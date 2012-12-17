@@ -149,6 +149,8 @@ public class UsuarioBean {
         
         if(this.usr.getNome() != null){
             this.chmdDAO.atualizarChamado(this.chmd, this.usr);
+            this.chmd = new Chamado();
+                ir = "consultachamado";
         }
         else{
             msn.EviarMensagens("frm:aviso", FacesMessage.SEVERITY_ERROR, "Erro na autenticação...", "Por favor, efetue login no sistema. Obrigado...");
