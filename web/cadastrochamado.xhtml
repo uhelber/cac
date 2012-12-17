@@ -62,7 +62,6 @@
                 <h:selectOneMenu value="#{usuarioBean.chmd.status}" label="Status" required="true" rendered="#{not empty usuarioBean.chmd.status}">
                     <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
                     <f:selectItems value="#{usuarioBean.status}" var="status" itemValue="#{status}" itemLabel="#{status.nome}" />
-                    <f:validator validatorId="ValidadorStatus" />
                 </h:selectOneMenu>
 
                 <h:outputLabel value="Bairro" for="bairro" />
