@@ -16,7 +16,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -138,9 +137,8 @@ public class UsuarioBean {
                 this.msn.EviarMensagens("frm:escola", FacesMessage.SEVERITY_ERROR, "Atenção:", "Campo obrigatório");
             }
         } else {
-            ir = "index";
             msn.EviarMensagens("frm:aviso", FacesMessage.SEVERITY_ERROR, "Erro na autenticação...", "Por favor, efetue login no sistema. Obrigado...");
-
+            ir = "index";
         }
 
         return ir;
@@ -148,12 +146,15 @@ public class UsuarioBean {
 
     public String atualizarChamado() throws ClassNotFoundException, SQLException {
         String ir = "";
-
-        System.out.println(this.chmd.getEscola());
-        System.out.println(this.chmd.getCidade());
-        System.out.println(this.chmd.getBairro());
-        System.out.println(this.chmd.getStatus());
-
+        
+        if(this.usr.getNome() != null){
+            this.chmdDAO.atualizarChamado(this.chmd, this.usr);
+        }
+        else{
+            msn.EviarMensagens("frm:aviso", FacesMessage.SEVERITY_ERROR, "Erro na autenticação...", "Por favor, efetue login no sistema. Obrigado...");
+            ir = "index";
+        }
+        
         return ir;
     }
 
