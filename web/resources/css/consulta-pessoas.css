@@ -1,0 +1,41 @@
+td.tipo { 
+    width: 20px;
+    text-align: center;
+}
+
+td.pessoa {
+    width: 200px;
+}
+
+td.tipopessoa {
+    width: 100px;
+    text-align: center;
+}
+
+td.email { 
+    width: 100px;
+    text-align: center;
+}
+
+td.datanascimento { 
+    width: 100px;
+    text-align: center;
+}
+
+td.ramoatividade { 
+    width: 100px;
+    text-align: center;
+}
+
+td.acoes { 
+    width: 40px;
+    text-align: center;
+}
+
+.grid .receita {
+    color: #0000ff;
+}
+
+.grid .despesa {
+    color: #c23030;
+}
