@@ -4,14 +4,7 @@
  */
 package cac.classes;
 
-import cac.dao.ChamadoDAO;
-import cac.dao.StatusDAO;
-import cac.dao.UsuarioDAO;
-import cac.db.Chamado;
-import cac.db.DataBase;
-import cac.db.Permissao;
-import cac.db.Status;
-import cac.db.Usuario;
+
 
 
 /**

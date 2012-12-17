@@ -6,6 +6,7 @@ package cac.dao;
 
 import cac.db.DataBase;
 import cac.db.Chamado;
+import cac.db.Parecer;
 import cac.db.Status;
 import cac.db.Usuario;
 import java.util.Date;
@@ -13,7 +14,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -58,18 +58,21 @@ public class ChamadoDAO{
         return retorno;
     }
 
-    public boolean atualizarChamado(Chamado chmd, Usuario usr) throws ClassNotFoundException, SQLException {
+    public boolean atualizarChamado(Chamado chmd, Parecer parecer, Usuario usr) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
+        Date dt = new Date();
+        SimpleDateFormat frmt = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         
-        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("UPDATE NTE.chamado SET cidade = ?, bairro = ?, escola = ?,"
-                + " contato = ?, telefone = ?, status = ?, abertopor = ?, dataabertura = ? WHERE idchamado = ?)");
+        PreparedStatement ps;
+        ps = (PreparedStatement) db.getPreparedStatement("UPDATE NTE.chamado SET cidade = ?, bairro = ?, escola = ?,"
+                + " contato = ?, telefone = ?, status = ?, descricao = ?, dataabertura = ? WHERE idchamado = ?");
         ps.setString(1, chmd.getCidade());
         ps.setString(2, chmd.getBairro());
         ps.setString(3, chmd.getEscola());
         ps.setString(4, chmd.getContato());
         ps.setString(5, chmd.getTelefone());
         ps.setInt(6, chmd.getStatus().getIdstatus());
-        ps.setInt(7, usr.getIdusuarios());
+        ps.setString(7, chmd.getDescricao());
         ps.setString(8, chmd.getDataabertura());
         ps.setInt(9, chmd.getIdchamado());
 
@@ -79,7 +82,7 @@ public class ChamadoDAO{
 
         return retorno;
     }
-
+    
     public List<Chamado> getTodosChamados() throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
         

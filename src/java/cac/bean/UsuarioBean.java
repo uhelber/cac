@@ -6,10 +6,12 @@ package cac.bean;
 
 import cac.classes.Mensagem;
 import cac.dao.ChamadoDAO;
+import cac.dao.ParecerDAO;
 import cac.dao.StatusDAO;
 import cac.dao.UsuarioDAO;
 import cac.db.Chamado;
 import cac.db.DataBase;
+import cac.db.Parecer;
 import cac.db.Status;
 import cac.db.Usuario;
 import java.sql.SQLException;
@@ -30,8 +32,10 @@ public class UsuarioBean {
 
     private UsuarioDAO usrDAO;
     private ChamadoDAO chmdDAO;
+    private ParecerDAO prcrDAO;
     private Usuario usr = new Usuario();
     private Chamado chmd = new Chamado();
+    private Parecer prcr = new Parecer();
     private StatusDAO sttsDAO = new StatusDAO();
     private Mensagem msn;
     private List<Status> status = new ArrayList<Status>();
@@ -88,6 +92,14 @@ public class UsuarioBean {
 
     public void setStatus(List<Status> status) {
         this.status = status;
+    }
+
+    public Parecer getPrcr() {
+        return prcr;
+    }
+
+    public void setPrcr(Parecer prcr) {
+        this.prcr = prcr;
     }
 
     /*
@@ -148,9 +160,12 @@ public class UsuarioBean {
         String ir = "";
         
         if(this.usr.getNome() != null){
-            this.chmdDAO.atualizarChamado(this.chmd, this.usr);
+            this.chmdDAO.atualizarChamado(this.chmd, this.prcr, this.usr);
+            this.prcrDAO.adicionarParecer(this.chmd, this.prcr, this.usr);
             this.chmd = new Chamado();
-                ir = "consultachamado";
+            this.prcr = new Parecer();
+            
+            ir = "consultachamado";
         }
         else{
             msn.EviarMensagens("frm:aviso", FacesMessage.SEVERITY_ERROR, "Erro na autenticação...", "Por favor, efetue login no sistema. Obrigado...");

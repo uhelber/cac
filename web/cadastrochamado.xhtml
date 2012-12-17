@@ -87,7 +87,7 @@
                 <h:inputTextarea id="descricao" cols="30" value="#{usuarioBean.chmd.descricao}" rendered="#{empty usuarioBean.chmd.descricao}" />
 
                 <h:outputLabel value="Parecer" for="parecer" rendered="#{not empty usuarioBean.chmd.escola}" />
-                <h:inputTextarea id="parecer" cols="30" rows="6" rendered="#{not empty usuarioBean.chmd.escola}" />
+                <h:inputTextarea id="parecer" value="#{usuarioBean.prcr.parecer}" cols="30" rows="6" rendered="#{not empty usuarioBean.chmd.escola}" />
 
                 <h:outputLabel />
                 <h:outputLabel />
