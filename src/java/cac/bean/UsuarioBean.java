@@ -15,6 +15,7 @@ import cac.db.Parecer;
 import cac.db.Status;
 import cac.db.Usuario;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -185,6 +186,16 @@ public class UsuarioBean {
         return chamado;
     }
 
+    public List<Parecer> listarTodosPareceres() throws ClassNotFoundException, SQLException, ParseException {
+        LinkedList<Parecer> parecer = new LinkedList<Parecer>();
+        if (this.usr.getNome() != null) {
+            parecer = (LinkedList<Parecer>) this.prcrDAO.getTodosPareceres();
+        } else {
+            this.sair();
+        }
+
+        return parecer;
+    }
     /*
      * Sistemas
      */
