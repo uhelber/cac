@@ -193,7 +193,7 @@ public class UsuarioBean {
         } else {
             this.sair();
         }
-
+        System.out.println(parecer);
         return parecer;
     }
     /*

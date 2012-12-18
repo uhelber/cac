@@ -33,7 +33,7 @@ public class ParecerDAO {
         SimpleDateFormat frmt = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         boolean retorno = false;
 
-        if (chmd.getEscola() != null) {
+        if (parecer.getParecer() != null) {
             ps.setString(1, null);
             ps.setInt(2, usr.getIdusuarios());
             ps.setString(3, frmt.format(dt));
