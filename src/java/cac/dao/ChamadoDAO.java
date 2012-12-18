@@ -76,7 +76,7 @@ public class ChamadoDAO{
         ps.setString(7, chmd.getDescricao());
         ps.setString(8, chmd.getDataabertura());
         ps.setInt(9, chmd.getIdchamado());
-        
+        System.out.println(usr.getIdusuarios());
         prcrDAO.adicionarParecer(chmd, parecer, usr);
         
         boolean retorno = ps.execute();
