@@ -60,6 +60,7 @@ public class ChamadoDAO{
 
     public boolean atualizarChamado(Chamado chmd, Parecer parecer, Usuario usr) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
+        ParecerDAO prcrDAO = new ParecerDAO();
         Date dt = new Date();
         SimpleDateFormat frmt = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         
@@ -75,7 +76,9 @@ public class ChamadoDAO{
         ps.setString(7, chmd.getDescricao());
         ps.setString(8, chmd.getDataabertura());
         ps.setInt(9, chmd.getIdchamado());
-
+        
+        prcrDAO.adicionarParecer(chmd, parecer, usr);
+        
         boolean retorno = ps.execute();
         ps.close();
         db.getCon().close();

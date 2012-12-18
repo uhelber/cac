@@ -161,7 +161,6 @@ public class UsuarioBean {
         
         if(this.usr.getNome() != null){
             this.chmdDAO.atualizarChamado(this.chmd, this.prcr, this.usr);
-            this.prcrDAO.adicionarParecer(this.chmd, this.prcr, this.usr);
             this.chmd = new Chamado();
             this.prcr = new Parecer();
             
