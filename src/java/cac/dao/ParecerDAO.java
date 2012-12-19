@@ -70,20 +70,37 @@ public class ParecerDAO {
         return parecer;
     }
 
-    private void polularListaParecer(Parecer prcr, ResultSet rs) throws SQLException, ClassNotFoundException, ParseException {
-        UsuarioDAO usrDAO = new UsuarioDAO();
+    public List<Parecer> getTodosPareceresPorIdChamado(Chamado chmd) throws ClassNotFoundException, SQLException, ParseException {
+        this.db = new DataBase();
 
-        SimpleDateFormat frmt = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Date dataatentimento = frmt.parse(rs.getString("dataatentimento"));
-        Date dataconclusao = frmt.parse(rs.getString("dataconclusao"));
+        LinkedList<Parecer> parecer = new LinkedList<Parecer>();
+        PreparedStatement ps = (PreparedStatement) this.db.getPreparedStatement("SELECT * FROM NTE.parecer WHERE chamado = ?");
+        ps.setInt(1, chmd.getIdchamado());
+        
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Parecer prcr = new Parecer();
+            polularListaParecer(prcr, rs);
+            parecer.add(prcr);
+        }
+        
+        ps.close();
+        rs.close();
+        db.getCon().close();
+
+        return parecer;
+    }
+
+    private void polularListaParecer(Parecer prcr, ResultSet rs) throws SQLException, ClassNotFoundException {
+        UsuarioDAO usrDAO = new UsuarioDAO();
 
         prcr.setIdparecer(rs.getInt("idparecer"));
         prcr.setTecnico(usrDAO.getPorIdUsuario(rs.getInt("tecnico")));
-        prcr.setDataatentimento(dataatentimento);
-        prcr.setDataconclusao(dataconclusao);
+        prcr.setDataatentimento(rs.getString("dataatentimento"));
+        prcr.setDataconclusao(rs.getString("dataconclusao"));
         prcr.setParecer(rs.getString("parecer"));
         prcr.setChamado(rs.getInt("chamado"));
-
 
     }
 
@@ -97,14 +114,10 @@ public class ParecerDAO {
         Parecer parecer = new Parecer();
         UsuarioDAO usrDAO = new UsuarioDAO();
 
-        SimpleDateFormat frmt = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Date dataatentimento = frmt.parse(rs.getString("dataatentimento"));
-        Date dataconclusao = frmt.parse(rs.getString("dataconclusao"));
-
         parecer.setIdparecer(rs.getInt("idparecer"));
         parecer.setTecnico(usrDAO.getPorIdUsuario(rs.getInt("tecnico")));
-        parecer.setDataatentimento(dataatentimento);
-        parecer.setDataconclusao(dataconclusao);
+        parecer.setDataatentimento(rs.getString("dataatentimento"));
+        parecer.setDataconclusao(rs.getString("dataconclusao"));
         parecer.setParecer(rs.getString("parecer"));
         parecer.setChamado(rs.getInt("chamado"));
 

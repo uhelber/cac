@@ -129,8 +129,7 @@ public class ChamadoDAO{
 
         Chamado chmd = new Chamado();
         StatusDAO stsDAO = new StatusDAO();
-        Status sts = new Status();
-        sts = stsDAO.getPorIdStatus(rs.getInt("status"));
+        Status sts = stsDAO.getPorIdStatus(rs.getInt("status"));
 
         chmd.setIdchamado(rs.getInt("idchamado"));
         chmd.setCidade(rs.getString("cidade"));
@@ -145,7 +144,7 @@ public class ChamadoDAO{
 
         ps.close();
         rs.close();
-        db.getCon().close();
+        this.db.getCon().close();
 
         return chmd;
     }

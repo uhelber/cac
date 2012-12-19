@@ -13,8 +13,8 @@ import java.util.Date;
 public class Parecer {
     private Integer idparecer;
     private Usuario tecnico;
-    private Date dataatentimento;
-    private Date dataconclusao;
+    private String dataatentimento;
+    private String dataconclusao;
     private String parecer;
     private Integer chamado;
 
@@ -37,19 +37,19 @@ public class Parecer {
         this.tecnico = tecnico;
     }
 
-    public Date getDataatentimento() {
+    public String getDataatentimento() {
         return dataatentimento;
     }
 
-    public void setDataatentimento(Date dataatentimento) {
+    public void setDataatentimento(String dataatentimento) {
         this.dataatentimento = dataatentimento;
     }
 
-    public Date getDataconclusao() {
+    public String getDataconclusao() {
         return dataconclusao;
     }
 
-    public void setDataconclusao(Date dataconclusao) {
+    public void setDataconclusao(String dataconclusao) {
         this.dataconclusao = dataconclusao;
     }
 

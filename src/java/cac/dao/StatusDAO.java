@@ -29,7 +29,7 @@ public class StatusDAO{
     public Status getPorIdStatus(Integer id) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
         
-        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM NTE.status WHERE idstatus = ?");
+        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM nte.status WHERE idstatus = ?");
         ps.setInt(1, id);
 
         ResultSet rs = ps.executeQuery();

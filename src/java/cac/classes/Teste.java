@@ -11,6 +11,7 @@ import cac.db.Chamado;
 import cac.db.Parecer;
 import cac.db.Usuario;
 import java.sql.SQLException;
+import java.text.ParseException;
 
 
 
@@ -21,7 +22,7 @@ import java.sql.SQLException;
  */
 public class Teste {
 
-    public static void main(String args[]) throws ClassNotFoundException, SQLException{
+    public static void main(String args[]) throws ClassNotFoundException, SQLException, ParseException{
         Parecer parecer = new Parecer();
         Usuario usr = new Usuario();
         Chamado chmd = new Chamado();
@@ -29,12 +30,9 @@ public class Teste {
         ChamadoDAO chmdDAO = new ChamadoDAO();
         UsuarioDAO usrDAO = new UsuarioDAO();
         
-        chmd = chmdDAO.getPorIdChamado(6);
-        usr = usrDAO.getPorIdUsuario(2);
-        parecer.setChamado(1);
-        parecer.setParecer("tando 1 2 3");
-        parecer.setTecnico(usr);
         
-        parecerDAO.adicionarParecer(chmd, parecer, usr);
+        for(int i =0; i < parecerDAO.getTodosPareceresPorIdChamado(chmd).size(); i++){
+            System.out.println(parecerDAO.getTodosPareceres().get(i).getParecer());
+        }
     }
 }

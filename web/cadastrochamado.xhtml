@@ -99,7 +99,12 @@
         </h:form>
         <br/>
         <br/>
-        
+        <h:dataTable value="#{usuarioBean.listarTodosChamados()}" var="parecer"  >
+            <h:column>
+                <h:outputText value="#{parecer.dataatentimento}" />
+                
+            </h:column>
+        </h:dataTable>
     </h:body>
 </html>
 
