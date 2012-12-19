@@ -186,12 +186,8 @@ public class UsuarioBean {
         return chamado;
     }
 
-    public List<Parecer> listarTodosPareceres() throws ClassNotFoundException, SQLException, ParseException {
-        LinkedList<Parecer> parecer = new LinkedList<Parecer>();
-        
-        parecer = (LinkedList<Parecer>) this.prcrDAO.getTodosPareceresPorIdChamado(this.chmd.getIdchamado());
-        
-        return parecer;
+    public List<Parecer> listarTodosPareceres() throws SQLException, ClassNotFoundException {
+       return this.prcrDAO.getTodosPareceresPorIdChamado(this.chmd.getIdchamado());
     }
     /*
      * Sistemas
