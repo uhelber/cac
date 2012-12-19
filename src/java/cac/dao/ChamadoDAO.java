@@ -75,7 +75,7 @@ public class ChamadoDAO{
         ps.setString(8, chmd.getDataabertura());
         ps.setInt(9, chmd.getIdchamado());
         
-        prcrDAO.adicionarParecer(chmd, parecer, usr);
+        //prcrDAO.adicionarParecer(chmd, parecer, usr);
         
         boolean retorno = ps.execute();
         ps.close();
@@ -122,14 +122,15 @@ public class ChamadoDAO{
     public Chamado getPorIdChamado(int id) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
         
-        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM NTE.USUARIOS WHERE idchamado = ?");
+        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM NTE.USUARIOS WHERE 'idchamado' = ?");
         ps.setInt(1, id);
 
         ResultSet rs = ps.executeQuery();
 
         Chamado chmd = new Chamado();
         StatusDAO stsDAO = new StatusDAO();
-        Status sts = stsDAO.getPorIdStatus(rs.getInt("status"));
+        Status sts = new Status();
+        sts = stsDAO.getPorIdStatus(rs.getInt("status"));
 
         chmd.setIdchamado(rs.getInt("idchamado"));
         chmd.setCidade(rs.getString("cidade"));

@@ -26,7 +26,7 @@ public class StatusDAO{
         this.status = new Status();
     }
 
-    public Status getPorIdStatus(int id) throws ClassNotFoundException, SQLException {
+    public Status getPorIdStatus(Integer id) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
         
         PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM NTE.status WHERE idstatus = ?");
