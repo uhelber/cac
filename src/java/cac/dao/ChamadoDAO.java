@@ -88,7 +88,7 @@ public class ChamadoDAO{
         this.db = new DataBase();
         
         LinkedList<Chamado> chamado = new LinkedList<Chamado>();
-        ResultSet rs = db.getStatement().executeQuery("SELECT * FROM NTE.chamado WHERE status <> '7' ORDER BY dataabertura");
+        ResultSet rs = this.db.getStatement().executeQuery("SELECT * FROM NTE.chamado WHERE status <> '7' ORDER BY dataabertura");
         while (rs.next()) {
             Chamado chmd = new Chamado();
             polularListaChamado(chmd, rs);

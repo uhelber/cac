@@ -31,7 +31,7 @@ public class Teste {
         UsuarioDAO usrDAO = new UsuarioDAO();
         
         
-        for(int i =0; i < parecerDAO.getTodosPareceresPorIdChamado(chmd).size(); i++){
+        for(int i =0; i < parecerDAO.getTodosPareceresPorIdChamado(9).size(); i++){
             System.out.println(parecerDAO.getTodosPareceres().get(i).getParecer());
         }
     }
