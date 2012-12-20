@@ -70,7 +70,7 @@ public class ParecerDAO {
         return parecer;
     }
 
-    public List<Parecer> getTodosPareceresPorIdChamado(int idChamado) throws SQLException, ClassNotFoundException {
+    public List<Parecer> getTodosPareceresPorIdChamado(int idChamado){
         LinkedList<Parecer> parecer = new LinkedList<Parecer>();
         /*
         PreparedStatement ps = (PreparedStatement) this.db.getPreparedStatement("SELECT * FROM nte.parecer WHERE chamado = ?");
@@ -88,6 +88,7 @@ public class ParecerDAO {
         ps.close();
         rs.close();
         */
+        System.out.println(idChamado);
         return parecer;
     }
 

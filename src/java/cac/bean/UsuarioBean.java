@@ -184,7 +184,9 @@ public class UsuarioBean {
     }
 
     public String /*List<Parecer>*/ listarTodosPareceres() throws SQLException, ClassNotFoundException {
-        System.out.println(this.prcrDAO.getTodosPareceresPorIdChamado(this.chmd.getIdchamado()).size());
+        LinkedList<Parecer> parecer = new LinkedList<Parecer>();
+        System.out.println(this.chmd.getIdchamado());
+        parecer = (LinkedList<Parecer>) this.prcrDAO.getTodosPareceresPorIdChamado(this.chmd.getIdchamado());
         return "consultachamado";
     }
     /*
