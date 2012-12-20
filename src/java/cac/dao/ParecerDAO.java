@@ -25,7 +25,7 @@ public class ParecerDAO {
 
     DataBase db;
 
-    public boolean adicionarParecer(Chamado chmd, Parecer parecer, Usuario usr) throws SQLException, ClassNotFoundException {
+    public void adicionarParecer(Chamado chmd, Parecer parecer, Usuario usr) throws SQLException, ClassNotFoundException {
         this.db = new DataBase();
 
         PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("INSERT INTO nte.parecer VALUE (?, ?, ?, ?, ?, ?)");
@@ -33,9 +33,7 @@ public class ParecerDAO {
         Date dt = new Date();
         SimpleDateFormat frmt = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
-        boolean retorno = false;
-
-        if ((parecer.getParecer() != null) || (parecer.getParecer().equals(""))) {
+        if (!parecer.getParecer().equals("")) {
             ps.setString(1, null);
             ps.setInt(2, usr.getIdusuarios());
             ps.setString(3, frmt.format(dt));
@@ -46,14 +44,12 @@ public class ParecerDAO {
             }
             ps.setString(5, parecer.getParecer());
             ps.setInt(6, chmd.getIdchamado());
+            
+            ps.execute();
         }
 
-
-        retorno = ps.execute();
         ps.close();
         db.getCon().close();
-
-        return retorno;
     }
 
     public List<Parecer> getTodosPareceres() throws ClassNotFoundException, SQLException {
