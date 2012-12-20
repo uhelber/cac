@@ -112,6 +112,7 @@ public class UsuarioBean {
 
         if (this.usr != null) {
             this.usr = this.usrDAO.validarUsuario(this.usr.getUsuario(), this.usr.getSenha());
+            ir = "consultachamado";
         } else {
             this.msn.EviarMensagens("frm:usuario", FacesMessage.SEVERITY_ERROR, "Erro na autenticação...", "Verifique se o usuario e senha estão certos.");
             return "index";
@@ -132,8 +133,7 @@ public class UsuarioBean {
     public String cadastrarChamado() throws ClassNotFoundException, SQLException {
         this.msn = new Mensagem();
         String ir = "";
-        System.out.println(usr.getNome());
-
+        
         if (this.usr.getNome() != null) {
             System.out.println(usr.getNome());
             if (!this.chmd.getEscola().equals("")) {
