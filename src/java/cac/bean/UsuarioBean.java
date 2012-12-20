@@ -110,7 +110,8 @@ public class UsuarioBean {
         this.msn = new Mensagem();
         String ir = "";
 
-        if (this.usr != null) {this.usr = this.usrDAO.validarUsuario(this.usr.getUsuario(), this.usr.getSenha());
+        if (this.usr != null) {
+            this.usr = this.usrDAO.validarUsuario(this.usr.getUsuario(), this.usr.getSenha());
         } else {
             this.msn.EviarMensagens("frm:usuario", FacesMessage.SEVERITY_ERROR, "Erro na autenticação...", "Verifique se o usuario e senha estão certos.");
             return "index";
@@ -131,8 +132,10 @@ public class UsuarioBean {
     public String cadastrarChamado() throws ClassNotFoundException, SQLException {
         this.msn = new Mensagem();
         String ir = "";
+        System.out.println(usr.getNome());
 
         if (this.usr.getNome() != null) {
+            System.out.println(usr.getNome());
             if (!this.chmd.getEscola().equals("")) {
                 this.chmdDAO.adicionarChamado(this.chmd, this.usr);
                 this.chmd = new Chamado();
@@ -150,19 +153,18 @@ public class UsuarioBean {
 
     public String atualizarChamado() throws ClassNotFoundException, SQLException {
         String ir = "";
-        
-        if(this.usr.getNome() != null){
+
+        if (this.usr.getNome() != null) {
             this.chmdDAO.atualizarChamado(this.chmd, this.prcr, this.usr);
             this.chmd = new Chamado();
             this.prcr = new Parecer();
-            
+
             ir = "consultachamado";
-        }
-        else{
+        } else {
             msn.EviarMensagens("frm:aviso", FacesMessage.SEVERITY_ERROR, "Erro na autenticação...", "Por favor, efetue login no sistema. Obrigado...");
             ir = "index";
         }
-        
+
         return ir;
     }
 
@@ -178,11 +180,12 @@ public class UsuarioBean {
     }
 
     public List<Parecer> listarTodosPareceres() throws SQLException, ClassNotFoundException {
-       return this.prcrDAO.getTodosPareceresPorIdChamado(this.chmd.getIdchamado());
+        return this.prcrDAO.getTodosPareceresPorIdChamado(this.chmd.getIdchamado());
     }
     /*
      * Sistemas
      */
+
     public String irCadastrarChamado() {
         this.chmd = new Chamado();
         return "cadastrochamado";

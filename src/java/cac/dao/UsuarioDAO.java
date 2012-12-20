@@ -121,7 +121,6 @@ public class UsuarioDAO{
     public Usuario validarUsuario(String usuario, String senha) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
         
-        
         PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM NTE.USUARIOS WHERE USUARIO = ? AND SENHA = ?");
         ps.setString(1, usuario);
         ps.setString(2, senha);
