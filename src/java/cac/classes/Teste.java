@@ -15,16 +15,13 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-
-
-
 /**
  *
  * @author UhelberC
  */
 public class Teste {
 
-    public static void main(String args[]) throws ClassNotFoundException, SQLException{
+    public static void main(String args[]) throws ClassNotFoundException, SQLException {
         Parecer parecer = new Parecer();
         Usuario usr = new Usuario();
         Chamado chmd = new Chamado();
@@ -33,13 +30,13 @@ public class Teste {
         UsuarioDAO usrDAO = new UsuarioDAO();
         UsuarioBean usrBean = new UsuarioBean();
         List<Parecer> listar = new LinkedList<Parecer>();
-        
-        
+
+
         usr = usrDAO.getPorIdUsuario(2);
         chmd = chmdDAO.getPorIdChamado(1);
-        listar = parecerDAO.getTodosPareceresPorIdChamado(chmd.getIdchamado());
-        
-        for(int i = 0; i < listar.size(); i++){
+        listar = parecerDAO.getTodosPareceresPorIdChamado(1);
+
+        for (int i = 0; i < listar.size(); i++) {
             System.out.println(listar.get(i).getParecer());
         }
     }

@@ -72,7 +72,7 @@ public class ParecerDAO {
 
     public List<Parecer> getTodosPareceresPorIdChamado(int idChamado) throws SQLException, ClassNotFoundException {
         LinkedList<Parecer> parecer = new LinkedList<Parecer>();
-
+        /*
         PreparedStatement ps = (PreparedStatement) this.db.getPreparedStatement("SELECT * FROM nte.parecer WHERE chamado = ?");
         ps.setInt(1, idChamado);
         
@@ -84,9 +84,10 @@ public class ParecerDAO {
             parecer.add(prcr);
         }
 
+        
         ps.close();
         rs.close();
-        
+        */
         return parecer;
     }
 

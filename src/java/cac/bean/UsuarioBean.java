@@ -183,9 +183,9 @@ public class UsuarioBean {
         return chamado;
     }
 
-    public void /*List<Parecer>*/ listarTodosPareceres() throws SQLException, ClassNotFoundException {
-        System.out.println(this.prcrDAO.getTodosPareceresPorIdChamado(this.chmd.getIdchamado()));
-        
+    public String /*List<Parecer>*/ listarTodosPareceres() throws SQLException, ClassNotFoundException {
+        System.out.println(this.prcrDAO.getTodosPareceresPorIdChamado(this.chmd.getIdchamado()).size());
+        return "consultachamado";
     }
     /*
      * Sistemas
