@@ -12,7 +12,6 @@ import cac.db.Chamado;
 import cac.db.Parecer;
 import cac.db.Usuario;
 import java.sql.SQLException;
-import java.text.ParseException;
 
 
 
