@@ -110,16 +110,7 @@ public class UsuarioBean {
         this.msn = new Mensagem();
         String ir = "";
 
-        if (this.usr.getUsuario() != null) {
-            if (this.usr.getSenha() != null) {
-                this.usr = this.usrDAO.validarUsuario(this.usr.getUsuario(), this.usr.getSenha());
-                if (usr.getNome() != null) {
-                    return "consultachamado";
-                } else {
-                    this.msn.EviarMensagens("frm:usuario", FacesMessage.SEVERITY_ERROR, "Erro na autenticação...", "Verifique se o usuario e senha estão certos.");
-                    return "index";
-                }
-            }
+        if (this.usr != null) {this.usr = this.usrDAO.validarUsuario(this.usr.getUsuario(), this.usr.getSenha());
         } else {
             this.msn.EviarMensagens("frm:usuario", FacesMessage.SEVERITY_ERROR, "Erro na autenticação...", "Verifique se o usuario e senha estão certos.");
             return "index";

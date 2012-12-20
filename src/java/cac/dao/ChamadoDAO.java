@@ -48,10 +48,10 @@ public class ChamadoDAO{
             ps.setString(8, chmd.getDescricao());
             ps.setInt(9, usr.getIdusuarios());
             ps.setString(10, frmt.format(dt));
+            
+            retorno = ps.execute();
         }
         
-        
-        retorno = ps.execute();
         ps.close();
         db.getCon().close();
 

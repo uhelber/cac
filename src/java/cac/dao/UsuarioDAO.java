@@ -121,15 +121,15 @@ public class UsuarioDAO{
     public Usuario validarUsuario(String usuario, String senha) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
         
+        
         PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM NTE.USUARIOS WHERE USUARIO = ? AND SENHA = ?");
         ps.setString(1, usuario);
         ps.setString(2, senha);
 
         ResultSet rs = ps.executeQuery();
         Usuario usr = null;
-        boolean testar = rs.next();
-
-        if (testar) {
+        
+        if (rs.next()) {
             usr = new Usuario();
             
             usr.setIdusuarios(rs.getInt("idusuarios"));
@@ -144,7 +144,7 @@ public class UsuarioDAO{
             usr.setUsuario(rs.getString("usuario"));
             usr.setSenha(rs.getString("senha"));
         }
-
+        
         ps.close();
         rs.close();
         db.getCon().close();
