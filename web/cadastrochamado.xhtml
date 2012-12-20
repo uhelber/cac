@@ -99,7 +99,7 @@
         </h:form>
         <br/>
         <br/>
-        <h:dataTable value="#{usuarioBean.listarTodosPareceres()}" var="parecer"   >
+        <h:dataTable value="#{usuarioBean.listarTodosPareceres()}" var="parecer" rendered="usuarioBean.listarTodosPareceres()"  >
             <h:column>
                 <h:outputText value="#{parecer.dataatentimento}" />
                 

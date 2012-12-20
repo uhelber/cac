@@ -29,22 +29,26 @@ public class ParecerDAO {
         this.db = new DataBase();
 
         PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("INSERT INTO nte.parecer VALUE (?, ?, ?, ?, ?, ?)");
-        
+
         Date dt = new Date();
         SimpleDateFormat frmt = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        
+
         boolean retorno = false;
 
         if ((parecer.getParecer() != null) || (parecer.getParecer().equals(""))) {
             ps.setString(1, null);
             ps.setInt(2, usr.getIdusuarios());
             ps.setString(3, frmt.format(dt));
-            ps.setString(4, frmt.format(dt));
+            if (chmd.getStatus().getIdstatus() == 7) {
+                ps.setString(4, frmt.format(dt));
+            } else {
+                ps.setString(4, null);
+            }
             ps.setString(5, parecer.getParecer());
             ps.setInt(6, chmd.getIdchamado());
         }
 
-        
+
         retorno = ps.execute();
         ps.close();
         db.getCon().close();
@@ -70,16 +74,15 @@ public class ParecerDAO {
         return parecer;
     }
 
-    public List<Parecer> getTodosPareceresPorIdChamado(int idChamado) throws SQLException, ClassNotFoundException{
+    public List<Parecer> getTodosPareceresPorIdChamado(int idChamado) throws SQLException, ClassNotFoundException {
         LinkedList<Parecer> parecer = new LinkedList<Parecer>();
-        
-        for(int i = 0; i < this.getTodosPareceres().size(); i++){
-            if(this.getTodosPareceres().get(i).getChamado() == idChamado)
-            {
+
+        for (int i = 0; i < this.getTodosPareceres().size(); i++) {
+            if (this.getTodosPareceres().get(i).getChamado() == idChamado) {
                 parecer.add(this.getTodosPareceres().get(i));
             }
         }
-        
+
         return parecer;
     }
 

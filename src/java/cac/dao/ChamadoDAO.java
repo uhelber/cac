@@ -75,7 +75,7 @@ public class ChamadoDAO{
         ps.setString(8, chmd.getDataabertura());
         ps.setInt(9, chmd.getIdchamado());
         
-        //prcrDAO.adicionarParecer(chmd, parecer, usr);
+        prcrDAO.adicionarParecer(chmd, parecer, usr);
         
         boolean retorno = ps.execute();
         ps.close();
