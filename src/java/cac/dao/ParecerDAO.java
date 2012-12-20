@@ -56,7 +56,7 @@ public class ParecerDAO {
         this.db = new DataBase();
 
         LinkedList<Parecer> parecer = new LinkedList<Parecer>();
-        ResultSet rs = db.getStatement().executeQuery("SELECT * FROM NTE.parecer");
+        ResultSet rs = this.db.getStatement().executeQuery("SELECT * FROM NTE.parecer");
 
         while (rs.next()) {
             Parecer prcr = new Parecer();
@@ -65,7 +65,7 @@ public class ParecerDAO {
         }
 
         rs.close();
-        db.getCon().close();
+        this.db.getCon().close();
 
         return parecer;
     }
@@ -73,12 +73,20 @@ public class ParecerDAO {
     public List<Parecer> getTodosPareceresPorIdChamado(int idChamado) throws SQLException, ClassNotFoundException {
         LinkedList<Parecer> parecer = new LinkedList<Parecer>();
 
-        for (int i = 0; i < this.getTodosPareceres().size(); i++) {
-            if (this.getTodosPareceres().get(i).getChamado() == idChamado) {
-                parecer.add(this.getTodosPareceres().get(i));
-            }
+        PreparedStatement ps = (PreparedStatement) this.db.getPreparedStatement("SELECT * FROM nte.parecer WHERE chamado = ?");
+        ps.setInt(1, idChamado);
+        
+        ResultSet rs = ps.executeQuery();
+        
+        while (rs.next()) {
+            Parecer prcr = new Parecer();
+            polularListaParecer(prcr, rs);
+            parecer.add(prcr);
         }
 
+        ps.close();
+        rs.close();
+        
         return parecer;
     }
 
