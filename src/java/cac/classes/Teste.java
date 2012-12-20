@@ -12,6 +12,8 @@ import cac.db.Chamado;
 import cac.db.Parecer;
 import cac.db.Usuario;
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
 
 
 
@@ -30,10 +32,15 @@ public class Teste {
         ChamadoDAO chmdDAO = new ChamadoDAO();
         UsuarioDAO usrDAO = new UsuarioDAO();
         UsuarioBean usrBean = new UsuarioBean();
+        List<Parecer> listar = new LinkedList<Parecer>();
         
         
-        for(int i =0; i < usrBean.listarTodosPareceres().size(); i++){
-            System.out.println(parecerDAO.getTodosPareceres().get(i).getParecer());
+        usr = usrDAO.getPorIdUsuario(2);
+        chmd = chmdDAO.getPorIdChamado(1);
+        listar = parecerDAO.getTodosPareceresPorIdChamado(chmd.getIdchamado());
+        
+        for(int i = 0; i < listar.size(); i++){
+            System.out.println(listar.get(i).getParecer());
         }
     }
 }
