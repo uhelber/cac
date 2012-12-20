@@ -10,7 +10,8 @@
         <h:outputStylesheet library="css" name="sistema.css" />
     </h:head>
     <h:body>
-        <h1>Novo Chamado</h1>
+        <h1><h:outputText value="Novo Chamado" rendered="#{empty usuarioBean.chmd.escola}" /></h1>
+        <h1><h:outputText value="Atualizar Chamado" rendered="#{not empty usuarioBean.chmd.escola}" /></h1>
         <h:form id="sair">
             <h:panelGroup class="usr">
                 <h:button image="imagens/sair2.png" action="#{usuarioBean.sair()}" />
@@ -26,7 +27,7 @@
             <h2><h:messages layout="table" style="color: red" /></h2>
 
             <h:panelGrid columns="5">
-                <h:commandButton value="Consulta" action="consultachamado" />
+                <h:commandButton value="Início" action="consultachamado" />
                 <h:outputText />
                 <h:outputText />
                 <h:outputText />
@@ -40,7 +41,13 @@
             <h:panelGrid columns="2" styleClass="form-grid" columnClasses="label, campo">
                 <h:outputLabel value="Cadastrador" rendered="#{not empty usuarioBean.chmd.escola}" />
                 <h:outputLabel value="#{usuarioBean.nomeCadastrador()}" rendered="#{not empty usuarioBean.chmd.escola}" />
-
+                
+                <h:outputText value="Data de Abertura" rendered="#{not empty usuarioBean.chmd.escola}" />
+                <h:outputText value="#{usuarioBean.chmd.dataabertura}" rendered="#{not empty usuarioBean.chmd.escola}" />
+                
+                <h:outputText value="Data de Atual" rendered="#{not empty usuarioBean.chmd.escola}" />
+                <h:outputText value="#{usuarioBean.dataAtual()}"  rendered="#{not empty usuarioBean.chmd.escola}" />
+                
                 <h:outputLabel />
                 <br/>
 

@@ -16,12 +16,16 @@ import cac.db.Status;
 import cac.db.Usuario;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.SimpleFormatter;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import sun.net.www.protocol.http.logging.HttpLogFormatter;
 
 /**
  *
@@ -208,5 +212,12 @@ public class UsuarioBean {
         db.fecherTudo();
 
         return "index";
+    }
+    
+    public String dataAtual(){
+        Date dt = new Date();
+        SimpleDateFormat frmt = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        
+        return frmt.format(dt);
     }
 }
