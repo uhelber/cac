@@ -14,7 +14,7 @@
         <h1><h:outputText value="Atualizar Chamado" rendered="#{not empty usuarioBean.chmd.escola}" /></h1>
         <h:form id="sair">
             <h:panelGroup class="usr">
-                <h:button image="imagens/sair2.png" action="#{usuarioBean.sair()}" />
+                <h:commandButton image="imagens/sair2.png" action="#{usuarioBean.sair()}" />
                 <h:outputText value="#{usuarioBean.usr.nome}" />
                 <h:outputText value=" " />
                 <h:outputText value="#{usuarioBean.usr.sobrenome}" />
@@ -106,7 +106,7 @@
         </h:form>
         <br/>
         <br/>
-        <h:dataTable value="#{usuarioBean.listarTodosPareceres()}" var="parecer" styleClass="grid" rowClasses="cor-sim, cor-nao">
+        <h:dataTable value="#{usuarioBean.listarTodosPareceres()}" var="parecer" styleClass="grid" rowClasses="cor-sim, cor-nao" rendered="#{not empty usuarioBean.listarTodosPareceres()}">
             <h:column>
                 <h:outputText value="Técnico: " />
                 <h:outputText value="#{parecer.tecnico.nome}" />

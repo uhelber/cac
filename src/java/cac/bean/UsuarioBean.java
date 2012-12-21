@@ -185,9 +185,7 @@ public class UsuarioBean {
         LinkedList<Parecer> parecer = new LinkedList<Parecer>();
         if (this.usr.getNome() != null) {
             parecer = (LinkedList<Parecer>) this.prcrDAO.getTodosPareceresPorIdChamado(this.chmd.getIdchamado());
-        } else {
-            this.sair();
-        }
+        } 
 
         return parecer;
 
