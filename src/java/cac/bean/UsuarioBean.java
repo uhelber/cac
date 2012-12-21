@@ -15,17 +15,14 @@ import cac.db.Parecer;
 import cac.db.Status;
 import cac.db.Usuario;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.SimpleFormatter;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import sun.net.www.protocol.http.logging.HttpLogFormatter;
 
 /**
  *
@@ -48,6 +45,7 @@ public class UsuarioBean {
     public UsuarioBean() throws ClassNotFoundException, SQLException {
         this.usrDAO = new UsuarioDAO();
         this.chmdDAO = new ChamadoDAO();
+        this.prcrDAO = new ParecerDAO();
         this.status = this.verificarStatus();
     }
 
@@ -137,7 +135,7 @@ public class UsuarioBean {
     public String cadastrarChamado() throws ClassNotFoundException, SQLException {
         this.msn = new Mensagem();
         String ir = "";
-        
+
         if (this.usr.getNome() != null) {
             System.out.println(usr.getNome());
             if (!this.chmd.getEscola().equals("")) {
@@ -183,11 +181,16 @@ public class UsuarioBean {
         return chamado;
     }
 
-    public String /*List<Parecer>*/ listarTodosPareceres() throws SQLException, ClassNotFoundException {
+    public List<Parecer> listarTodosPareceres() throws SQLException, ClassNotFoundException {
         LinkedList<Parecer> parecer = new LinkedList<Parecer>();
-        System.out.println(this.chmd.getIdchamado());
-        parecer = (LinkedList<Parecer>) this.prcrDAO.getTodosPareceresPorIdChamado(this.chmd.getIdchamado());
-        return "consultachamado";
+        if (this.usr.getNome() != null) {
+            parecer = (LinkedList<Parecer>) this.prcrDAO.getTodosPareceresPorIdChamado(this.chmd.getIdchamado());
+        } else {
+            this.sair();
+        }
+
+        return parecer;
+
     }
     /*
      * Sistemas
@@ -216,11 +219,11 @@ public class UsuarioBean {
 
         return "index";
     }
-    
-    public String dataAtual(){
+
+    public String dataAtual() {
         Date dt = new Date();
         SimpleDateFormat frmt = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        
+
         return frmt.format(dt);
     }
 }

@@ -69,4 +69,46 @@ public class Parecer {
         this.chamado = chamado;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 97 * hash + (this.idparecer != null ? this.idparecer.hashCode() : 0);
+        hash = 97 * hash + (this.tecnico != null ? this.tecnico.hashCode() : 0);
+        hash = 97 * hash + (this.dataatentimento != null ? this.dataatentimento.hashCode() : 0);
+        hash = 97 * hash + (this.dataconclusao != null ? this.dataconclusao.hashCode() : 0);
+        hash = 97 * hash + (this.parecer != null ? this.parecer.hashCode() : 0);
+        hash = 97 * hash + (this.chamado != null ? this.chamado.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Parecer other = (Parecer) obj;
+        if (this.idparecer != other.idparecer && (this.idparecer == null || !this.idparecer.equals(other.idparecer))) {
+            return false;
+        }
+        if (this.tecnico != other.tecnico && (this.tecnico == null || !this.tecnico.equals(other.tecnico))) {
+            return false;
+        }
+        if ((this.dataatentimento == null) ? (other.dataatentimento != null) : !this.dataatentimento.equals(other.dataatentimento)) {
+            return false;
+        }
+        if ((this.dataconclusao == null) ? (other.dataconclusao != null) : !this.dataconclusao.equals(other.dataconclusao)) {
+            return false;
+        }
+        if ((this.parecer == null) ? (other.parecer != null) : !this.parecer.equals(other.parecer)) {
+            return false;
+        }
+        if (this.chamado != other.chamado && (this.chamado == null || !this.chamado.equals(other.chamado))) {
+            return false;
+        }
+        return true;
+    }
+
 }

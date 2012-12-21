@@ -87,7 +87,7 @@ public class ChamadoDAO{
     public List<Chamado> getTodosChamados() throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
         
-        LinkedList<Chamado> chamado = new LinkedList<Chamado>();
+        List<Chamado> chamado = new LinkedList<Chamado>();
         ResultSet rs = this.db.getStatement().executeQuery("SELECT * FROM NTE.chamado WHERE status <> '7' ORDER BY dataabertura");
         while (rs.next()) {
             Chamado chmd = new Chamado();
@@ -103,6 +103,7 @@ public class ChamadoDAO{
     private void polularListaChamado(Chamado chmd, ResultSet rs) throws SQLException, ClassNotFoundException {
         UsuarioDAO usrDAO = new UsuarioDAO();
         Usuario usr = usrDAO.getPorIdUsuario(rs.getInt("abertopor"));
+        
         StatusDAO stsDAO = new StatusDAO();
         Status sts = stsDAO.getPorIdStatus(rs.getInt("status"));
 
