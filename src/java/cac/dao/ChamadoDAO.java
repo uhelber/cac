@@ -124,7 +124,7 @@ public class ChamadoDAO{
         if(sts.getIdstatus() == 2){
             chmd.setImagem("/imagens/alerta2.2.png");
         }
-        if(sts.getIdstatus() == 3){
+        if((sts.getIdstatus() == 3) || (sts.getIdstatus() == 5) || (sts.getIdstatus() == 6)){
             chmd.setImagem("/imagens/alerta3.2.png");
         }
         if(sts.getIdstatus() == 4){
