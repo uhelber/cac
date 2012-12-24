@@ -224,4 +224,13 @@ public class UsuarioBean {
 
         return frmt.format(dt);
     }
+    
+    public String getImagemStatus()
+    {
+        String imagem = "";
+        
+        
+        
+        return imagem;
+    }
 }

@@ -117,7 +117,23 @@ public class ChamadoDAO{
         chmd.setDescricao(rs.getString("descricao"));
         chmd.setAbertopor(rs.getInt("abertopor"));
         chmd.setDataabertura(rs.getString("dataabertura"));
-
+        
+        if(sts.getIdstatus() == 1){
+            chmd.setImagem("/imagens/alerta1.2.png");
+        }
+        if(sts.getIdstatus() == 2){
+            chmd.setImagem("/imagens/alerta2.2.png");
+        }
+        if(sts.getIdstatus() == 3){
+            chmd.setImagem("/imagens/alerta3.2.png");
+        }
+        if(sts.getIdstatus() == 4){
+            chmd.setImagem("/imagens/alerta4.2.png");
+        }
+        if(sts.getIdstatus() == 7){
+            chmd.setImagem("/imagens/alerta5.2.png");
+        }
+        
     }
 
     public Chamado getPorIdChamado(int id) throws ClassNotFoundException, SQLException {

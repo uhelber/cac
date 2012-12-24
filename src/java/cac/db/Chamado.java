@@ -20,6 +20,7 @@ public class Chamado {
     private String descricao;
     private Integer abertopor;
     private String dataabertura;
+    private String imagem;
 
     public Chamado() {
     }
@@ -102,6 +103,14 @@ public class Chamado {
 
     public void setDataabertura(String dataabertura) {
         this.dataabertura = dataabertura;
+    }
+
+    public String getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
     }
 
     
