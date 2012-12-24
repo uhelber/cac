@@ -196,11 +196,11 @@ public class UsuarioBean {
 
     public String irCadastrarChamado() {
         this.chmd = new Chamado();
-        return "cadastrochamado";
+        return "cadastrarchamado";
     }
 
     public String irEditarChamado() {
-        return "cadastrochamado";
+        return "editarchamado";
     }
 
     public List<Status> verificarStatus() throws ClassNotFoundException, SQLException {
@@ -225,12 +225,5 @@ public class UsuarioBean {
         return frmt.format(dt);
     }
     
-    public String getImagemStatus()
-    {
-        String imagem = "";
-        
-        
-        
-        return imagem;
-    }
+    
 }
