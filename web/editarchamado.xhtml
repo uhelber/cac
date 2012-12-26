@@ -10,7 +10,7 @@
         <h:outputStylesheet library="css" name="sistema.css" />
     </h:head>
     <h:body>
-        <h1><h:outputText value="Atualizar Chamado" rendered="#{not empty usuarioBean.chmd.escola}" /></h1>
+        <h1><h:outputText value="Atualizar Chamado"/></h1>
         <h:form id="sair">
             <h:panelGroup class="usr">
                 <h:commandButton image="imagens/sair2.png" action="#{usuarioBean.sair()}" />
@@ -23,7 +23,6 @@
             <br/>
             <br/>
             <br/>
-            <h2><h:messages layout="table" style="color: red" /></h2>
 
             <h:panelGrid columns="5">
                 <h:commandButton value="Início" action="consultachamado" />
@@ -37,6 +36,8 @@
             </h:panelGrid>
         </h:form>
         <h:form id="frm">
+            <h2><h:messages layout="table" showDetail="false" showSummary="true" styleClass="form-messages" errorClass="error"
+                            infoClass="info" /></h2>
             <h:panelGrid columns="2" styleClass="form-grid" columnClasses="label, campo">
                 <h:outputLabel value="Cadastrador" />
                 <h:outputLabel value="#{usuarioBean.nomeCadastrador()}" />
@@ -52,14 +53,13 @@
 
                 <h:outputLabel value="Escola" for="escola" />
                 <h:panelGroup >
-                    <h:inputText id="escola" size="40" value="#{usuarioBean.chmd.escola}" required="true" rendered="#{empty usuarioBean.chmd.escola}" />
-                    <h:outputLabel value="#{usuarioBean.chmd.escola}" rendered="#{not empty usuarioBean.chmd.escola}" />
+                    <h:outputLabel id="escola" value="#{usuarioBean.chmd.escola}" />
                     <h:message for="escola" />
                 </h:panelGroup>
 
                 <h:outputLabel value="Cidade" for="cidade" />
                 <h:panelGroup >
-                    <h:outputLabel value="#{usuarioBean.chmd.cidade}" rendered="#{not empty usuarioBean.chmd.cidade}" />
+                    <h:outputLabel id="cidade" value="#{usuarioBean.chmd.cidade}" rendered="#{not empty usuarioBean.chmd.cidade}" />
                     <h:message for="cidade" />
                 </h:panelGroup>
 
@@ -88,8 +88,8 @@
                 </h:panelGroup>
 
                 <h:outputLabel value="Descrição" for="descricao" />
-                <h:outputLabel value="#{usuarioBean.chmd.descricao}"/>
-                
+                <h:outputLabel id="descricao" value="#{usuarioBean.chmd.descricao}"/>
+
                 <h:outputLabel value="Parecer" for="parecer" />
                 <h:inputTextarea id="parecer" value="#{usuarioBean.prcr.parecer}" cols="30" rows="6" />
 
@@ -102,7 +102,7 @@
         </h:form>
         <br/>
         <br/>
-        <h:dataTable value="#{usuarioBean.listarTodosPareceres()}" var="parecer" styleClass="grid" rowClasses="cor-sim, cor-nao" rendered="#{empty usuarioBean.listarTodosPareceres()}">
+        <h:dataTable value="#{usuarioBean.listarTodosPareceres()}" var="parecer" styleClass="grid" rowClasses="cor-sim, cor-nao" rendered="#{not empty usuarioBean.listarTodosPareceres()}">
             <h:column>
                 <h:outputText value="Técnico: " />
                 <h:outputText value="#{parecer.tecnico.nome}" />

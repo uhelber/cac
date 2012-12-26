@@ -157,11 +157,16 @@ public class UsuarioBean {
         String ir = "";
 
         if (this.usr.getNome() != null) {
-            this.chmdDAO.atualizarChamado(this.chmd, this.prcr, this.usr);
-            this.chmd = new Chamado();
-            this.prcr = new Parecer();
-
-            ir = "consultachamado";
+            if (!this.prcr.getParecer().equals("")) {
+                this.chmdDAO.atualizarChamado(this.chmd, this.prcr, this.usr);
+                this.prcr = new Parecer();
+                msn.EviarMensagens("frm:parecer", FacesMessage.SEVERITY_INFO, "Atualização realizada com sucesso!!!", "");
+            }
+            else{
+                msn.EviarMensagens("frm:parecer", FacesMessage.SEVERITY_ERROR, "Não se pode atualizar o chamado sem haver um parecer...", "");
+            }
+                
+            ir = "editarchamado";
         } else {
             msn.EviarMensagens("frm:aviso", FacesMessage.SEVERITY_ERROR, "Erro na autenticação...", "Por favor, efetue login no sistema. Obrigado...");
             ir = "index";
@@ -185,8 +190,7 @@ public class UsuarioBean {
         LinkedList<Parecer> parecer = new LinkedList<Parecer>();
         if (this.usr.getNome() != null) {
             parecer = (LinkedList<Parecer>) this.prcrDAO.getTodosPareceresPorIdChamado(this.chmd.getIdchamado());
-        } 
-
+        }
         return parecer;
 
     }
@@ -224,6 +228,4 @@ public class UsuarioBean {
 
         return frmt.format(dt);
     }
-    
-    
 }
