@@ -102,7 +102,9 @@
         </h:form>
         <br/>
         <br/>
-        <h:dataTable value="#{usuarioBean.listarTodosPareceres()}" var="parecer" styleClass="grid" rowClasses="cor-sim, cor-nao" rendered="#{not empty usuarioBean.listarTodosPareceres()}">
+        <h:dataTable  value="#{usuarioBean.listarTodosPareceres()}" var="parecer" styleClass="grid" 
+                      rowClasses="cor-sim, cor-nao" rendered="#{not empty usuarioBean.listarTodosPareceres()}"
+                      width="25%">
             <h:column>
                 <h:outputText value="Técnico: " />
                 <h:outputText value="#{parecer.tecnico.nome}" />
