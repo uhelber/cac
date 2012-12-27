@@ -5,6 +5,7 @@
 package cac.dao;
 
 import cac.db.DataBase;
+import cac.db.Permissao;
 import cac.db.Usuario;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -131,6 +132,9 @@ public class UsuarioDAO{
         if (rs.next()) {
             usr = new Usuario();
             
+            PermissaoDAO permissaoDAO = new PermissaoDAO();
+            Permissao permissao = permissaoDAO.getPorIdPermissao(rs.getInt("permissao"));
+            
             usr.setIdusuarios(rs.getInt("idusuarios"));
             usr.setNome(rs.getString("nome"));
             usr.setSobrenome(rs.getString("sobrenome"));
@@ -142,6 +146,8 @@ public class UsuarioDAO{
             usr.setMatricula(rs.getString("matricula"));
             usr.setUsuario(rs.getString("usuario"));
             usr.setSenha(rs.getString("senha"));
+            usr.setPermissao(permissao);
+            
         }
         
         ps.close();

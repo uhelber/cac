@@ -66,7 +66,7 @@
                 <h:outputLabel value="Status" />
                 <h:selectOneMenu value="#{usuarioBean.chmd.status}" label="Status" required="true">
                     <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
-                    <f:selectItems value="#{usuarioBean.status}" var="status" itemValue="#{status}" itemLabel="#{status.nome}" />
+                    <f:selectItems value="#{usuarioBean.verificarStatus()}" var="status" itemValue="#{status}" itemLabel="#{status.nome}" />
                 </h:selectOneMenu>
 
                 <h:outputLabel value="Bairro" for="bairro" />
@@ -103,7 +103,7 @@
         <br/>
         <br/>
         <h:dataTable  value="#{usuarioBean.listarTodosPareceres()}" var="parecer" styleClass="grid" 
-                      rowClasses="cor-sim, cor-nao" rendered="#{not empty usuarioBean.listarTodosPareceres()}"
+                      rowClasses="parecer-cor-sim, parecer-cor-nao" rendered="#{not empty usuarioBean.listarTodosPareceres()}"
                       width="25%">
             <h:column>
                 <h:outputText value="Técnico: " />

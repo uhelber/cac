@@ -40,13 +40,11 @@ public class UsuarioBean {
     private Parecer prcr = new Parecer();
     private StatusDAO sttsDAO = new StatusDAO();
     private Mensagem msn;
-    private List<Status> status = new ArrayList<Status>();
-
+    
     public UsuarioBean() throws ClassNotFoundException, SQLException {
         this.usrDAO = new UsuarioDAO();
         this.chmdDAO = new ChamadoDAO();
         this.prcrDAO = new ParecerDAO();
-        this.status = this.verificarStatus();
     }
 
     public UsuarioDAO getUsrDAO() {
@@ -87,14 +85,6 @@ public class UsuarioBean {
 
     public void setSttsDAO(StatusDAO sttsDAO) {
         this.sttsDAO = sttsDAO;
-    }
-
-    public List<Status> getStatus() {
-        return status;
-    }
-
-    public void setStatus(List<Status> status) {
-        this.status = status;
     }
 
     public Parecer getPrcr() {
@@ -208,8 +198,8 @@ public class UsuarioBean {
     }
 
     public List<Status> verificarStatus() throws ClassNotFoundException, SQLException {
-        List<Status> stts = this.sttsDAO.getTodosStatus();
-
+        //List<Status> stts = this.sttsDAO.getTodosStatus();
+        List<Status> stts = this.sttsDAO.getTodosStatusPorPermissao(this.usr, this.chmd);
         return stts;
     }
 

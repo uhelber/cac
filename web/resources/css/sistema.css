@@ -53,6 +53,16 @@ h1 {
 	background-color: #e6e6e6;
 }
 
+.grid .parecer-cor-sim {
+	background-color: #dbdbdb;
+        border-radius: 8px;
+}
+
+.grid .parecer-cor-nao {
+	background-color: #e6e6e6;
+        border-radius: 8px;
+}
+
 .form-grid {
 	background-color: #f2f2f2;
 	border-radius: 8px;
