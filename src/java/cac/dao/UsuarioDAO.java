@@ -17,11 +17,11 @@ import java.util.List;
  *
  * @author UhelberC
  */
-public class UsuarioDAO{
+public class UsuarioDAO {
 
     DataBase db;
+
     public UsuarioDAO() throws ClassNotFoundException, SQLException {
-        
     }
     private String campoIdUsuario;
     private String campoUsuario;
@@ -41,7 +41,7 @@ public class UsuarioDAO{
 
     public boolean adicionarUsuario(Usuario usr) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
-        
+
         PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("INSERT INTO NTE.USUARIOS VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         ps.setString(1, null);
         ps.setString(2, usr.getNome());
@@ -65,7 +65,7 @@ public class UsuarioDAO{
 
     public boolean atualizarUsuario(Usuario usr) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
-        
+
         PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("UPDATE NTE.USUARIOS SET nome = ?, sobrenome = ?, setor = ?,"
                 + " datanascimento = ?, datacadastro = ?, cadastrador = ?, telefone = ?, matricula = ?, usuario = ?, senha = ?, permissao = ? WHERE idusuarios = ?)");
         ps.setString(1, usr.getNome());
@@ -90,7 +90,7 @@ public class UsuarioDAO{
 
     public List<Usuario> getTodosUsuarios() throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
-        
+
         List<Usuario> usuarios = new LinkedList<Usuario>();
         ResultSet rs = db.getStatement().executeQuery("SELECT * FROM NTE.USUARIOS");
         while (rs.next()) {
@@ -105,7 +105,7 @@ public class UsuarioDAO{
     }
 
     private void polularListaUsuario(Usuario usr, ResultSet rs) throws SQLException, ClassNotFoundException {
-        
+
         usr.setIdusuarios(rs.getInt("idusuarios"));
         usr.setNome(rs.getString("nome"));
         usr.setSobrenome(rs.getString("sobrenome"));
@@ -121,37 +121,40 @@ public class UsuarioDAO{
 
     public Usuario validarUsuario(String usuario, String senha) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
-        
-        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM NTE.USUARIOS WHERE USUARIO = ? AND SENHA = ?");
-        ps.setString(1, usuario);
-        ps.setString(2, senha);
-
-        ResultSet rs = ps.executeQuery();
         Usuario usr = null;
-        
-        if (rs.next()) {
-            usr = new Usuario();
-            
-            PermissaoDAO permissaoDAO = new PermissaoDAO();
-            Permissao permissao = permissaoDAO.getPorIdPermissao(rs.getInt("permissao"));
-            
-            usr.setIdusuarios(rs.getInt("idusuarios"));
-            usr.setNome(rs.getString("nome"));
-            usr.setSobrenome(rs.getString("sobrenome"));
-            usr.setSetor(rs.getString("setor"));
-            usr.setDatanascimento(rs.getDate("datanascimento"));
-            usr.setDatacadastro(rs.getDate("datacadastro"));
-            usr.setCadastrador(rs.getInt("cadastrador"));
-            usr.setTelefone(rs.getString("telefone"));
-            usr.setMatricula(rs.getString("matricula"));
-            usr.setUsuario(rs.getString("usuario"));
-            usr.setSenha(rs.getString("senha"));
-            usr.setPermissao(permissao);
-            
+
+        if ((!usuario.equals("")) && (!senha.equals(""))) {
+            PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM NTE.USUARIOS WHERE USUARIO = ? AND SENHA = ?");
+            ps.setString(1, usuario);
+            ps.setString(2, senha);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                usr = new Usuario();
+
+                PermissaoDAO permissaoDAO = new PermissaoDAO();
+                Permissao permissao = permissaoDAO.getPorIdPermissao(rs.getInt("permissao"));
+
+                usr.setIdusuarios(rs.getInt("idusuarios"));
+                usr.setNome(rs.getString("nome"));
+                usr.setSobrenome(rs.getString("sobrenome"));
+                usr.setSetor(rs.getString("setor"));
+                usr.setDatanascimento(rs.getDate("datanascimento"));
+                usr.setDatacadastro(rs.getDate("datacadastro"));
+                usr.setCadastrador(rs.getInt("cadastrador"));
+                usr.setTelefone(rs.getString("telefone"));
+                usr.setMatricula(rs.getString("matricula"));
+                usr.setUsuario(rs.getString("usuario"));
+                usr.setSenha(rs.getString("senha"));
+                usr.setPermissao(permissao);
+
+            }
+
+            ps.close();
+            rs.close();
         }
-        
-        ps.close();
-        rs.close();
+
         db.getCon().close();
 
         return usr;
@@ -159,14 +162,14 @@ public class UsuarioDAO{
 
     public Usuario getPorIdUsuario(int id) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
-        
+
         PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM NTE.USUARIOS WHERE idusuarios = ?");
         ps.setInt(1, id);
 
         ResultSet rs = ps.executeQuery();
 
         Usuario usr = new Usuario();
-                
+
         if (rs.next()) {
             usr.setIdusuarios(rs.getInt("idusuarios"));
             usr.setNome(rs.getString("nome"));

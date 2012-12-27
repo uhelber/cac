@@ -40,7 +40,7 @@ public class UsuarioBean {
     private Parecer prcr = new Parecer();
     private StatusDAO sttsDAO = new StatusDAO();
     private Mensagem msn;
-    
+
     public UsuarioBean() throws ClassNotFoundException, SQLException {
         this.usrDAO = new UsuarioDAO();
         this.chmdDAO = new ChamadoDAO();
@@ -103,11 +103,19 @@ public class UsuarioBean {
         String ir = "";
 
         if (this.usr != null) {
-            this.usr = this.usrDAO.validarUsuario(this.usr.getUsuario(), this.usr.getSenha());
-            ir = "consultachamado";
+            Usuario usuario = this.usrDAO.validarUsuario(this.usr.getUsuario(), this.usr.getSenha());
+
+            if ((usuario != null)) {
+                this.usr = usuario;
+
+                ir = "consultachamado";
+            } else {
+                this.msn.EviarMensagens("frm:usuario", FacesMessage.SEVERITY_ERROR, "Erro na autenticação...", "Verifique se o usuario e senha estão certos.");
+                ir = "index";
+            }
         } else {
             this.msn.EviarMensagens("frm:usuario", FacesMessage.SEVERITY_ERROR, "Erro na autenticação...", "Verifique se o usuario e senha estão certos.");
-            return "index";
+            ir = "index";
         }
 
         return ir;
@@ -151,11 +159,10 @@ public class UsuarioBean {
                 this.chmdDAO.atualizarChamado(this.chmd, this.prcr, this.usr);
                 this.prcr = new Parecer();
                 msn.EviarMensagens("frm:parecer", FacesMessage.SEVERITY_INFO, "Atualização realizada com sucesso!!!", "");
-            }
-            else{
+            } else {
                 msn.EviarMensagens("frm:parecer", FacesMessage.SEVERITY_ERROR, "Não se pode atualizar o chamado sem haver um parecer...", "");
             }
-                
+
             ir = "editarchamado";
         } else {
             msn.EviarMensagens("frm:aviso", FacesMessage.SEVERITY_ERROR, "Erro na autenticação...", "Por favor, efetue login no sistema. Obrigado...");
