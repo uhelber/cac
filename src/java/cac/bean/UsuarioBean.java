@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import javax.annotation.PreDestroy;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -194,6 +195,11 @@ public class UsuarioBean {
     /*
      * Sistemas
      */
+    @PreDestroy
+    public void destroy(){
+        System.out.println("\n\n\n\n\n\n......Uhelber.....\n\n\n\n\n\n");
+       
+    }
 
     public String irCadastrarChamado() {
         this.chmd = new Chamado();
