@@ -238,7 +238,7 @@ public class UsuarioBean {
 
     public String dataAtual() {
         Date dt = new Date();
-        SimpleDateFormat frmt = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+        SimpleDateFormat frmt = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
         return frmt.format(dt);
     }
