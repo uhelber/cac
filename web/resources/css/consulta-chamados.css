@@ -4,7 +4,7 @@ td.tipo {
 }
 
 td.escola {
-    width: 19%;
+    width: 17%;
     text-align: center;
 }
 
@@ -44,7 +44,7 @@ td.descricao {
 }
 
 td.editar { 
-    width: 1%;
+    width: 3%;
     text-align: center;
 }
 
