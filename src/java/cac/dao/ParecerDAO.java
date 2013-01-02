@@ -4,6 +4,7 @@
  */
 package cac.dao;
 
+import cac.classes.ConverteData;
 import cac.db.Chamado;
 import cac.db.DataBase;
 import cac.db.Parecer;
@@ -27,11 +28,11 @@ public class ParecerDAO {
 
     public void adicionarParecer(Chamado chmd, Parecer parecer, Usuario usr) throws SQLException, ClassNotFoundException {
         this.db = new DataBase();
-
+        
         PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("INSERT INTO nte.parecer VALUE (?, ?, ?, ?, ?, ?)");
 
         Date dt = new Date();
-        SimpleDateFormat frmt = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        SimpleDateFormat frmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:s");
 
         if (!parecer.getParecer().equals("")) {
             ps.setString(1, null);
@@ -93,11 +94,12 @@ public class ParecerDAO {
 
     private void polularListaParecer(Parecer prcr, ResultSet rs) throws SQLException, ClassNotFoundException {
         UsuarioDAO usrDAO = new UsuarioDAO();
-
+        ConverteData cDT = new ConverteData();
+        
         prcr.setIdparecer(rs.getInt("idparecer"));
         prcr.setTecnico(usrDAO.getPorIdUsuario(rs.getInt("tecnico")));
-        prcr.setDataatentimento(rs.getString("dataatentimento"));
-        prcr.setDataconclusao(rs.getString("dataconclusao"));
+        prcr.setDataatentimento(cDT.clu_Data(rs.getString("dataatentimento")));
+        prcr.setDataconclusao(cDT.clu_Data(rs.getString("dataconclusao")));
         prcr.setParecer(rs.getString("parecer"));
         prcr.setChamado(rs.getInt("chamado"));
 

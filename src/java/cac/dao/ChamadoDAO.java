@@ -4,6 +4,7 @@
  */
 package cac.dao;
 
+import cac.classes.ConverteData;
 import cac.db.DataBase;
 import cac.db.Chamado;
 import cac.db.Parecer;
@@ -34,7 +35,7 @@ public class ChamadoDAO{
         
         PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("INSERT INTO NTE.chamado VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         Date dt = new Date();
-        SimpleDateFormat frmt = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        SimpleDateFormat frmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         boolean retorno = false;
 
         if (chmd.getEscola() != null) {
@@ -60,11 +61,12 @@ public class ChamadoDAO{
 
     public boolean atualizarChamado(Chamado chmd, Parecer parecer, Usuario usr) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
+        ConverteData cDT = new ConverteData();
         ParecerDAO prcrDAO = new ParecerDAO();
         
         PreparedStatement ps;
         ps = (PreparedStatement) db.getPreparedStatement("UPDATE NTE.chamado SET cidade = ?, bairro = ?, escola = ?,"
-                + " contato = ?, telefone = ?, status = ?, descricao = ?, dataabertura = ? WHERE idchamado = ?");
+                + " contato = ?, telefone = ?, status = ?, descricao = ? WHERE idchamado = ?");
         ps.setString(1, chmd.getCidade());
         ps.setString(2, chmd.getBairro());
         ps.setString(3, chmd.getEscola());
@@ -72,8 +74,7 @@ public class ChamadoDAO{
         ps.setString(5, chmd.getTelefone());
         ps.setInt(6, chmd.getStatus().getIdstatus());
         ps.setString(7, chmd.getDescricao());
-        ps.setString(8, chmd.getDataabertura());
-        ps.setInt(9, chmd.getIdchamado());
+        ps.setInt(8, chmd.getIdchamado());
         
         prcrDAO.adicionarParecer(chmd, parecer, usr);
         
@@ -109,6 +110,8 @@ public class ChamadoDAO{
     }
 
     private void polularListaChamado(Chamado chmd, ResultSet rs) throws SQLException, ClassNotFoundException {
+        ConverteData cDT = new ConverteData();
+        
         UsuarioDAO usrDAO = new UsuarioDAO();
         Usuario usr = usrDAO.getPorIdUsuario(rs.getInt("abertopor"));
         
@@ -124,7 +127,7 @@ public class ChamadoDAO{
         chmd.setStatus(sts);
         chmd.setDescricao(rs.getString("descricao"));
         chmd.setAbertopor(rs.getInt("abertopor"));
-        chmd.setDataabertura(rs.getString("dataabertura"));
+        chmd.setDataabertura(cDT.clu_Data(rs.getString("dataabertura")));
         
         if(sts.getIdstatus() == 1){
             chmd.setImagem("/imagens/alerta1.2.png");
@@ -146,6 +149,7 @@ public class ChamadoDAO{
 
     public Chamado getPorIdChamado(int id) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
+        ConverteData cDT = new ConverteData();
         
         PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM NTE.USUARIOS WHERE 'idchamado' = ?");
         ps.setInt(1, id);
@@ -165,7 +169,7 @@ public class ChamadoDAO{
         chmd.setStatus(sts);
         chmd.setDescricao(rs.getString("descrcao"));
         chmd.setAbertopor(rs.getInt("abertopor"));
-        chmd.setDataabertura(rs.getString("dataabertura"));
+        chmd.setDataabertura(cDT.clu_Data(rs.getString("dataabertura")));
 
         ps.close();
         rs.close();

@@ -4,8 +4,6 @@
  */
 package cac.db;
 
-import java.util.Date;
-
 /**
  *
  * @author UhelberC
