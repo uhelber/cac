@@ -109,7 +109,7 @@ public class UsuarioBean {
             if ((usuario != null)) {
                 this.usr = usuario;
 
-                ir = "consultachamado";
+                ir = "listarchamados";
             } else {
                 this.msn.EviarMensagens("frm:usuario", FacesMessage.SEVERITY_ERROR, "Erro na autenticação...", "Verifique se o usuario e senha estão certos.");
                 ir = "index";
@@ -140,7 +140,7 @@ public class UsuarioBean {
             if (!this.chmd.getEscola().equals("")) {
                 this.chmdDAO.adicionarChamado(this.chmd, this.usr);
                 this.chmd = new Chamado();
-                ir = "consultachamado";
+                ir = "listarchamados";
             } else {
                 this.msn.EviarMensagens("frm:escola", FacesMessage.SEVERITY_ERROR, "Atenção:", "Campo obrigatório");
             }
