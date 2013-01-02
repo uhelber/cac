@@ -84,11 +84,19 @@ public class ChamadoDAO{
         return retorno;
     }
     
-    public List<Chamado> getTodosChamados() throws ClassNotFoundException, SQLException {
+    public List<Chamado> getTodosChamados(String organizar) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
         
+        if(organizar == null)
+        {
+            organizar = " WHERE status <> '7' ORDER BY dataabertura";
+        }
+        else{
+            organizar = " WHERE status <> '7' ORDER BY " + organizar;
+        }
+        
         List<Chamado> chamado = new LinkedList<Chamado>();
-        ResultSet rs = this.db.getStatement().executeQuery("SELECT * FROM NTE.chamado WHERE status <> '7' ORDER BY dataabertura");
+        ResultSet rs = this.db.getStatement().executeQuery("SELECT * FROM NTE.chamado" + organizar);
         while (rs.next()) {
             Chamado chmd = new Chamado();
             polularListaChamado(chmd, rs);

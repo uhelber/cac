@@ -41,6 +41,7 @@ public class UsuarioBean {
     private Parecer prcr = new Parecer();
     private StatusDAO sttsDAO = new StatusDAO();
     private Mensagem msn;
+    private String organizar = null;
 
     public UsuarioBean() throws ClassNotFoundException, SQLException {
         this.usrDAO = new UsuarioDAO();
@@ -94,6 +95,14 @@ public class UsuarioBean {
 
     public void setPrcr(Parecer prcr) {
         this.prcr = prcr;
+    }
+
+    public String getOrganizar() {
+        return organizar;
+    }
+
+    public void setOrganizar(String organizar) {
+        this.organizar = organizar;
     }
 
     /*
@@ -176,11 +185,11 @@ public class UsuarioBean {
     public List<Chamado> listarTodosChamados() throws ClassNotFoundException, SQLException {
         LinkedList<Chamado> chamado = new LinkedList<Chamado>();
         if (this.usr.getNome() != null) {
-            chamado = (LinkedList<Chamado>) this.chmdDAO.getTodosChamados();
+            chamado = (LinkedList<Chamado>) this.chmdDAO.getTodosChamados(this.organizar);
         } else {
             this.sair();
         }
-
+        
         return chamado;
     }
 
@@ -203,10 +212,12 @@ public class UsuarioBean {
 
     public String irCadastrarChamado() {
         this.chmd = new Chamado();
+        this.organizar = null;
         return "cadastrarchamado";
     }
 
     public String irEditarChamado() {
+        this.organizar = null;
         return "editarchamado";
     }
 

@@ -1,40 +1,58 @@
 td.tipo { 
-	width: 20px;
-	text-align: center;
+    width: 1%;
+    text-align: center;
 }
 
 td.escola {
+    width: 19%;
+    text-align: center;
 }
 
-td.valor { 
-	width: 100px;
-	text-align: center;
+td.status { 
+    width: 10%;
+    text-align: center;
 }
 
-td.vencimento { 
-	width: 100px;
-	text-align: center;
+td.cidade { 
+    width: 10%;
+    text-align: center;
 }
 
-td.pagamento { 
-	width: 100px;
-	text-align: center;
+td.bairro { 
+    width: 10%;
+    text-align: center;
 }
 
-td.situacao { 
-	width: 80px;
-	text-align: center;
+td.contato { 
+    width: 10%;
+    text-align: center;
 }
 
-td.acoes { 
-	width: 40px;
-	text-align: center;
+td.telefone { 
+    width: 10%;
+    text-align: center;
+}
+
+td.dataabertura { 
+    width: 10%;
+    text-align: center;
+}
+
+td.descricao { 
+    width: 19%;
+    text-align: center;
+}
+
+td.editar { 
+    width: 1%;
+    text-align: center;
 }
 
 .grid .receita {
-	color: #0000ff;
+    color: #0000ff;
 }
 
 .grid .despesa {
-	color: #c23030;
+    color: #c23030;
 }
+

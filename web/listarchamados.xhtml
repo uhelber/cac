@@ -6,7 +6,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <title>CAC - Consulta dos chamados</title>
-        <h:outputStylesheet library="css" name="consulta-chamdos.css" />
+        <h:outputStylesheet library="css" name="consulta-chamados.css" />
         <h:outputStylesheet library="css" name="sistema.css" />
     </h:head>
     <h:body>
@@ -26,49 +26,63 @@
             
             <h:dataTable var="chamdo" value="#{usuarioBean.listarTodosChamados()}" width="100%" 
                          styleClass="grid" headerClass="cabecalho" rowClasses="cor-sim, cor-nao"
-                         columnClasses="tipo, escola, valor, vencimento, pagamento, situacao, acoes">
+                         columnClasses="tipo, escola, status, cidade, bairro, contato, telefone, dataabertura, descricao, editar">
                 <h:column >
                     <h:graphicImage value="#{chamdo.imagem}" />
                 </h:column>
                 <h:column>
                     <f:facet name="header" >
-                        <h:outputText value="Escola" />
+                        <h:commandLink value="Escola" action="listarchamados" >
+                            <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="escola" />
+                        </h:commandLink>
                     </f:facet>
                     <h:outputText value="#{chamdo.escola}" />
                 </h:column>
                 <h:column>
                     <f:facet name="header" >
-                        <h:outputText value="Status" />
+                        <h:commandLink value="Status" action="listarchamados" >
+                            <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="status" />
+                        </h:commandLink>
                     </f:facet>
                     <h:outputText value="#{chamdo.status.nome}" />
                 </h:column>
                 <h:column>
                     <f:facet name="header" >
-                        <h:outputText value="Cidade" />
+                        <h:commandLink value="Cidade" action="listarchamados" >
+                            <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="cidade" />
+                        </h:commandLink>
                     </f:facet>
                     <h:outputText value="#{chamdo.cidade}" />
                 </h:column>
                 <h:column>
                     <f:facet name="header" >
-                        <h:outputText value="Bairro" />
+                        <h:commandLink value="Bairro" action="listarchamados" >
+                            <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="bairro" />
+                        </h:commandLink>
                     </f:facet>
                     <h:outputText value="#{chamdo.bairro}" />
                 </h:column>
                 <h:column>
                     <f:facet name="header" >
-                        <h:outputText value="Nome do Contato" />
+                        <h:commandLink value="Nome do Contato" action="listarchamados" >
+                            <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="contato" />
+                        </h:commandLink>
                     </f:facet>
                     <h:outputText value="#{chamdo.contato}" />
                 </h:column>
                 <h:column>
                     <f:facet name="header" >
-                        <h:outputText value="Telefone" />
+                        <h:commandLink value="Telefone" action="listarchamados" >
+                            <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="telefone" />
+                        </h:commandLink>
                     </f:facet>
                     <h:outputText value="#{chamdo.telefone}" />
                 </h:column>
                 <h:column>
                     <f:facet name="header" >
-                        <h:outputText value="Data da Abertura" />
+                        <h:commandLink value="Data da Abertura" action="listarchamados" >
+                            <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="dataabertura" />
+                        </h:commandLink>
                     </f:facet>
                     <h:outputText value="#{chamdo.dataabertura}" >
                         <f:convertDateTime parent="dd/MM/yyyy" />
@@ -86,10 +100,6 @@
                         <f:setPropertyActionListener target="#{usuarioBean.chmd}" value="#{chamdo}" />
                         <h:graphicImage value="/imagens/editar.png" title="Editar" />
                     </h:commandLink>
-                </h:column>
-                <h:column>
-                    <f:facet name="header" />
-                    <h:graphicImage value="/imagens/excluir.png" />
                 </h:column>
             </h:dataTable>
         </h:form>
