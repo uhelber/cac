@@ -16,7 +16,6 @@ import cac.db.Status;
 import cac.db.Usuario;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -206,7 +205,6 @@ public class UsuarioBean {
      */
     @PreDestroy
     public void destroy(){
-        System.out.println("\n\n\n\n\n\n......Uhelber.....\n\n\n\n\n\n");
        
     }
 
@@ -241,5 +239,9 @@ public class UsuarioBean {
         SimpleDateFormat frmt = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
         return frmt.format(dt);
+    }
+    
+    public String organizar(){
+        return "";
     }
 }

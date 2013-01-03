@@ -88,9 +88,13 @@ public class ChamadoDAO{
     public List<Chamado> getTodosChamados(String organizar) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
         
-        if(organizar == null)
+        if(organizar == null || organizar.equals(""))
         {
             organizar = " WHERE status <> '7' ORDER BY dataabertura";
+        }
+        else if(organizar.equals("finalizado"))
+        {
+            organizar = " WHERE status = '7' ORDER BY dataabertura";
         }
         else{
             organizar = " WHERE status <> '7' ORDER BY " + organizar;

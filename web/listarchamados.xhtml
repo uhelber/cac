@@ -23,6 +23,12 @@
             <br/>
             <br/>
             <h:commandButton value="Novo Chamado" action="#{usuarioBean.irCadastrarChamado()}" />
+            <h:commandButton value="Chamados Finalizados" action="listarchamados" >
+                <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="finalizado" />
+            </h:commandButton>
+            <h:commandButton value="Voltar" action="listarchamados" rendered="#{not empty usuarioBean.organizar}" >
+                <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="#{usuarioBean.organizar()}" />
+            </h:commandButton>
             
             <h:dataTable var="chamdo" value="#{usuarioBean.listarTodosChamados()}" width="100%" 
                          styleClass="grid" headerClass="cabecalho" rowClasses="cor-sim, cor-nao"
