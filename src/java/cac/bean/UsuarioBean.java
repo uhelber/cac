@@ -182,7 +182,7 @@ public class UsuarioBean {
     }
 
     public List<Chamado> listarTodosChamados() throws ClassNotFoundException, SQLException {
-        LinkedList<Chamado> chamado = new LinkedList<Chamado>();
+        List<Chamado> chamado = new LinkedList<Chamado>();
         if (this.usr.getNome() != null) {
             chamado = (LinkedList<Chamado>) this.chmdDAO.getTodosChamados(this.organizar);
         } else {
@@ -193,7 +193,7 @@ public class UsuarioBean {
     }
 
     public List<Parecer> listarTodosPareceres() throws SQLException, ClassNotFoundException {
-        LinkedList<Parecer> parecer = new LinkedList<Parecer>();
+        List<Parecer> parecer = new LinkedList<Parecer>();
         if (this.usr.getNome() != null) {
             parecer = (LinkedList<Parecer>) this.prcrDAO.getTodosPareceresPorIdChamado(this.chmd.getIdchamado());
         }
@@ -242,6 +242,7 @@ public class UsuarioBean {
     }
     
     public String organizar(){
+        this.organizar = null;
         return "";
     }
 }
