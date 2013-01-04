@@ -22,7 +22,8 @@ import java.util.List;
  *
  * @author UhelberC
  */
-public class ChamadoDAO{
+public class ChamadoDAO {
+
     DataBase db;
     private UsuarioDAO usrDAO = new UsuarioDAO();
     private StatusDAO stsDAO = new StatusDAO();
@@ -32,7 +33,7 @@ public class ChamadoDAO{
 
     public boolean adicionarChamado(Chamado chmd, Usuario usr) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
-        
+
         PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("INSERT INTO NTE.chamado VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         Date dt = new Date();
         SimpleDateFormat frmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -49,10 +50,10 @@ public class ChamadoDAO{
             ps.setString(8, chmd.getDescricao());
             ps.setInt(9, usr.getIdusuarios());
             ps.setString(10, frmt.format(dt));
-            
+
             retorno = ps.execute();
         }
-        
+
         ps.close();
         db.getCon().close();
 
@@ -63,7 +64,7 @@ public class ChamadoDAO{
         this.db = new DataBase();
         ConverteData cDT = new ConverteData();
         ParecerDAO prcrDAO = new ParecerDAO();
-        
+
         PreparedStatement ps;
         ps = (PreparedStatement) db.getPreparedStatement("UPDATE NTE.chamado SET cidade = ?, bairro = ?, escola = ?,"
                 + " contato = ?, telefone = ?, status = ?, descricao = ? WHERE idchamado = ?");
@@ -75,31 +76,33 @@ public class ChamadoDAO{
         ps.setInt(6, chmd.getStatus().getIdstatus());
         ps.setString(7, chmd.getDescricao());
         ps.setInt(8, chmd.getIdchamado());
-        
+
         prcrDAO.adicionarParecer(chmd, parecer, usr);
-        
+
         boolean retorno = ps.execute();
         ps.close();
         db.getCon().close();
 
         return retorno;
     }
-    
-    public List<Chamado> getTodosChamados(String organizar) throws ClassNotFoundException, SQLException {
+
+    public List<Chamado> getTodosChamados(String tipo, String organizar) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
-        
-        if(organizar == null || organizar.equals(""))
-        {
-            organizar = " WHERE status <> '7' ORDER BY dataabertura";
+
+        if (tipo == null) {
+            if (organizar == null || organizar.equals("")) {
+                organizar = " WHERE status <> '7' ORDER BY dataabertura";
+            }else {
+                organizar = " WHERE status <> '7' ORDER BY " + organizar;
+            }
         }
-        else if(organizar.equals("finalizado"))
-        {
-            organizar = " WHERE status = '7' ORDER BY dataabertura";
+        else if(tipo.equals("finalizado")){
+            if (organizar.equals("finalizado")) {
+                organizar = " WHERE status = '7' ORDER BY dataabertura";
+            }
         }
-        else{
-            organizar = " WHERE status <> '7' ORDER BY " + organizar;
-        }
-        
+
+
         List<Chamado> chamado = new LinkedList<Chamado>();
         ResultSet rs = this.db.getStatement().executeQuery("SELECT * FROM NTE.chamado" + organizar);
         while (rs.next()) {
@@ -109,16 +112,16 @@ public class ChamadoDAO{
         }
         rs.close();
         db.getCon().close();
-        
+
         return chamado;
     }
 
     private void polularListaChamado(Chamado chmd, ResultSet rs) throws SQLException, ClassNotFoundException {
         ConverteData cDT = new ConverteData();
-        
+
         UsuarioDAO usrDAO = new UsuarioDAO();
         Usuario usr = usrDAO.getPorIdUsuario(rs.getInt("abertopor"));
-        
+
         StatusDAO stsDAO = new StatusDAO();
         Status sts = stsDAO.getPorIdStatus(rs.getInt("status"));
 
@@ -132,29 +135,29 @@ public class ChamadoDAO{
         chmd.setDescricao(rs.getString("descricao"));
         chmd.setAbertopor(rs.getInt("abertopor"));
         chmd.setDataabertura(cDT.clu_Data(rs.getString("dataabertura")));
-        
-        if(sts.getIdstatus() == 1){
+
+        if (sts.getIdstatus() == 1) {
             chmd.setImagem("/imagens/alerta1.2.png");
         }
-        if(sts.getIdstatus() == 2){
+        if (sts.getIdstatus() == 2) {
             chmd.setImagem("/imagens/alerta2.2.png");
         }
-        if((sts.getIdstatus() == 3) || (sts.getIdstatus() == 5) || (sts.getIdstatus() == 6)){
+        if ((sts.getIdstatus() == 3) || (sts.getIdstatus() == 5) || (sts.getIdstatus() == 6)) {
             chmd.setImagem("/imagens/alerta3.2.png");
         }
-        if(sts.getIdstatus() == 4){
+        if (sts.getIdstatus() == 4) {
             chmd.setImagem("/imagens/alerta4.2.png");
         }
-        if(sts.getIdstatus() == 7){
+        if (sts.getIdstatus() == 7) {
             chmd.setImagem("/imagens/alerta5.2.png");
         }
-        
+
     }
 
     public Chamado getPorIdChamado(int id) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
         ConverteData cDT = new ConverteData();
-        
+
         PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM NTE.USUARIOS WHERE 'idchamado' = ?");
         ps.setInt(1, id);
 
