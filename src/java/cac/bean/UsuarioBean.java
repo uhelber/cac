@@ -42,11 +42,16 @@ public class UsuarioBean {
     private Mensagem msn;
     private String organizar = null;
     private String tipoListarChamados = null;
+    private String statusFinalizado = null;
 
     public UsuarioBean() throws ClassNotFoundException, SQLException {
         this.usrDAO = new UsuarioDAO();
         this.chmdDAO = new ChamadoDAO();
         this.prcrDAO = new ParecerDAO();
+
+        this.organizar = null;
+        this.tipoListarChamados = null;
+        this.statusFinalizado = null;
     }
 
     public UsuarioDAO getUsrDAO() {
@@ -111,6 +116,14 @@ public class UsuarioBean {
 
     public void setTipoListarChamados(String tipoListarChamados) {
         this.tipoListarChamados = tipoListarChamados;
+    }
+
+    public String getStatusFinalizado() {
+        return statusFinalizado;
+    }
+
+    public void setStatusFinalizado(String statusFinalizado) {
+        this.statusFinalizado = statusFinalizado;
     }
 
     /*
@@ -197,7 +210,7 @@ public class UsuarioBean {
         } else {
             this.sair();
         }
-        
+
         return chamado;
     }
 
@@ -212,9 +225,9 @@ public class UsuarioBean {
     /*
      * Sistemas
      */
+
     @PreDestroy
-    public void destroy(){
-       
+    public void destroy() {
     }
 
     public String irCadastrarChamado() {
@@ -225,12 +238,19 @@ public class UsuarioBean {
 
     public String irEditarChamado() {
         this.organizar = null;
+
+        if (this.chmd.getStatus().getIdstatus() == 7) {
+            this.statusFinalizado = "finalizado";
+        } else {
+            this.statusFinalizado = null;
+        }
+
         return "editarchamado";
     }
 
     public List<Status> verificarStatus() throws ClassNotFoundException, SQLException {
-        //List<Status> stts = this.sttsDAO.getTodosStatus();
         List<Status> stts = this.sttsDAO.getTodosStatusPorPermissao(this.usr, this.chmd);
+
         return stts;
     }
 
@@ -249,10 +269,37 @@ public class UsuarioBean {
 
         return frmt.format(dt);
     }
-    
-    public String organizarNull(){
+
+    public String voltar() {
+        if (this.tipoListarChamados.equals("finalizado")) {
+            this.organizar = null;
+            this.tipoListarChamados = null;
+            this.statusFinalizado = null;
+        }
+
+        return "listarchamados";
+    }
+
+    public String irChamadosFinalizados() {
+        this.organizar = "finalizado";
+        this.tipoListarChamados = "finalizado";
+
+        return "chamadosfinalizados";
+    }
+
+    public String irListarChamados() {
         this.organizar = null;
         this.tipoListarChamados = null;
+        this.statusFinalizado = null;
+
         return "listarchamados";
+    }
+
+    public String organizarNull() {
+        if (this.tipoListarChamados != null) {
+            return this.irChamadosFinalizados();
+        } else {
+            return this.irListarChamados();
+        }
     }
 }

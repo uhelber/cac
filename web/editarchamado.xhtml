@@ -25,7 +25,7 @@
             <br/>
 
             <h:panelGrid columns="5">
-                <h:commandButton value="Início" action="listarchamados" />
+                <h:commandButton value="Voltar" action="#{usuarioBean.organizarNull()}" />
                 <h:outputText />
                 <h:outputText />
                 <h:outputText />
@@ -64,26 +64,32 @@
                 </h:panelGroup>
 
                 <h:outputLabel value="Status" />
-                <h:selectOneMenu value="#{usuarioBean.chmd.status}" label="Status" required="true">
-                    <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
-                    <f:selectItems value="#{usuarioBean.verificarStatus()}" var="status" itemValue="#{status}" itemLabel="#{status.nome}" />
-                </h:selectOneMenu>
+                <h:panelGroup>
+                    <h:outputText value="#{usuarioBean.chmd.status.nome}" rendered="#{not empty usuarioBean.statusFinalizado}" />
+                    <h:selectOneMenu value="#{usuarioBean.chmd.status}" label="Status" required="true" rendered="#{empty usuarioBean.statusFinalizado}">
+                        <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+                        <f:selectItems value="#{usuarioBean.verificarStatus()}" var="status" itemValue="#{status}" itemLabel="#{status.nome}" />
+                    </h:selectOneMenu>
+                </h:panelGroup>
 
                 <h:outputLabel value="Bairro" for="bairro" />
                 <h:panelGroup >
-                    <h:inputText id="bairro" size="40" value="#{usuarioBean.chmd.bairro}" />
+                    <h:outputText value="#{usuarioBean.chmd.bairro}" rendered="#{not empty usuarioBean.statusFinalizado}" />
+                    <h:inputText id="bairro" size="40" value="#{usuarioBean.chmd.bairro}" rendered="#{empty usuarioBean.statusFinalizado}" />
                     <h:message for="bairro" />
                 </h:panelGroup>
 
                 <h:outputLabel value="Contato" for="contato" />
                 <h:panelGroup >
-                    <h:inputText id="contato" size="40" value="#{usuarioBean.chmd.contato}" required="true" />
+                    <h:outputText value="#{usuarioBean.chmd.contato}" rendered="#{not empty usuarioBean.statusFinalizado}" />
+                    <h:inputText id="contato" size="40" value="#{usuarioBean.chmd.contato}" required="true" rendered="#{empty usuarioBean.statusFinalizado}" />
                     <h:message for="contato" />
                 </h:panelGroup>
 
                 <h:outputLabel value="Telefone" for="telefone" />
                 <h:panelGroup >
-                    <h:inputText id="telefone" size="40" value="#{usuarioBean.chmd.telefone}" />
+                    <h:outputText value="#{usuarioBean.chmd.telefone}" rendered="#{not empty usuarioBean.statusFinalizado}" />
+                    <h:inputText id="telefone" size="40" value="#{usuarioBean.chmd.telefone}" rendered="#{empty usuarioBean.statusFinalizado}" />
                     <h:message for="telefone" />
                 </h:panelGroup>
 
