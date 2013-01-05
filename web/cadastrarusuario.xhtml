@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>CAC - Cadastro de Usuário</title>
+        <h:outputStylesheet library="css" name="consulta-chamados.css" />
+        <h:outputStylesheet library="css" name="sistema.css" />
+    </h:head>
+    <h:body>
+        <h1><h:outputText value="Novo Chamado" /></h1>
+        <h:form id="sair">
+            <h:panelGroup class="usr">
+                <h:commandButton image="imagens/sair2.png" action="#{usuarioBean.sair()}" />
+                <h:outputText value="#{usuarioBean.usr.nome}" />
+                <h:outputText value=" " />
+                <h:outputText value="#{usuarioBean.usr.sobrenome}" />
+            </h:panelGroup>
+        </h:form>
+        <h:form id="voltar">
+            <br/>
+            <br/>
+            <br/>
+            <h2><h:messages layout="table" style="color: red" /></h2>
+
+            <h:panelGrid columns="5">
+                <h:commandButton value="Voltar" action="#{usuarioBean.irListarChamados()}" />
+                <h:outputText />
+                <h:outputText />
+                <h:outputText />
+                <h:outputText />
+            </h:panelGrid>
+        </h:form>
+        <h:form id="frm">
+            <h:panelGrid columns="2" styleClass="form-grid" columnClasses="label, campo">
+                <h:outputLabel value="Nome" for="nome" />
+                <h:panelGroup >
+                    <h:inputText id="nome" size="40" value="#{usuarioBean.novoUsr.nome}" required="true" />
+                    <h:message for="nome" />
+                </h:panelGroup>
+
+                <h:outputLabel value="Sobrenome" for="sobrenome" />
+                <h:panelGroup >
+                    <h:inputText id="sobrenome" size="40" value="#{usuarioBean.novoUsr.sobrenome}" required="true" />
+                    <h:message for="sobrenome" />
+                </h:panelGroup>
+
+                <h:outputLabel value="Setor" for="setor" />
+                <h:panelGroup>
+                    <h:outputText value="#{usuarioBean.novoUsr.setor}" />
+                    <h:selectOneMenu value="#{usuarioBean.novoUsr.setor}" label="Setor" required="true" >
+                        <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+                        <f:selectItems value="#{usuarioBean.verificarStatus()}" var="status" itemValue="#{status}" itemLabel="#{status.nome}" />
+                    </h:selectOneMenu>
+                </h:panelGroup>
+
+                <h:commandButton value="Cadastrar" action="" />
+
+            </h:panelGrid>
+        </h:form>
+
+    </h:body>
+</html>
+

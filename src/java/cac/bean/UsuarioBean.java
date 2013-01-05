@@ -36,6 +36,7 @@ public class UsuarioBean {
     private ChamadoDAO chmdDAO;
     private ParecerDAO prcrDAO;
     private Usuario usr = new Usuario();
+    private Usuario novoUsr = new Usuario();
     private Chamado chmd = new Chamado();
     private Parecer prcr = new Parecer();
     private StatusDAO sttsDAO = new StatusDAO();
@@ -124,6 +125,14 @@ public class UsuarioBean {
 
     public void setStatusFinalizado(String statusFinalizado) {
         this.statusFinalizado = statusFinalizado;
+    }
+
+    public Usuario getNovoUsr() {
+        return novoUsr;
+    }
+
+    public void setNovoUsr(Usuario novoUsr) {
+        this.novoUsr = novoUsr;
     }
 
     /*

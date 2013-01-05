@@ -6,6 +6,7 @@ package cac.dao;
 
 import cac.db.Chamado;
 import cac.db.DataBase;
+import cac.db.Setor;
 import cac.db.Status;
 import cac.db.Usuario;
 import java.sql.PreparedStatement;
@@ -18,19 +19,19 @@ import java.util.List;
  *
  * @author UhelberC
  */
-public class StatusDAO {
+public class SetorDAO {
 
     DataBase db;
-    private Status status;
-
+    private Setor setor;
+    
     public StatusDAO() throws ClassNotFoundException, SQLException {
-        this.status = new Status();
+        this.setor = new Setor();
     }
 
     public Status getPorIdStatus(Integer id) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
 
-        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM nte.status WHERE idstatus = ?");
+        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM nte.setor WHERE idsetor = ?");
         ps.setInt(1, id);
 
         ResultSet rs = ps.executeQuery();
@@ -38,7 +39,7 @@ public class StatusDAO {
         Status sts = new Status();
 
         if (rs.next()) {
-            sts.setIdstatus(rs.getInt("idstatus"));
+            sts.setIdstatus(rs.getInt("idsetor"));
             sts.setNome(rs.getString("nome"));
         }
 
