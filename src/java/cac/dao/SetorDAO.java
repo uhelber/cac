@@ -24,7 +24,7 @@ public class SetorDAO {
     DataBase db;
     private Setor setor;
     
-    public StatusDAO() throws ClassNotFoundException, SQLException {
+    public SetorDAO(){
         this.setor = new Setor();
     }
 
