@@ -28,7 +28,7 @@ public class SetorDAO {
         this.setor = new Setor();
     }
 
-    public Status getPorIdStatus(Integer id) throws ClassNotFoundException, SQLException {
+    public Status getPorIdSetor(Integer id) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
 
         PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM nte.setor WHERE idsetor = ?");
@@ -50,45 +50,24 @@ public class SetorDAO {
         return sts;
     }
 
-    public List<Status> getTodosStatus() throws ClassNotFoundException, SQLException {
+    public List<Setor> getTodosSetor() throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
-        LinkedList<Status> status = new LinkedList<Status>();
+        List<Setor> setor = new LinkedList<Setor>();
 
-        ResultSet rs = db.getStatement().executeQuery("SELECT * FROM nte.status");
+        ResultSet rs = db.getStatement().executeQuery("SELECT * FROM nte.setor");
         while (rs.next()) {
-            Status stts = new Status();
-            polularListaChamado(stts, rs);
-            status.add(stts);
+            Setor str = new Setor();
+            polularListaChamado(str, rs);
+            setor.add(str);
         }
         rs.close();
         db.getCon().close();
 
-        return status;
+        return setor;
     }
 
-    public List<Status> getTodosStatusPorPermissao(Usuario usr, Chamado chmd) throws ClassNotFoundException, SQLException {
-        this.db = new DataBase();
-        LinkedList<Status> status = new LinkedList<Status>();
-
-        if (usr.getPermissao().getIdpermissao() != 1) {
-            ResultSet rs = db.getStatement().executeQuery("SELECT * FROM nte.status");
-            while (rs.next()) {
-                Status stts = new Status();
-                polularListaChamado(stts, rs);
-                status.add(stts);
-            }
-            rs.close();
-        }else{
-            status.add(this.getPorIdStatus(chmd.getStatus().getIdstatus()));
-        }
-
-        db.getCon().close();
-
-        return status;
-    }
-
-    private void polularListaChamado(Status stts, ResultSet rs) throws SQLException, ClassNotFoundException {
-        stts.setIdstatus(rs.getInt("idstatus"));
+    private void polularListaChamado(Setor stts, ResultSet rs) throws SQLException, ClassNotFoundException {
+        stts.setIdsetor(rs.getInt("idsetor"));
         stts.setNome(rs.getString("nome"));
     }
 }
