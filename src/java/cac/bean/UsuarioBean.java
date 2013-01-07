@@ -6,11 +6,13 @@ package cac.bean;
 
 import cac.classes.Mensagem;
 import cac.dao.ChamadoDAO;
+import cac.dao.EscolaDAO;
 import cac.dao.ParecerDAO;
 import cac.dao.StatusDAO;
 import cac.dao.UsuarioDAO;
 import cac.db.Chamado;
 import cac.db.DataBase;
+import cac.db.Escola;
 import cac.db.Parecer;
 import cac.db.Status;
 import cac.db.Usuario;
@@ -31,15 +33,26 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean
 @SessionScoped
 public class UsuarioBean {
-
+    /*
+     * DAOs
+     */
     private UsuarioDAO usrDAO;
     private ChamadoDAO chmdDAO;
     private ParecerDAO prcrDAO;
+    private StatusDAO sttsDAO = new StatusDAO();
+    private EscolaDAO escolaDAO;
+    
+    /*
+     * Objetos
+     */
     private Usuario usr = new Usuario();
     private Usuario novoUsr = new Usuario();
     private Chamado chmd = new Chamado();
     private Parecer prcr = new Parecer();
-    private StatusDAO sttsDAO = new StatusDAO();
+    
+    /*
+     * Argumentos
+     */
     private Mensagem msn;
     private String organizar = null;
     private String tipoListarChamados = null;
@@ -49,6 +62,7 @@ public class UsuarioBean {
         this.usrDAO = new UsuarioDAO();
         this.chmdDAO = new ChamadoDAO();
         this.prcrDAO = new ParecerDAO();
+        this.escolaDAO = new EscolaDAO();
 
         this.organizar = null;
         this.tipoListarChamados = null;
@@ -231,6 +245,16 @@ public class UsuarioBean {
         return parecer;
 
     }
+    
+    public List<Escola> listarTodosEscola() throws SQLException, ClassNotFoundException {
+        List<Escola> escola = new LinkedList<Escola>();
+        if (this.usr.getNome() != null) {
+            escola = (LinkedList<Escola>) this.escolaDAO.getTodosEscolas();
+        }
+        return escola;
+
+    }
+    
     /*
      * Sistemas
      */
