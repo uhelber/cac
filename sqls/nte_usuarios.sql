@@ -4,7 +4,7 @@ USE `nte`;
 --
 -- Host: localhost    Database: nte
 -- ------------------------------------------------------
--- Server version	5.5.28-log
+-- Server version	5.1.67-community
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -28,7 +28,8 @@ CREATE TABLE `usuarios` (
   `idusuarios` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) NOT NULL,
   `sobrenome` varchar(45) DEFAULT NULL,
-  `setor` varchar(45) DEFAULT NULL,
+  `setor` int(11) DEFAULT NULL,
+  `funcao` int(11) DEFAULT NULL,
   `datanascimento` date DEFAULT NULL,
   `datacadastro` date DEFAULT NULL,
   `cadastrador` int(11) DEFAULT NULL,
@@ -40,7 +41,11 @@ CREATE TABLE `usuarios` (
   PRIMARY KEY (`idusuarios`),
   KEY `fk_idx` (`permissao`),
   KEY `fk_usuarios_usuarios_idx` (`cadastrador`),
+  KEY `fk_usuarios_setor_idx` (`setor`),
+  KEY `fk_usuarios_fncao_idx` (`funcao`),
+  CONSTRAINT `fk_usuarios_fncao` FOREIGN KEY (`funcao`) REFERENCES `funcao` (`idfuncao`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_usuarios_permissoes` FOREIGN KEY (`permissao`) REFERENCES `permissoes` (`idpermissao`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_usuarios_setor` FOREIGN KEY (`setor`) REFERENCES `setor` (`idsetor`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_usuarios_usuarios` FOREIGN KEY (`cadastrador`) REFERENCES `usuarios` (`idusuarios`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -51,7 +56,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'Administrador',NULL,NULL,NULL,NULL,1,NULL,NULL,'admim','admin',3),(2,'Uhelber','Lima da Costa','Proinfo',NULL,NULL,1,NULL,NULL,'uhelber','lcosta',2),(3,'Giodano Bruno','Patrício Leal','Proinfo',NULL,NULL,2,NULL,NULL,'bruno','123',2),(4,'Maria do Socorro','Albino',NULL,NULL,NULL,3,NULL,NULL,'malbino','001',1);
+INSERT INTO `usuarios` VALUES (1,'Administrador',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,'admim','admin',3),(2,'Uhelber','Lima da Costa',NULL,NULL,NULL,NULL,1,NULL,NULL,'uhelber','lcosta',2),(3,'Giodano Bruno','Patrício Leal',NULL,NULL,NULL,NULL,2,NULL,NULL,'bruno','123',2),(4,'Maria do Socorro','Albino',NULL,NULL,NULL,NULL,3,NULL,NULL,'malbino','001',1);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -64,4 +69,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-12-06 17:18:37
+-- Dump completed on 2013-01-06 22:21:13

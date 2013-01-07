@@ -18,34 +18,27 @@ USE `nte`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `parecer`
+-- Table structure for table `setor`
 --
 
-DROP TABLE IF EXISTS `parecer`;
+DROP TABLE IF EXISTS `setor`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `parecer` (
-  `idparecer` int(11) NOT NULL AUTO_INCREMENT,
-  `tecnico` int(11) NOT NULL,
-  `dataatentimento` datetime DEFAULT NULL,
-  `dataconclusao` datetime DEFAULT NULL,
-  `parecer` text,
-  `chamado` int(11) NOT NULL,
-  PRIMARY KEY (`idparecer`),
-  KEY `fk_parecer_chamado_idx` (`chamado`),
-  KEY `fk_parecer_usuarios_idx` (`tecnico`),
-  CONSTRAINT `fk_parecer_chamado` FOREIGN KEY (`chamado`) REFERENCES `chamado` (`idchamado`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_parecer_usuarios` FOREIGN KEY (`tecnico`) REFERENCES `usuarios` (`idusuarios`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `setor` (
+  `idsetor` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idsetor`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `parecer`
+-- Dumping data for table `setor`
 --
 
-LOCK TABLES `parecer` WRITE;
-/*!40000 ALTER TABLE `parecer` DISABLE KEYS */;
-/*!40000 ALTER TABLE `parecer` ENABLE KEYS */;
+LOCK TABLES `setor` WRITE;
+/*!40000 ALTER TABLE `setor` DISABLE KEYS */;
+INSERT INTO `setor` VALUES (1,'Proinfo'),(2,'NTEJPA'),(3,'NTECGE'),(4,'NTEPAT'),(5,'NTECAJ'),(6,'TVEscola');
+/*!40000 ALTER TABLE `setor` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -57,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-01-06 22:21:11
+-- Dump completed on 2013-01-06 22:21:12
