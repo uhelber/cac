@@ -54,10 +54,10 @@ public class RegionalDAO {
         ResultSet rs = ps.executeQuery();
 
         Regional regional = new Regional();
+        if(rs.next()){
+            polularListaRegional(regional, rs);
+        }
         
-        regional.setIdregional(rs.getInt("idregional"));
-        regional.setNome(rs.getString("nome"));
-
         ps.close();
         rs.close();
         this.db.getCon().close();

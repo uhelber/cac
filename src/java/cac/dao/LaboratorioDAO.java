@@ -55,8 +55,10 @@ public class LaboratorioDAO {
         ResultSet rs = ps.executeQuery();
         
         Laboratorio laboratorio = new Laboratorio();
-        polularListaLaboratorio(laboratorio, rs);
-        
+        if(rs.next()){
+            polularListaLaboratorio(laboratorio, rs);
+        }
+                
         ps.close();
         rs.close();
         this.db.getCon().close();

@@ -26,11 +26,10 @@ DROP TABLE IF EXISTS `chamado`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `chamado` (
   `idchamado` int(11) NOT NULL AUTO_INCREMENT,
-  `cidade` varchar(45) DEFAULT NULL,
-  `bairro` varchar(45) DEFAULT NULL,
   `escola` int(11) DEFAULT NULL,
   `contato` varchar(45) DEFAULT NULL,
   `telefone` varchar(45) DEFAULT NULL,
+  `telefone2` varchar(45) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   `descricao` text,
   `abertopor` int(11) DEFAULT NULL,
@@ -63,4 +62,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-01-06 22:21:06
+-- Dump completed on 2013-01-07 13:29:13
