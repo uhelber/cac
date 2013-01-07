@@ -5,7 +5,7 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
-        <title>CAC - Cadastro de Usuário</title>
+        <title>CAC - Cadastro de chamado</title>
         <h:outputStylesheet library="css" name="consulta-chamados.css" />
         <h:outputStylesheet library="css" name="sistema.css" />
     </h:head>
@@ -35,32 +35,48 @@
         </h:form>
         <h:form id="frm">
             <h:panelGrid columns="2" styleClass="form-grid" columnClasses="label, campo">
-                <h:outputLabel value="Nome" for="nome" />
+                <h:outputLabel value="Escola" for="escola" />
                 <h:panelGroup >
-                    <h:inputText id="nome" size="40" value="#{usuarioBean.novoUsr.nome}" required="true" />
-                    <h:message for="nome" />
+                    <h:inputText id="escola" size="40" value="#{usuarioBean.chmd.escola}" required="true" />
+                    <h:message for="escola" />
                 </h:panelGroup>
 
-                <h:outputLabel value="Sobrenome" for="sobrenome" />
+                <h:outputLabel value="Cidade" for="cidade" />
                 <h:panelGroup >
-                    <h:inputText id="sobrenome" size="40" value="#{usuarioBean.novoUsr.sobrenome}" required="true" />
-                    <h:message for="sobrenome" />
+                    <h:inputText id="cidade" size="40" value="#{usuarioBean.chmd.cidade}" required="true" />
+                    <h:message for="cidade" />
                 </h:panelGroup>
 
-                <h:outputLabel value="Setor" for="setor" />
-                <h:panelGroup>
-                    <h:outputText value="#{usuarioBean.novoUsr.setor}" />
-                    <h:selectOneMenu value="#{usuarioBean.novoUsr.setor}" label="Setor" required="true" >
-                        <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
-                        <f:selectItems value="#{usuarioBean.verificarStatus()}" var="status" itemValue="#{status}" itemLabel="#{status.nome}" />
-                    </h:selectOneMenu>
+                <h:outputLabel value="Bairro" for="bairro" />
+                <h:panelGroup >
+                    <h:inputText id="bairro" size="40" value="#{usuarioBean.chmd.bairro}" />
+                    <h:message for="bairro" />
                 </h:panelGroup>
 
-                <h:commandButton value="Cadastrar" action="" />
+                <h:outputLabel value="Contato" for="contato" />
+                <h:panelGroup >
+                    <h:inputText id="contato" size="40" value="#{usuarioBean.chmd.contato}" required="true" />
+                    <h:message for="contato" />
+                </h:panelGroup>
 
+                <h:outputLabel value="Telefone" for="telefone" />
+                <h:panelGroup >
+                    <h:inputText id="telefone" size="40" value="#{usuarioBean.chmd.telefone}" required="true" />
+                    <h:message for="telefone" />
+                </h:panelGroup>
+
+                <h:outputLabel value="Descrição" for="descricao" />
+                <h:inputTextarea id="descricao" cols="30" value="#{usuarioBean.chmd.descricao}" required="true" />
+
+                <h:outputLabel />
+                <h:outputLabel />
+                <br/>
+
+                <h:commandButton value="Cadastrar" action="#{usuarioBean.cadastrarChamado()}" />
+                
             </h:panelGrid>
         </h:form>
-
+        
     </h:body>
 </html>
 

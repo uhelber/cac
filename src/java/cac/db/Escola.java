@@ -12,7 +12,7 @@ package cac.db;
 public class Escola {
     private Integer idescola;
     private Regional regional;
-    private String cidade;
+    private Cidade cidade;
     private Integer inep;
     private String escola;
     private String endereco;
@@ -35,11 +35,11 @@ public class Escola {
         this.regional = regional;
     }
 
-    public String getCidade() {
+    public Cidade getCidade() {
         return cidade;
     }
 
-    public void setCidade(String cidade) {
+    public void setCidade(Cidade cidade) {
         this.cidade = cidade;
     }
 
@@ -86,14 +86,14 @@ public class Escola {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 17 * hash + (this.idescola != null ? this.idescola.hashCode() : 0);
-        hash = 17 * hash + (this.regional != null ? this.regional.hashCode() : 0);
-        hash = 17 * hash + (this.cidade != null ? this.cidade.hashCode() : 0);
-        hash = 17 * hash + (this.inep != null ? this.inep.hashCode() : 0);
-        hash = 17 * hash + (this.escola != null ? this.escola.hashCode() : 0);
-        hash = 17 * hash + (this.endereco != null ? this.endereco.hashCode() : 0);
-        hash = 17 * hash + (this.bairro != null ? this.bairro.hashCode() : 0);
-        hash = 17 * hash + (this.laboratorio != null ? this.laboratorio.hashCode() : 0);
+        hash = 29 * hash + (this.idescola != null ? this.idescola.hashCode() : 0);
+        hash = 29 * hash + (this.regional != null ? this.regional.hashCode() : 0);
+        hash = 29 * hash + (this.cidade != null ? this.cidade.hashCode() : 0);
+        hash = 29 * hash + (this.inep != null ? this.inep.hashCode() : 0);
+        hash = 29 * hash + (this.escola != null ? this.escola.hashCode() : 0);
+        hash = 29 * hash + (this.endereco != null ? this.endereco.hashCode() : 0);
+        hash = 29 * hash + (this.bairro != null ? this.bairro.hashCode() : 0);
+        hash = 29 * hash + (this.laboratorio != null ? this.laboratorio.hashCode() : 0);
         return hash;
     }
 
@@ -112,7 +112,7 @@ public class Escola {
         if (this.regional != other.regional && (this.regional == null || !this.regional.equals(other.regional))) {
             return false;
         }
-        if ((this.cidade == null) ? (other.cidade != null) : !this.cidade.equals(other.cidade)) {
+        if (this.cidade != other.cidade && (this.cidade == null || !this.cidade.equals(other.cidade))) {
             return false;
         }
         if (this.inep != other.inep && (this.inep == null || !this.inep.equals(other.inep))) {

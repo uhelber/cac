@@ -6,11 +6,13 @@ package cac.bean;
 
 import cac.classes.Mensagem;
 import cac.dao.ChamadoDAO;
+import cac.dao.CidadeDAO;
 import cac.dao.EscolaDAO;
 import cac.dao.ParecerDAO;
 import cac.dao.StatusDAO;
 import cac.dao.UsuarioDAO;
 import cac.db.Chamado;
+import cac.db.Cidade;
 import cac.db.DataBase;
 import cac.db.Escola;
 import cac.db.Parecer;
@@ -41,6 +43,7 @@ public class UsuarioBean {
     private ParecerDAO prcrDAO;
     private StatusDAO sttsDAO = new StatusDAO();
     private EscolaDAO escolaDAO;
+    private CidadeDAO cidadeDAO;
     
     /*
      * Objetos
@@ -63,6 +66,7 @@ public class UsuarioBean {
         this.chmdDAO = new ChamadoDAO();
         this.prcrDAO = new ParecerDAO();
         this.escolaDAO = new EscolaDAO();
+        this.cidadeDAO = new CidadeDAO();
 
         this.organizar = null;
         this.tipoListarChamados = null;
@@ -252,6 +256,15 @@ public class UsuarioBean {
             escola = (LinkedList<Escola>) this.escolaDAO.getTodosEscolas();
         }
         return escola;
+
+    }
+    
+    public List<Cidade> listarTodosCidade() throws SQLException, ClassNotFoundException {
+        List<Cidade> cidade = new LinkedList<Cidade>();
+        if (this.usr.getNome() != null) {
+            cidade = (LinkedList<Cidade>) this.cidadeDAO.getTodosCidades();
+        }
+        return cidade;
 
     }
     

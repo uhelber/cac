@@ -4,6 +4,7 @@
  */
 package cac.dao;
 
+import cac.db.Cidade;
 import cac.db.DataBase;
 import cac.db.Escola;
 import cac.db.Laboratorio;
@@ -48,9 +49,12 @@ public class EscolaDAO {
         LaboratorioDAO laboratorioDAO = new LaboratorioDAO();
         Laboratorio laboratorio = laboratorioDAO.getPorIdLaboratorio(rs.getInt("laboratorio"));
         
+        CidadeDAO cidadeDAO = new CidadeDAO();
+        Cidade cidade = cidadeDAO.getPorIdCidade(rs.getInt("cidade"));
+        
         escola.setIdescola(rs.getInt("idescola"));
         escola.setRegional(regional);
-        escola.setCidade(rs.getString("cidade"));
+        escola.setCidade(cidade);
         escola.setInep(rs.getInt("inep"));
         escola.setEscola(rs.getString("escola"));
         escola.setEndereco(rs.getString("endereco"));

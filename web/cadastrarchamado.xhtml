@@ -35,48 +35,18 @@
         </h:form>
         <h:form id="frm">
             <h:panelGrid columns="2" styleClass="form-grid" columnClasses="label, campo">
-                <h:outputLabel value="Escola" for="escola" />
-                <h:panelGroup >
-                    <h:inputText id="escola" size="40" value="#{usuarioBean.chmd.escola}" required="true" />
-                    <h:message for="escola" />
-                </h:panelGroup>
-
                 <h:outputLabel value="Cidade" for="cidade" />
-                <h:panelGroup >
-                    <h:inputText id="cidade" size="40" value="#{usuarioBean.chmd.cidade}" required="true" />
-                    <h:message for="cidade" />
-                </h:panelGroup>
+                <h:selectOneMenu value="#{usuarioBean.chmd.escola.cidade}" label="Cidade" required="true" rendered="#{empty usuarioBean.statusFinalizado}">
+                    <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+                    <f:selectItems value="#{usuarioBean.listarTodosEscola()}" var="escola" itemValue="#{escola}" itemLabel="#{escola.cidade}" />
+                </h:selectOneMenu>
 
-                <h:outputLabel value="Bairro" for="bairro" />
-                <h:panelGroup >
-                    <h:inputText id="bairro" size="40" value="#{usuarioBean.chmd.bairro}" />
-                    <h:message for="bairro" />
-                </h:panelGroup>
-
-                <h:outputLabel value="Contato" for="contato" />
-                <h:panelGroup >
-                    <h:inputText id="contato" size="40" value="#{usuarioBean.chmd.contato}" required="true" />
-                    <h:message for="contato" />
-                </h:panelGroup>
-
-                <h:outputLabel value="Telefone" for="telefone" />
-                <h:panelGroup >
-                    <h:inputText id="telefone" size="40" value="#{usuarioBean.chmd.telefone}" required="true" />
-                    <h:message for="telefone" />
-                </h:panelGroup>
-
-                <h:outputLabel value="Descrição" for="descricao" />
-                <h:inputTextarea id="descricao" cols="30" value="#{usuarioBean.chmd.descricao}" required="true" />
-
-                <h:outputLabel />
-                <h:outputLabel />
-                <br/>
-
-                <h:commandButton value="Cadastrar" action="#{usuarioBean.cadastrarChamado()}" />
                 
+                <h:commandButton value="Cadastrar" action="#{usuarioBean.cadastrarChamado()}" />
+
             </h:panelGrid>
         </h:form>
-        
+
     </h:body>
 </html>
 
