@@ -11,11 +11,10 @@ package cac.db;
  */
 public class Chamado {
     private Integer idchamado;
-    private String cidade;
-    private String bairro;
-    private String escola;
+    private Escola escola;
     private String contato;
     private String telefone;
+    private String telefone2;
     private Status status;
     private String descricao;
     private Integer abertopor;
@@ -33,27 +32,11 @@ public class Chamado {
         this.idchamado = idchamado;
     }
 
-    public String getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
-    public String getBairro() {
-        return bairro;
-    }
-
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
-    }
-
-    public String getEscola() {
+    public Escola getEscola() {
         return escola;
     }
 
-    public void setEscola(String escola) {
+    public void setEscola(Escola escola) {
         this.escola = escola;
     }
 
@@ -71,6 +54,14 @@ public class Chamado {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public String getTelefone2() {
+        return telefone2;
+    }
+
+    public void setTelefone2(String telefone2) {
+        this.telefone2 = telefone2;
     }
 
     public Status getStatus() {
@@ -111,6 +102,64 @@ public class Chamado {
 
     public void setImagem(String imagem) {
         this.imagem = imagem;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 43 * hash + (this.idchamado != null ? this.idchamado.hashCode() : 0);
+        hash = 43 * hash + (this.escola != null ? this.escola.hashCode() : 0);
+        hash = 43 * hash + (this.contato != null ? this.contato.hashCode() : 0);
+        hash = 43 * hash + (this.telefone != null ? this.telefone.hashCode() : 0);
+        hash = 43 * hash + (this.telefone2 != null ? this.telefone2.hashCode() : 0);
+        hash = 43 * hash + (this.status != null ? this.status.hashCode() : 0);
+        hash = 43 * hash + (this.descricao != null ? this.descricao.hashCode() : 0);
+        hash = 43 * hash + (this.abertopor != null ? this.abertopor.hashCode() : 0);
+        hash = 43 * hash + (this.dataabertura != null ? this.dataabertura.hashCode() : 0);
+        hash = 43 * hash + (this.imagem != null ? this.imagem.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Chamado other = (Chamado) obj;
+        if (this.idchamado != other.idchamado && (this.idchamado == null || !this.idchamado.equals(other.idchamado))) {
+            return false;
+        }
+        if (this.escola != other.escola && (this.escola == null || !this.escola.equals(other.escola))) {
+            return false;
+        }
+        if ((this.contato == null) ? (other.contato != null) : !this.contato.equals(other.contato)) {
+            return false;
+        }
+        if ((this.telefone == null) ? (other.telefone != null) : !this.telefone.equals(other.telefone)) {
+            return false;
+        }
+        if ((this.telefone2 == null) ? (other.telefone2 != null) : !this.telefone2.equals(other.telefone2)) {
+            return false;
+        }
+        if (this.status != other.status && (this.status == null || !this.status.equals(other.status))) {
+            return false;
+        }
+        if ((this.descricao == null) ? (other.descricao != null) : !this.descricao.equals(other.descricao)) {
+            return false;
+        }
+        if (this.abertopor != other.abertopor && (this.abertopor == null || !this.abertopor.equals(other.abertopor))) {
+            return false;
+        }
+        if ((this.dataabertura == null) ? (other.dataabertura != null) : !this.dataabertura.equals(other.dataabertura)) {
+            return false;
+        }
+        if ((this.imagem == null) ? (other.imagem != null) : !this.imagem.equals(other.imagem)) {
+            return false;
+        }
+        return true;
     }
 
     

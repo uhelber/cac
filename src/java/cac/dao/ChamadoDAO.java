@@ -7,6 +7,7 @@ package cac.dao;
 import cac.classes.ConverteData;
 import cac.db.DataBase;
 import cac.db.Chamado;
+import cac.db.Escola;
 import cac.db.Parecer;
 import cac.db.Status;
 import cac.db.Usuario;
@@ -34,22 +35,21 @@ public class ChamadoDAO {
     public boolean adicionarChamado(Chamado chmd, Usuario usr) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
 
-        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("INSERT INTO NTE.chamado VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("INSERT INTO NTE.chamado VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         Date dt = new Date();
         SimpleDateFormat frmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         boolean retorno = false;
 
         if (chmd.getEscola() != null) {
             ps.setString(1, null);
-            ps.setString(2, chmd.getCidade());
-            ps.setString(3, chmd.getBairro());
-            ps.setString(4, chmd.getEscola());
-            ps.setString(5, chmd.getContato());
-            ps.setString(6, chmd.getTelefone());
-            ps.setInt(7, 4);
-            ps.setString(8, chmd.getDescricao());
-            ps.setInt(9, usr.getIdusuarios());
-            ps.setString(10, frmt.format(dt));
+            ps.setInt(2, chmd.getEscola().getIdescola());
+            ps.setString(3, chmd.getContato());
+            ps.setString(4, chmd.getTelefone());
+            ps.setString(5, chmd.getTelefone2());
+            ps.setInt(6, 4);
+            ps.setString(7, chmd.getDescricao());
+            ps.setInt(8, usr.getIdusuarios());
+            ps.setString(9, frmt.format(dt));
 
             retorno = ps.execute();
         }
@@ -66,16 +66,15 @@ public class ChamadoDAO {
         ParecerDAO prcrDAO = new ParecerDAO();
 
         PreparedStatement ps;
-        ps = (PreparedStatement) db.getPreparedStatement("UPDATE NTE.chamado SET cidade = ?, bairro = ?, escola = ?,"
-                + " contato = ?, telefone = ?, status = ?, descricao = ? WHERE idchamado = ?");
-        ps.setString(1, chmd.getCidade());
-        ps.setString(2, chmd.getBairro());
-        ps.setString(3, chmd.getEscola());
-        ps.setString(4, chmd.getContato());
-        ps.setString(5, chmd.getTelefone());
-        ps.setInt(6, chmd.getStatus().getIdstatus());
-        ps.setString(7, chmd.getDescricao());
-        ps.setInt(8, chmd.getIdchamado());
+        ps = (PreparedStatement) db.getPreparedStatement("UPDATE NTE.chamado escola = ?,"
+                + " contato = ?, telefone = ?, telefone = ?, status = ?, descricao = ? WHERE idchamado = ?");
+        ps.setInt(1, chmd.getEscola().getIdescola());
+        ps.setString(2, chmd.getContato());
+        ps.setString(3, chmd.getTelefone());
+        ps.setString(4, chmd.getTelefone2());
+        ps.setInt(5, chmd.getStatus().getIdstatus());
+        ps.setString(6, chmd.getDescricao());
+        ps.setInt(7, chmd.getIdchamado());
 
         prcrDAO.adicionarParecer(chmd, parecer, usr);
 
@@ -89,15 +88,14 @@ public class ChamadoDAO {
     public List<Chamado> getTodosChamados(String tipo, String organizar) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
         String org = "";
-        
+
         if (tipo == null) {
             if (organizar == null || organizar.equals("")) {
                 org = " WHERE status <> '7' ORDER BY dataabertura";
-            }else {
+            } else {
                 org = " WHERE status <> '7' ORDER BY " + organizar;
             }
-        }
-        else if(tipo.equals("finalizado")){
+        } else if (tipo.equals("finalizado")) {
             if (organizar.equals("finalizado")) {
                 org = " WHERE status = '7' ORDER BY dataabertura";
             }
@@ -125,13 +123,15 @@ public class ChamadoDAO {
 
         StatusDAO stsDAO = new StatusDAO();
         Status sts = stsDAO.getPorIdStatus(rs.getInt("status"));
+        
+        EscolaDAO escolaDAO = new EscolaDAO();
+        Escola escola = escolaDAO.getPorIdEscola(rs.getInt("escola"));
 
         chmd.setIdchamado(rs.getInt("idchamado"));
-        chmd.setCidade(rs.getString("cidade"));
-        chmd.setBairro(rs.getString("bairro"));
-        chmd.setEscola(rs.getString("escola"));
+        chmd.setEscola(escola);
         chmd.setContato(rs.getString("contato"));
         chmd.setTelefone(rs.getString("telefone"));
+        chmd.setTelefone2(rs.getString("telefone2"));
         chmd.setStatus(sts);
         chmd.setDescricao(rs.getString("descricao"));
         chmd.setAbertopor(rs.getInt("abertopor"));
@@ -165,13 +165,15 @@ public class ChamadoDAO {
         ResultSet rs = ps.executeQuery();
 
         Chamado chmd = new Chamado();
+        
         StatusDAO stsDAO = new StatusDAO();
         Status sts = stsDAO.getPorIdStatus(rs.getInt("status"));
+        
+        EscolaDAO escolaDAO = new EscolaDAO();
+        Escola escola = escolaDAO.getPorIdEscola(rs.getInt("escola"));
 
         chmd.setIdchamado(rs.getInt("idchamado"));
-        chmd.setCidade(rs.getString("cidade"));
-        chmd.setBairro(rs.getString("bairro"));
-        chmd.setEscola(rs.getString("escola"));
+        chmd.setEscola(escola);
         chmd.setContato(rs.getString("contato"));
         chmd.setTelefone(rs.getString("telefone"));
         chmd.setStatus(sts);
