@@ -34,14 +34,23 @@
             </h:panelGrid>
         </h:form>
         <h:form id="frm">
-            <h:panelGrid columns="2" styleClass="form-grid" columnClasses="label, campo">
+            <h:panelGrid columns="5" styleClass="form-grid" columnClasses="label, campo">
                 <h:outputLabel value="Cidade" for="cidade" />
-                <h:selectOneMenu value="#{usuarioBean.chmd.escola.cidade}" label="Cidade" required="true" rendered="#{empty usuarioBean.statusFinalizado}">
+                <h:selectOneMenu value="#{usuarioBean.chmd.escola.cidade}" label="Cidade" required="true" >
                     <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
-                    <f:selectItems value="#{usuarioBean.listarTodosEscola()}" var="escola" itemValue="#{escola}" itemLabel="#{escola.cidade}" />
+                    <f:selectItems value="#{usuarioBean.listarTodosCidade()}" var="cidade" itemValue="#{cidade}" itemLabel="#{cidade.nome}" />
                 </h:selectOneMenu>
+                <h:outputLabel />
 
-                
+                <h:outputLabel value="Escola" for="escola" />
+                <h:selectOneMenu value="#{usuarioBean.chmd.escola}" label="Escola" required="true" >
+                    <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+                    <f:selectItems value="#{usuarioBean.listarTodosEscolaPorIdCidade()}" var="escola" itemValue="#{escola}" itemLabel="#{escola.nome}" />
+                </h:selectOneMenu>
+                <h:outputLabel />
+
+
+
                 <h:commandButton value="Cadastrar" action="#{usuarioBean.cadastrarChamado()}" />
 
             </h:panelGrid>

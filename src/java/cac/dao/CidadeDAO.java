@@ -6,7 +6,6 @@ package cac.dao;
 
 import cac.db.Cidade;
 import cac.db.DataBase;
-import cac.db.Laboratorio;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,7 +27,7 @@ public class CidadeDAO {
         this.db = new DataBase();
 
         List<Cidade> cidade = new LinkedList<Cidade>();
-        ResultSet rs = this.db.getStatement().executeQuery("SELECT * FROM nte.cidade");
+        ResultSet rs = this.db.getStatement().executeQuery("SELECT * FROM nte.cidades");
         while (rs.next()) {
             Cidade cdd = new Cidade();
             polularListaCidade(cdd, rs);
@@ -41,7 +40,7 @@ public class CidadeDAO {
     }
 
     private void polularListaCidade(Cidade cidade, ResultSet rs) throws SQLException, ClassNotFoundException {
-        cidade.setIdcidade(rs.getInt("idcidade"));
+        cidade.setIdcidade(rs.getInt("idcidades"));
         cidade.setNome(rs.getString("nome"));
     }
 
@@ -49,7 +48,7 @@ public class CidadeDAO {
         this.db = new DataBase();
         
         
-        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM nte.cidade WHERE 'idcidade' = ?");
+        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM nte.cidades WHERE idcidades = ?");
         ps.setInt(1, id);
 
         ResultSet rs = ps.executeQuery();

@@ -38,13 +38,13 @@ public class UsuarioBean {
     /*
      * DAOs
      */
+
     private UsuarioDAO usrDAO;
     private ChamadoDAO chmdDAO;
     private ParecerDAO prcrDAO;
     private StatusDAO sttsDAO = new StatusDAO();
     private EscolaDAO escolaDAO;
     private CidadeDAO cidadeDAO;
-    
     /*
      * Objetos
      */
@@ -52,7 +52,8 @@ public class UsuarioBean {
     private Usuario novoUsr = new Usuario();
     private Chamado chmd = new Chamado();
     private Parecer prcr = new Parecer();
-    
+    private Escola escola = new Escola();
+    Cidade cidade = new Cidade();
     /*
      * Argumentos
      */
@@ -153,6 +154,22 @@ public class UsuarioBean {
         this.novoUsr = novoUsr;
     }
 
+    public Escola getEscola() {
+        return escola;
+    }
+
+    public void setEscola(Escola escola) {
+        this.escola = escola;
+    }
+
+    public Cidade getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(Cidade cidade) {
+        this.cidade = cidade;
+    }
+
     /*
      * Área reservada a configurações de usuários.
      */
@@ -193,9 +210,8 @@ public class UsuarioBean {
         String ir = "";
 
         if (this.usr.getNome() != null) {
-            System.out.println(usr.getNome());
-            if (!this.chmd.getEscola().equals("")) {
-                this.chmdDAO.adicionarChamado(this.chmd, this.usr);
+            if (this.chmd.getEscola().getCidade() != null) {
+                //this.chmdDAO.adicionarChamado(this.chmd, this.usr);
                 this.chmd = new Chamado();
                 ir = "listarchamados";
             } else {
@@ -210,7 +226,7 @@ public class UsuarioBean {
     }
 
     public String atualizarChamado() throws ClassNotFoundException, SQLException {
-        String ir = "";
+        String ir;
 
         if (this.usr.getNome() != null) {
             if (!this.prcr.getParecer().equals("")) {
@@ -249,16 +265,27 @@ public class UsuarioBean {
         return parecer;
 
     }
-    
+
     public List<Escola> listarTodosEscola() throws SQLException, ClassNotFoundException {
         List<Escola> escola = new LinkedList<Escola>();
+        System.out.println(this.escola.getCidade().getIdcidade());
         if (this.usr.getNome() != null) {
-            escola = (LinkedList<Escola>) this.escolaDAO.getTodosEscolas();
+            escola = (List<Escola>) this.escolaDAO.getTodosEscolas();
         }
         return escola;
 
     }
-    
+
+    public List<Escola> listarTodosEscolaPorIdCidade() throws SQLException, ClassNotFoundException {
+        List<Escola> escola = new LinkedList<Escola>();
+        
+        escola.add(this.escola);
+        
+        
+        return escola;
+
+    }
+
     public List<Cidade> listarTodosCidade() throws SQLException, ClassNotFoundException {
         List<Cidade> cidade = new LinkedList<Cidade>();
         if (this.usr.getNome() != null) {
@@ -267,11 +294,10 @@ public class UsuarioBean {
         return cidade;
 
     }
-    
+
     /*
      * Sistemas
      */
-
     @PreDestroy
     public void destroy() {
     }

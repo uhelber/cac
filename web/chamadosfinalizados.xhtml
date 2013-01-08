@@ -25,7 +25,7 @@
             <h:commandButton value="Novo Chamado" action="#{usuarioBean.irCadastrarChamado()}" />
             <h:commandButton value="Voltar" action="#{usuarioBean.voltar()}" rendered="#{not empty usuarioBean.organizar}" />
             
-            <h:dataTable var="chamdo" value="#{usuarioBean.listarTodosChamados()}" width="100%" 
+            <h:dataTable var="chamdo" value="#{usuarioBean.listarTodosChamados()}" width="100%" rendered="#{not empty usuarioBean.listarTodosChamados()}" 
                          styleClass="grid" headerClass="cabecalho" rowClasses="cor-sim, cor-nao"
                          columnClasses="tipo, escola, status, cidade, bairro, contato, telefone, dataabertura, descricao, editar">
                 <h:column >

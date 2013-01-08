@@ -49,7 +49,7 @@ public class LaboratorioDAO {
         this.db = new DataBase();
         
         
-        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM nte.laboratorio WHERE 'idlaboratorio' = ?");
+        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM nte.laboratorio WHERE idlaboratorio = ?");
         ps.setInt(1, id);
 
         ResultSet rs = ps.executeQuery();

@@ -31,9 +31,9 @@ public class Cidade {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 29 * hash + (this.idcidade != null ? this.idcidade.hashCode() : 0);
-        hash = 29 * hash + (this.nome != null ? this.nome.hashCode() : 0);
+        int hash = 5;
+        hash = 83 * hash + (this.idcidade != null ? this.idcidade.hashCode() : 0);
+        hash = 83 * hash + (this.nome != null ? this.nome.hashCode() : 0);
         return hash;
     }
 
@@ -54,5 +54,5 @@ public class Cidade {
         }
         return true;
     }
-    
+
 }

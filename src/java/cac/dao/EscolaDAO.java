@@ -45,18 +45,18 @@ public class EscolaDAO {
     private void polularListaEscola(Escola escola, ResultSet rs) throws SQLException, ClassNotFoundException {
         RegionalDAO regionalDAO = new RegionalDAO();
         Regional regional = regionalDAO.getPorIdRegional(rs.getInt("regional"));
-        
+
         LaboratorioDAO laboratorioDAO = new LaboratorioDAO();
         Laboratorio laboratorio = laboratorioDAO.getPorIdLaboratorio(rs.getInt("laboratorio"));
-        
+
         CidadeDAO cidadeDAO = new CidadeDAO();
         Cidade cidade = cidadeDAO.getPorIdCidade(rs.getInt("cidade"));
-        
+
         escola.setIdescola(rs.getInt("idescola"));
         escola.setRegional(regional);
         escola.setCidade(cidade);
         escola.setInep(rs.getInt("inep"));
-        escola.setEscola(rs.getString("escola"));
+        escola.setNome(rs.getString("escola"));
         escola.setEndereco(rs.getString("endereco"));
         escola.setBairro(rs.getString("bairro"));
         escola.setLaboratorio(laboratorio);
@@ -64,16 +64,37 @@ public class EscolaDAO {
 
     public Escola getPorIdEscola(int id) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
-        
-        
-        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM nte.escola WHERE 'idescola' = ?");
+
+
+        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM nte.escola WHERE idescola = ?");
         ps.setInt(1, id);
 
         ResultSet rs = ps.executeQuery();
+
+        Escola escola = new Escola();
+        if (rs.next()) {
+            polularListaEscola(escola, rs);
+        }
+
+        ps.close();
+        rs.close();
+        this.db.getCon().close();
+
+        return escola;
+    }
+
+    public Escola getPorIdCidade(int id) throws ClassNotFoundException, SQLException {
+        this.db = new DataBase();
         
+
+        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM nte.escola WHERE 'idcidades' = ?");
+        ps.setInt(1, id);
+
+        ResultSet rs = ps.executeQuery();
+
         Escola escola = new Escola();
         polularListaEscola(escola, rs);
-        
+
         ps.close();
         rs.close();
         this.db.getCon().close();

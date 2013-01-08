@@ -48,7 +48,7 @@ public class RegionalDAO {
     public Regional getPorIdRegional(int id) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
         
-        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM nte.regional WHERE 'idregional' = ?");
+        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM nte.regional WHERE idregional = ?");
         ps.setInt(1, id);
 
         ResultSet rs = ps.executeQuery();

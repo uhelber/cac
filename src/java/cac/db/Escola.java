@@ -14,7 +14,7 @@ public class Escola {
     private Regional regional;
     private Cidade cidade;
     private Integer inep;
-    private String escola;
+    private String nome;
     private String endereco;
     private String bairro;
     private Laboratorio laboratorio;
@@ -51,12 +51,12 @@ public class Escola {
         this.inep = inep;
     }
 
-    public String getEscola() {
-        return escola;
+    public String getNome() {
+        return nome;
     }
 
-    public void setEscola(String escola) {
-        this.escola = escola;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getEndereco() {
@@ -85,15 +85,15 @@ public class Escola {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 29 * hash + (this.idescola != null ? this.idescola.hashCode() : 0);
-        hash = 29 * hash + (this.regional != null ? this.regional.hashCode() : 0);
-        hash = 29 * hash + (this.cidade != null ? this.cidade.hashCode() : 0);
-        hash = 29 * hash + (this.inep != null ? this.inep.hashCode() : 0);
-        hash = 29 * hash + (this.escola != null ? this.escola.hashCode() : 0);
-        hash = 29 * hash + (this.endereco != null ? this.endereco.hashCode() : 0);
-        hash = 29 * hash + (this.bairro != null ? this.bairro.hashCode() : 0);
-        hash = 29 * hash + (this.laboratorio != null ? this.laboratorio.hashCode() : 0);
+        int hash = 5;
+        hash = 89 * hash + (this.idescola != null ? this.idescola.hashCode() : 0);
+        hash = 89 * hash + (this.regional != null ? this.regional.hashCode() : 0);
+        hash = 89 * hash + (this.cidade != null ? this.cidade.hashCode() : 0);
+        hash = 89 * hash + (this.inep != null ? this.inep.hashCode() : 0);
+        hash = 89 * hash + (this.nome != null ? this.nome.hashCode() : 0);
+        hash = 89 * hash + (this.endereco != null ? this.endereco.hashCode() : 0);
+        hash = 89 * hash + (this.bairro != null ? this.bairro.hashCode() : 0);
+        hash = 89 * hash + (this.laboratorio != null ? this.laboratorio.hashCode() : 0);
         return hash;
     }
 
@@ -118,7 +118,7 @@ public class Escola {
         if (this.inep != other.inep && (this.inep == null || !this.inep.equals(other.inep))) {
             return false;
         }
-        if ((this.escola == null) ? (other.escola != null) : !this.escola.equals(other.escola)) {
+        if ((this.nome == null) ? (other.nome != null) : !this.nome.equals(other.nome)) {
             return false;
         }
         if ((this.endereco == null) ? (other.endereco != null) : !this.endereco.equals(other.endereco)) {
