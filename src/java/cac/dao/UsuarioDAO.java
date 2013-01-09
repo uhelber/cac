@@ -5,7 +5,9 @@
 package cac.dao;
 
 import cac.db.DataBase;
+import cac.db.Funcao;
 import cac.db.Permissao;
+import cac.db.Setor;
 import cac.db.Usuario;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -42,19 +44,20 @@ public class UsuarioDAO {
     public boolean adicionarUsuario(Usuario usr) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
 
-        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("INSERT INTO NTE.USUARIOS VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("INSERT INTO NTE.USUARIOS VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         ps.setString(1, null);
         ps.setString(2, usr.getNome());
         ps.setString(3, usr.getSobrenome());
-        ps.setString(4, usr.getSetor());
-        ps.setDate(5, usr.getDatanascimento());
-        ps.setDate(6, usr.getDatacadastro());
-        ps.setInt(7, usr.getCadastrador());
-        ps.setString(8, usr.getTelefone());
-        ps.setString(9, usr.getMatricula());
-        ps.setString(10, usr.getUsuario());
-        ps.setString(11, usr.getSenha());
-        ps.setObject(12, usr.getPermissao());
+        ps.setInt(4, usr.getSetor().getIdsetor());
+        ps.setInt(5, usr.getFuncao().getIdfuncao());
+        ps.setDate(6, usr.getDatanascimento());
+        ps.setDate(7, usr.getDatacadastro());
+        ps.setInt(8, usr.getCadastrador());
+        ps.setString(9, usr.getTelefone());
+        ps.setString(10, usr.getMatricula());
+        ps.setString(11, usr.getUsuario());
+        ps.setString(12, usr.getSenha());
+        ps.setObject(13, usr.getPermissao());
 
         boolean retorno = ps.execute();
         ps.close();
@@ -66,20 +69,21 @@ public class UsuarioDAO {
     public boolean atualizarUsuario(Usuario usr) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
 
-        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("UPDATE NTE.USUARIOS SET nome = ?, sobrenome = ?, setor = ?,"
+        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("UPDATE NTE.USUARIOS SET nome = ?, sobrenome = ?, setor = ?, funcao = ?,"
                 + " datanascimento = ?, datacadastro = ?, cadastrador = ?, telefone = ?, matricula = ?, usuario = ?, senha = ?, permissao = ? WHERE idusuarios = ?)");
         ps.setString(1, usr.getNome());
         ps.setString(2, usr.getSobrenome());
-        ps.setString(3, usr.getSetor());
-        ps.setDate(4, usr.getDatanascimento());
-        ps.setDate(5, usr.getDatacadastro());
-        ps.setInt(6, usr.getCadastrador());
-        ps.setString(7, usr.getTelefone());
-        ps.setString(8, usr.getMatricula());
-        ps.setString(9, usr.getUsuario());
-        ps.setString(10, usr.getSenha());
-        ps.setObject(11, usr.getPermissao());
-        ps.setInt(12, usr.getIdusuarios());
+        ps.setInt(3, usr.getSetor().getIdsetor());
+        ps.setInt(4, usr.getFuncao().getIdfuncao());
+        ps.setDate(5, usr.getDatanascimento());
+        ps.setDate(6, usr.getDatacadastro());
+        ps.setInt(7, usr.getCadastrador());
+        ps.setString(8, usr.getTelefone());
+        ps.setString(9, usr.getMatricula());
+        ps.setString(10, usr.getUsuario());
+        ps.setString(11, usr.getSenha());
+        ps.setObject(12, usr.getPermissao());
+        ps.setInt(13, usr.getIdusuarios());
 
         boolean retorno = ps.execute();
         ps.close();
@@ -105,11 +109,17 @@ public class UsuarioDAO {
     }
 
     private void polularListaUsuario(Usuario usr, ResultSet rs) throws SQLException, ClassNotFoundException {
-
+        SetorDAO setorDAO = new SetorDAO();
+        Setor setor = setorDAO.getPorIdSetor(rs.getInt("setor"));
+        
+        FuncaoDAO funcaoDAO = new FuncaoDAO();
+        Funcao funcao = funcaoDAO.getPorIdFuncao(rs.getInt("funcao"));
+        
         usr.setIdusuarios(rs.getInt("idusuarios"));
         usr.setNome(rs.getString("nome"));
         usr.setSobrenome(rs.getString("sobrenome"));
-        usr.setSetor(rs.getString("setor"));
+        usr.setSetor(setor);
+        usr.setFuncao(funcao);
         usr.setDatanascimento(rs.getDate("datanascimento"));
         usr.setDatacadastro(rs.getDate("datacadastro"));
         usr.setCadastrador(rs.getInt("cadastrador"));
@@ -135,11 +145,18 @@ public class UsuarioDAO {
 
                 PermissaoDAO permissaoDAO = new PermissaoDAO();
                 Permissao permissao = permissaoDAO.getPorIdPermissao(rs.getInt("permissao"));
+                
+                SetorDAO setorDAO = new SetorDAO();
+                Setor setor = setorDAO.getPorIdSetor(rs.getInt("setor"));
+                
+                FuncaoDAO funcaoDAO = new FuncaoDAO();
+                Funcao funcao = funcaoDAO.getPorIdFuncao(rs.getInt("funcao"));
 
                 usr.setIdusuarios(rs.getInt("idusuarios"));
                 usr.setNome(rs.getString("nome"));
                 usr.setSobrenome(rs.getString("sobrenome"));
-                usr.setSetor(rs.getString("setor"));
+                usr.setSetor(setor);
+                usr.setFuncao(funcao);
                 usr.setDatanascimento(rs.getDate("datanascimento"));
                 usr.setDatacadastro(rs.getDate("datacadastro"));
                 usr.setCadastrador(rs.getInt("cadastrador"));
@@ -171,10 +188,17 @@ public class UsuarioDAO {
         Usuario usr = new Usuario();
 
         if (rs.next()) {
+            SetorDAO setorDAO = new SetorDAO();
+            Setor setor = setorDAO.getPorIdSetor(rs.getInt("setor"));
+            
+            FuncaoDAO funcaoDAO = new FuncaoDAO();
+            Funcao funcao = funcaoDAO.getPorIdFuncao(rs.getInt("funcao"));
+            
             usr.setIdusuarios(rs.getInt("idusuarios"));
             usr.setNome(rs.getString("nome"));
             usr.setSobrenome(rs.getString("sobrenome"));
-            usr.setSetor(rs.getString("setor"));
+            usr.setSetor(setor);
+            usr.setFuncao(funcao);
             usr.setDatanascimento(rs.getDate("datanascimento"));
             usr.setDatacadastro(rs.getDate("datacadastro"));
             usr.setCadastrador(rs.getInt("cadastrador"));

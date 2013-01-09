@@ -278,9 +278,11 @@ public class UsuarioBean {
 
     public List<Escola> listarTodosEscolaPorIdCidade() throws SQLException, ClassNotFoundException {
         List<Escola> escola = new LinkedList<Escola>();
-        
-        escola.add(this.escola);
-        
+        this.chmd.getEscola().getCidade().setIdcidade(1);
+        if (this.usr.getNome() != null) {
+            escola = (List<Escola>) this.escolaDAO.getPorIdCidade(this.chmd.getEscola().getCidade().getIdcidade());
+            
+        }
         
         return escola;
 

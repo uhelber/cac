@@ -4,11 +4,8 @@
  */
 package cac.dao;
 
-import cac.db.Chamado;
 import cac.db.DataBase;
 import cac.db.Setor;
-import cac.db.Status;
-import cac.db.Usuario;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,7 +25,7 @@ public class SetorDAO {
         this.setor = new Setor();
     }
 
-    public Status getPorIdSetor(Integer id) throws ClassNotFoundException, SQLException {
+    public Setor getPorIdSetor(Integer id) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
 
         PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM nte.setor WHERE idsetor = ?");
@@ -36,18 +33,17 @@ public class SetorDAO {
 
         ResultSet rs = ps.executeQuery();
 
-        Status sts = new Status();
+        Setor setor = new Setor();
 
         if (rs.next()) {
-            sts.setIdstatus(rs.getInt("idsetor"));
-            sts.setNome(rs.getString("nome"));
+            polularListaChamado(setor, rs);
         }
 
         ps.close();
         rs.close();
         db.getCon().close();
 
-        return sts;
+        return setor;
     }
 
     public List<Setor> getTodosSetor() throws ClassNotFoundException, SQLException {

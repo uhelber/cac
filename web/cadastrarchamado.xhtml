@@ -45,7 +45,7 @@
                 <h:outputLabel value="Escola" for="escola" />
                 <h:selectOneMenu value="#{usuarioBean.chmd.escola}" label="Escola" required="true" >
                     <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
-                    <f:selectItems value="#{usuarioBean.listarTodosEscolaPorIdCidade()}" var="escola" itemValue="#{escola}" itemLabel="#{escola.nome}" />
+                    <f:selectItems value="#{usuarioBean.listarTodosEscolaPorIdCidade()}" var="escola" itemValue="#{escola}" itemLabel="#{escola.nome}" rendered="#{empty usuarioBean.listarTodosEscolaPorIdCidade()}" />
                 </h:selectOneMenu>
                 <h:outputLabel />
 
