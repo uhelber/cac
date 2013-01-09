@@ -4,11 +4,13 @@
  */
 package cac.db;
 
+import java.io.Serializable;
+
 /**
  *
  * @author UhelberC
  */
-public class Permissao {
+public class Permissao implements Serializable {
     private Integer idpermissao;
     private String tipo;
 

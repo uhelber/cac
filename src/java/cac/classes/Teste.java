@@ -35,7 +35,7 @@ public class Teste {
         CidadeDAO dao = new CidadeDAO();
         EscolaDAO escDAO = new EscolaDAO();
         Cidade cid = dao.getPorIdCidade(1);
-        Escola esc = escDAO.getPorIdEscola(1);
+        Escola esc = escDAO.getPorIdCidade(cid);
         
         System.out.println(esc.getNome());
 

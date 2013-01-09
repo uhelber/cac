@@ -4,14 +4,17 @@
  */
 package cac.db;
 
+import java.io.Serializable;
+
 /**
  *
  * @author UhelberC
  */
-public class Setor {
+public class Setor implements Serializable {
     
     private Integer idsetor;
     private String nome;
+    private Cidade cidade;
 
     public Integer getIdsetor() {
         return idsetor;
@@ -29,11 +32,20 @@ public class Setor {
         this.nome = nome;
     }
 
+    public Cidade getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(Cidade cidade) {
+        this.cidade = cidade;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + (this.idsetor != null ? this.idsetor.hashCode() : 0);
-        hash = 97 * hash + (this.nome != null ? this.nome.hashCode() : 0);
+        int hash = 7;
+        hash = 73 * hash + (this.idsetor != null ? this.idsetor.hashCode() : 0);
+        hash = 73 * hash + (this.nome != null ? this.nome.hashCode() : 0);
+        hash = 73 * hash + (this.cidade != null ? this.cidade.hashCode() : 0);
         return hash;
     }
 
@@ -52,8 +64,10 @@ public class Setor {
         if ((this.nome == null) ? (other.nome != null) : !this.nome.equals(other.nome)) {
             return false;
         }
+        if (this.cidade != other.cidade && (this.cidade == null || !this.cidade.equals(other.cidade))) {
+            return false;
+        }
         return true;
     }
 
-    
 }

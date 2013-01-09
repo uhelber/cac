@@ -4,12 +4,14 @@
  */
 package cac.db;
 
+import java.io.Serializable;
+
 
 /**
  *
  * @author UhelberC
  */
-public class Cidade {
+public class Cidade implements Serializable{
     private Integer idcidade;
     private String nome;
 

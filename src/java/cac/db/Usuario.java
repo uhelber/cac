@@ -4,13 +4,14 @@
  */
 package cac.db;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 /**
  *
  * @author UhelberC
  */
-public class Usuario {
+public class Usuario implements Serializable {
 
     private Integer idusuarios;
     private String nome;

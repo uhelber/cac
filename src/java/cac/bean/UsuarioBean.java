@@ -18,6 +18,7 @@ import cac.db.Escola;
 import cac.db.Parecer;
 import cac.db.Status;
 import cac.db.Usuario;
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,6 +28,7 @@ import javax.annotation.PreDestroy;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.event.ValueChangeEvent;
 
 /**
  *
@@ -53,7 +55,7 @@ public class UsuarioBean {
     private Chamado chmd = new Chamado();
     private Parecer prcr = new Parecer();
     private Escola escola = new Escola();
-    Cidade cidade = new Cidade();
+    private Cidade cidade = new Cidade();
     /*
      * Argumentos
      */
@@ -61,6 +63,7 @@ public class UsuarioBean {
     private String organizar = null;
     private String tipoListarChamados = null;
     private String statusFinalizado = null;
+    private Cidade cidadeSeleciona = null;
 
     public UsuarioBean() throws ClassNotFoundException, SQLException {
         this.usrDAO = new UsuarioDAO();
@@ -170,6 +173,15 @@ public class UsuarioBean {
         this.cidade = cidade;
     }
 
+    public Cidade getCidadeSeleciona() {
+        return cidadeSeleciona;
+    }
+
+    public void setCidadeSeleciona(Cidade cidadeSeleciona) {
+        this.cidadeSeleciona = cidadeSeleciona;
+    }
+
+
     /*
      * Área reservada a configurações de usuários.
      */
@@ -278,18 +290,20 @@ public class UsuarioBean {
 
     public List<Escola> listarTodosEscolaPorIdCidade() throws SQLException, ClassNotFoundException {
         List<Escola> escola = new LinkedList<Escola>();
-        this.chmd.getEscola().getCidade().setIdcidade(1);
+
         if (this.usr.getNome() != null) {
-            escola = (List<Escola>) this.escolaDAO.getPorIdCidade(this.chmd.getEscola().getCidade().getIdcidade());
-            
+            if (this.cidadeSeleciona != null) {
+                escola = (List<Escola>) this.escolaDAO.getTodosEscolasPorIdCidade(this.cidadeSeleciona);
+            }
         }
-        
+
         return escola;
 
     }
 
     public List<Cidade> listarTodosCidade() throws SQLException, ClassNotFoundException {
         List<Cidade> cidade = new LinkedList<Cidade>();
+
         if (this.usr.getNome() != null) {
             cidade = (LinkedList<Cidade>) this.cidadeDAO.getTodosCidades();
         }
@@ -375,5 +389,9 @@ public class UsuarioBean {
         } else {
             return this.irListarChamados();
         }
+    }
+
+    public void selecionarCidade(ValueChangeEvent evento) {
+        this.cidadeSeleciona = (Cidade) evento.getNewValue();
     }
 }

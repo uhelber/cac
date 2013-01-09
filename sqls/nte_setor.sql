@@ -27,7 +27,10 @@ DROP TABLE IF EXISTS `setor`;
 CREATE TABLE `setor` (
   `idsetor` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`idsetor`)
+  `cidade` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idsetor`),
+  KEY `fk_setor_cidades_idx` (`cidade`),
+  CONSTRAINT `fk_setor_cidades` FOREIGN KEY (`cidade`) REFERENCES `cidades` (`idcidades`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -37,7 +40,7 @@ CREATE TABLE `setor` (
 
 LOCK TABLES `setor` WRITE;
 /*!40000 ALTER TABLE `setor` DISABLE KEYS */;
-INSERT INTO `setor` VALUES (1,'Proinfo'),(2,'NTEJPA'),(3,'NTECGE'),(4,'NTEPAT'),(5,'NTECAJ'),(6,'TVEscola');
+INSERT INTO `setor` VALUES (1,'Proinfo',94),(2,'NTEJPA',94),(3,'NTECGE',50),(4,'NTEPAT',134),(5,'NTECAJ',46),(6,'TVEscola',94);
 /*!40000 ALTER TABLE `setor` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-01-07 13:29:20
+-- Dump completed on 2013-01-09 11:26:58

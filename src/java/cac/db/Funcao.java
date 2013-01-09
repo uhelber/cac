@@ -4,11 +4,13 @@
  */
 package cac.db;
 
+import java.io.Serializable;
+
 /**
  *
  * @author UhelberC
  */
-public class Funcao {
+public class Funcao implements Serializable {
     
     private Integer idfuncao;
     private String nome;

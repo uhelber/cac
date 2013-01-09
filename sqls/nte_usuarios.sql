@@ -56,7 +56,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'Administrador',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,'admim','admin',3),(2,'Uhelber','Lima da Costa',NULL,NULL,NULL,NULL,1,NULL,NULL,'uhelber','lcosta',2),(3,'Giodano Bruno','Patrício Leal',NULL,NULL,NULL,NULL,2,NULL,NULL,'bruno','123',2),(4,'Maria do Socorro','Albino',NULL,NULL,NULL,NULL,3,NULL,NULL,'malbino','001',1);
+INSERT INTO `usuarios` VALUES (1,'Administrador',NULL,1,4,NULL,NULL,1,NULL,NULL,'admim','admin',3),(2,'Uhelber','Lima da Costa',2,4,NULL,NULL,1,NULL,NULL,'uhelber','lcosta',2),(3,'Giodano Bruno','Patrício Leal',2,4,NULL,NULL,2,NULL,NULL,'bruno','123',2),(4,'Maria do Socorro','Albino',2,4,NULL,NULL,3,NULL,NULL,'malbino','001',1);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -69,4 +69,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-01-07 13:29:21
+-- Dump completed on 2013-01-09 11:26:59

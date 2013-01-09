@@ -4,12 +4,14 @@
  */
 package cac.db;
 
+import java.io.Serializable;
+
 
 /**
  *
  * @author UhelberC
  */
-public class Regional {
+public class Regional implements Serializable {
     private Integer idregional;
     private String nome;
 

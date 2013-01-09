@@ -4,6 +4,7 @@
  */
 package cac.dao;
 
+import cac.db.Cidade;
 import cac.db.DataBase;
 import cac.db.Setor;
 import java.sql.PreparedStatement;
@@ -19,10 +20,8 @@ import java.util.List;
 public class SetorDAO {
 
     DataBase db;
-    private Setor setor;
     
     public SetorDAO(){
-        this.setor = new Setor();
     }
 
     public Setor getPorIdSetor(Integer id) throws ClassNotFoundException, SQLException {
@@ -62,8 +61,12 @@ public class SetorDAO {
         return setor;
     }
 
-    private void polularListaChamado(Setor stts, ResultSet rs) throws SQLException, ClassNotFoundException {
-        stts.setIdsetor(rs.getInt("idsetor"));
-        stts.setNome(rs.getString("nome"));
+    private void polularListaChamado(Setor setor, ResultSet rs) throws SQLException, ClassNotFoundException {
+        CidadeDAO cidadeDAO = new CidadeDAO();
+        Cidade cidade = cidadeDAO.getPorIdCidade(rs.getInt("cidade"));
+        
+        setor.setIdsetor(rs.getInt("idsetor"));
+        setor.setNome(rs.getString("nome"));
+        setor.setCidade(cidade);
     }
 }

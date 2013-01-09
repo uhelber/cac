@@ -4,11 +4,13 @@
  */
 package cac.db;
 
+import java.io.Serializable;
+
 /**
  *
  * @author UhelberC
  */
-public class Status {
+public class Status implements Serializable {
     
     private Integer idstatus;
     private String nome;

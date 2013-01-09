@@ -4,12 +4,14 @@
  */
 package cac.db;
 
+import java.io.Serializable;
+
 
 /**
  *
  * @author UhelberC
  */
-public class Escola {
+public class Escola implements Serializable {
     private Integer idescola;
     private Regional regional;
     private Cidade cidade;

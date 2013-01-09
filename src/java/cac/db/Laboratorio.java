@@ -4,12 +4,14 @@
  */
 package cac.db;
 
+import java.io.Serializable;
+
 
 /**
  *
  * @author UhelberC
  */
-public class Laboratorio {
+public class Laboratorio implements Serializable {
     private Integer idlaboratorio;
     private String pregao;
     private String contrato;
