@@ -52,6 +52,7 @@ public class UsuarioBean {
     private CidadeDAO cidadeDAO;
     private SetorDAO setorDAO;
     private FuncaoDAO funcaoDAO;
+    
     /*
      * Objetos
      */
@@ -63,6 +64,8 @@ public class UsuarioBean {
     private Cidade cidade = new Cidade();
     private Setor setor;
     private Funcao funcao;
+    private Cidade cidadeSeleciona = null;
+    
     /*
      * Argumentos
      */
@@ -70,8 +73,8 @@ public class UsuarioBean {
     private String organizar = null;
     private String tipoListarChamados = null;
     private String statusFinalizado = null;
-    private Cidade cidadeSeleciona = null;
-
+    private String confirmarSenha = "";
+    
     public UsuarioBean() throws ClassNotFoundException, SQLException {
         this.usrDAO = new UsuarioDAO();
         this.chmdDAO = new ChamadoDAO();
@@ -188,6 +191,14 @@ public class UsuarioBean {
 
     public void setCidadeSeleciona(Cidade cidadeSeleciona) {
         this.cidadeSeleciona = cidadeSeleciona;
+    }
+
+    public String getConfirmarSenha() {
+        return confirmarSenha;
+    }
+
+    public void setConfirmarSenha(String confirmarSenha) {
+        this.confirmarSenha = confirmarSenha;
     }
 
 

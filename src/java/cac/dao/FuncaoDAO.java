@@ -48,7 +48,7 @@ public class FuncaoDAO {
         this.db = new DataBase();
         List<Funcao> funcao = new LinkedList<Funcao>();
 
-        ResultSet rs = db.getStatement().executeQuery("SELECT * FROM nte.setor");
+        ResultSet rs = db.getStatement().executeQuery("SELECT * FROM nte.funcao");
         while (rs.next()) {
             Funcao func = new Funcao();
             polularListaFuncao(func, rs);

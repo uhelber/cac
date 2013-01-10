@@ -34,22 +34,21 @@
             </h:panelGrid>
         </h:form>
         <h:form id="frm">
-            <h:panelGrid columns="5" styleClass="form-grid" columnClasses="label, campo, ,label, campo">
+            <h:panelGrid columns="2" styleClass="form-grid" columnClasses="label, campo">
                 <h:outputLabel value="Nome" for="nome" />
                 <h:panelGroup>
                     <h:message for="nome" />
                     <br/>
-                    <h:inputText id="nome" value="#{usuarioBean.novoUsr.nome}" size="12" required="true" />
+                    <h:inputText id="nome" value="#{usuarioBean.novoUsr.nome}" size="30" required="true" />
                 </h:panelGroup>
-                <h:outputLabel />
                 
                 <h:outputLabel value="Sobrenome" for="sobrenome" />
                 <h:panelGroup>
                     <h:message for="sobrenome" />
                     <br/>
-                    <h:inputText id="sobrenome" value="#{usuarioBean.novoUsr.sobrenome}" size="12" required="true" />
+                    <h:inputText id="sobrenome" value="#{usuarioBean.novoUsr.sobrenome}" size="30" required="true" />
                 </h:panelGroup>
-                
+
                 <h:outputLabel value="Setor" for="setor" />
                 <h:panelGroup>
                     <h:message for="setor" />
@@ -59,14 +58,65 @@
                         <f:selectItems value="#{usuarioBean.listarTodosSetores()}" var="setor" itemValue="#{setor}" itemLabel="#{setor.nome}" rendered="#{not empty usuarioBean.listarTodosEscolaPorIdCidade()}" />
                     </h:selectOneMenu>
                 </h:panelGroup>
+                
+                <h:outputLabel value="Função" for="funcao" />
+                <h:panelGroup>
+                    <h:message for="funcao" />
+                    <br/>
+                    <h:selectOneMenu id="funcao" value="#{usuarioBean.novoUsr.setor}"  label="Funcao" required="true" >
+                        <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+                        <f:selectItems value="#{usuarioBean.listarTodosFuncaos()}" var="funcao" itemValue="#{funcao}" itemLabel="#{funcao.nome}" rendered="#{not empty usuarioBean.listarTodosEscolaPorIdCidade()}" />
+                    </h:selectOneMenu>
+                </h:panelGroup>
 
+                <h:outputLabel value="Dada de nascimento" for="datanascimento" />
+                <h:panelGroup>
+                    <h:message for="datanascimento" />
+                    <br/>
+                    <h:inputText id="datanascimento" value="#{usuarioBean.novoUsr.datanascimento}" size="30" required="true" />
+                </h:panelGroup>
+                
+                <h:outputLabel value="Telefone" for="telefone" />
+                <h:panelGroup>
+                    <h:message for="datanascimento" />
+                    <br/>
+                    <h:inputText id="telefone" value="#{usuarioBean.novoUsr.telefone}" size="30" required="true" />
+                </h:panelGroup>
+                
+                <h:outputLabel value="Matricula" for="matricula" />
+                <h:panelGroup>
+                    <h:message for="matricula" />
+                    <br/>
+                    <h:inputText id="matricula" value="#{usuarioBean.novoUsr.telefone}" size="30" required="true" />
+                </h:panelGroup>
+                
+                <h:outputLabel value="Login" for="login" />
+                <h:panelGroup>
+                    <h:message for="login" />
+                    <br/>
+                    <h:inputText id="login" value="#{usuarioBean.novoUsr.usuario}" size="30" required="true" />
+                </h:panelGroup>
+                
+                <h:outputLabel value="Senha" for="senha" />
+                <h:panelGroup>
+                    <h:message for="senha" />
+                    <br/>
+                    <h:inputSecret id="senha" value="#{usuarioBean.novoUsr.senha}" size="30" required="true" />
+                </h:panelGroup>
+                
+                <h:outputLabel value="Confirmar senha" for="csenha" />
+                <h:panelGroup>
+                    <h:message for="csenha" />
+                    <br/>
+                    <h:inputSecret id="csenha" value="#{usuarioBean.confirmarSenha}" size="30" required="true" />
+                </h:panelGroup>
+                
                 <br/>
-                
-                <h:outputLabel />
-                <h:outputLabel />
-                
-                <h:commandButton value="Cadastrar" action="#{usuarioBean.cadastrarChamado()}" />
 
+                <h:outputLabel />
+                <h:outputLabel />
+
+                <h:commandButton value="Cadastrar" action="#{usuarioBean.cadastrarChamado()}" />
             </h:panelGrid>
         </h:form>
 
