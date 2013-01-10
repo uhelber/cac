@@ -54,7 +54,7 @@
                     <h:message for="setor" />
                     <br/>
                     <h:selectOneMenu id="setor" value="#{usuarioBean.novoUsr.setor}"  label="Setor" required="true" >
-                        <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+                        <f:selectItem itemLabel="Selecione um setor" noSelectionOption="true" />
                         <f:selectItems value="#{usuarioBean.listarTodosSetores()}" var="setor" itemValue="#{setor}" itemLabel="#{setor.nome}" rendered="#{not empty usuarioBean.listarTodosEscolaPorIdCidade()}" />
                     </h:selectOneMenu>
                 </h:panelGroup>
@@ -63,8 +63,8 @@
                 <h:panelGroup>
                     <h:message for="funcao" />
                     <br/>
-                    <h:selectOneMenu id="funcao" value="#{usuarioBean.novoUsr.setor}"  label="Funcao" required="true" >
-                        <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+                    <h:selectOneMenu id="funcao" value="#{usuarioBean.novoUsr.funcao}"  label="Funcao" required="true" >
+                        <f:selectItem itemLabel="Selecione uma função" noSelectionOption="true" />
                         <f:selectItems value="#{usuarioBean.listarTodosFuncaos()}" var="funcao" itemValue="#{funcao}" itemLabel="#{funcao.nome}" rendered="#{not empty usuarioBean.listarTodosEscolaPorIdCidade()}" />
                     </h:selectOneMenu>
                 </h:panelGroup>
@@ -109,6 +109,16 @@
                     <h:message for="csenha" />
                     <br/>
                     <h:inputSecret id="csenha" value="#{usuarioBean.confirmarSenha}" size="30" required="true" />
+                </h:panelGroup>
+                
+                <h:outputLabel value="Permissão" for="permissao" />
+                <h:panelGroup>
+                    <h:message for="permissao" />
+                    <br/>
+                    <h:selectOneMenu id="permissao" value="#{usuarioBean.cidade}"  label="Permissao" required="true" >
+                        <f:selectItem itemLabel="Selecione um tipo" noSelectionOption="true" />
+                        <f:selectItems value="#{usuarioBean.listarTodosPermissoes()}" var="permissao" itemValue="#{permissao}" itemLabel="#{permissao.tipo}" />
+                    </h:selectOneMenu>
                 </h:panelGroup>
                 
                 <br/>

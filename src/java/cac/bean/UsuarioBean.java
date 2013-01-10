@@ -10,6 +10,7 @@ import cac.dao.CidadeDAO;
 import cac.dao.EscolaDAO;
 import cac.dao.FuncaoDAO;
 import cac.dao.ParecerDAO;
+import cac.dao.PermissaoDAO;
 import cac.dao.SetorDAO;
 import cac.dao.StatusDAO;
 import cac.dao.UsuarioDAO;
@@ -19,6 +20,7 @@ import cac.db.DataBase;
 import cac.db.Escola;
 import cac.db.Funcao;
 import cac.db.Parecer;
+import cac.db.Permissao;
 import cac.db.Setor;
 import cac.db.Status;
 import cac.db.Usuario;
@@ -52,6 +54,7 @@ public class UsuarioBean {
     private CidadeDAO cidadeDAO;
     private SetorDAO setorDAO;
     private FuncaoDAO funcaoDAO;
+    private PermissaoDAO permissaoDAO;
     
     /*
      * Objetos
@@ -83,6 +86,7 @@ public class UsuarioBean {
         this.cidadeDAO = new CidadeDAO();
         this.setorDAO = new SetorDAO();
         this.funcaoDAO = new FuncaoDAO();
+        this.permissaoDAO = new PermissaoDAO();
 
         this.organizar = null;
         this.tipoListarChamados = null;
@@ -350,6 +354,16 @@ public class UsuarioBean {
             funcao = (LinkedList<Funcao>) this.funcaoDAO.getTodosFuncao();
         }
         return funcao;
+
+    }
+
+    public List<Permissao> listarTodosPermissoes() throws SQLException, ClassNotFoundException {
+        List<Permissao> permissao = new LinkedList<Permissao>();
+
+        if (this.usr.getNome() != null) {
+            permissao = (LinkedList<Permissao>) this.permissaoDAO.getTodosPermissoes(this.usr);
+        }
+        return permissao;
 
     }
 
