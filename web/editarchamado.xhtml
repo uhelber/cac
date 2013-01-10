@@ -53,13 +53,13 @@
 
                 <h:outputLabel value="Escola" for="escola" />
                 <h:panelGroup >
-                    <h:outputLabel id="escola" value="#{usuarioBean.chmd.escola}" />
+                    <h:outputLabel id="escola" value="#{usuarioBean.chmd.escola.nome}" />
                     <h:message for="escola" />
                 </h:panelGroup>
 
                 <h:outputLabel value="Cidade" for="cidade" />
                 <h:panelGroup >
-                    <h:outputLabel id="cidade" value="#{usuarioBean.chmd.cidade}" rendered="#{not empty usuarioBean.chmd.cidade}" />
+                    <h:outputLabel id="cidade" value="#{usuarioBean.chmd.escola.cidade.nome}" rendered="#{not empty usuarioBean.chmd.escola.cidade}" />
                     <h:message for="cidade" />
                 </h:panelGroup>
 
@@ -74,8 +74,8 @@
 
                 <h:outputLabel value="Bairro" for="bairro" />
                 <h:panelGroup >
-                    <h:outputText value="#{usuarioBean.chmd.bairro}" rendered="#{not empty usuarioBean.statusFinalizado}" />
-                    <h:inputText id="bairro" size="40" value="#{usuarioBean.chmd.bairro}" rendered="#{empty usuarioBean.statusFinalizado}" />
+                    <h:outputText value="#{usuarioBean.chmd.escola.bairro}" rendered="#{not empty usuarioBean.statusFinalizado}" />
+                    <h:inputText id="bairro" size="40" value="#{usuarioBean.chmd.escola.bairro}" rendered="#{empty usuarioBean.statusFinalizado}" />
                     <h:message for="bairro" />
                 </h:panelGroup>
 
@@ -90,6 +90,14 @@
                 <h:panelGroup >
                     <h:outputText value="#{usuarioBean.chmd.telefone}" rendered="#{not empty usuarioBean.statusFinalizado}" />
                     <h:inputText id="telefone" size="40" value="#{usuarioBean.chmd.telefone}" rendered="#{empty usuarioBean.statusFinalizado}" />
+                    <h:message for="telefone" />
+                </h:panelGroup>
+
+                
+                <h:outputLabel value="Telefone 2" for="telefone2" />
+                <h:panelGroup >
+                    <h:outputText value="#{usuarioBean.chmd.telefone2}" rendered="#{not empty usuarioBean.statusFinalizado}" />
+                    <h:inputText id="telefone2" size="40" value="#{usuarioBean.chmd.telefone2}" rendered="#{empty usuarioBean.statusFinalizado}" />
                     <h:message for="telefone" />
                 </h:panelGroup>
 

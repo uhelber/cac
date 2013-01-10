@@ -18,7 +18,6 @@ import cac.db.Escola;
 import cac.db.Parecer;
 import cac.db.Status;
 import cac.db.Usuario;
-import java.io.Serializable;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -223,8 +222,9 @@ public class UsuarioBean {
 
         if (this.usr.getNome() != null) {
             if (this.chmd.getEscola().getCidade() != null) {
-                //this.chmdDAO.adicionarChamado(this.chmd, this.usr);
+                this.chmdDAO.adicionarChamado(this.chmd, this.usr);
                 this.chmd = new Chamado();
+                this.cidade = new Cidade();
                 ir = "listarchamados";
             } else {
                 this.msn.EviarMensagens("frm:escola", FacesMessage.SEVERITY_ERROR, "Atenção:", "Campo obrigatório");

@@ -40,7 +40,7 @@
                             <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="escola" />
                         </h:commandLink>
                     </f:facet>
-                    <h:outputText value="#{chamdo.escola}" />
+                    <h:outputText value="#{chamdo.escola.nome}" />
                 </h:column>
                 <h:column>
                     <f:facet name="header" >
@@ -56,7 +56,7 @@
                             <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="cidade" />
                         </h:commandLink>
                     </f:facet>
-                    <h:outputText value="#{chamdo.cidade}" />
+                    <h:outputText value="#{chamdo.escola.cidade.nome}" />
                 </h:column>
                 <h:column>
                     <f:facet name="header" >
@@ -64,7 +64,7 @@
                             <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="bairro" />
                         </h:commandLink>
                     </f:facet>
-                    <h:outputText value="#{chamdo.bairro}" />
+                    <h:outputText value="#{chamdo.escola.bairro}" />
                 </h:column>
                 <h:column>
                     <f:facet name="header" >
@@ -80,7 +80,7 @@
                             <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="telefone" />
                         </h:commandLink>
                     </f:facet>
-                    <h:outputText value="#{chamdo.telefone}" />
+                    <h:outputText value="#{chamdo.telefone} / #{chamdo.telefone2}" />
                 </h:column>
                 <h:column>
                     <f:facet name="header" >

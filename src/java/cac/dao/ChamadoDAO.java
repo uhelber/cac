@@ -66,15 +66,13 @@ public class ChamadoDAO {
         ParecerDAO prcrDAO = new ParecerDAO();
 
         PreparedStatement ps;
-        ps = (PreparedStatement) db.getPreparedStatement("UPDATE NTE.chamado escola = ?,"
-                + " contato = ?, telefone = ?, telefone = ?, status = ?, descricao = ? WHERE idchamado = ?");
-        ps.setInt(1, chmd.getEscola().getIdescola());
-        ps.setString(2, chmd.getContato());
-        ps.setString(3, chmd.getTelefone());
-        ps.setString(4, chmd.getTelefone2());
-        ps.setInt(5, chmd.getStatus().getIdstatus());
-        ps.setString(6, chmd.getDescricao());
-        ps.setInt(7, chmd.getIdchamado());
+        ps = (PreparedStatement) db.getPreparedStatement("UPDATE NTE.chamado SET contato = ?, telefone = ?, telefone2 = ?, status = ? WHERE idchamado = ?");
+        
+        ps.setString(1, chmd.getContato());
+        ps.setString(2, chmd.getTelefone());
+        ps.setString(3, chmd.getTelefone2());
+        ps.setInt(4, chmd.getStatus().getIdstatus());
+        ps.setInt(5, chmd.getIdchamado());
 
         prcrDAO.adicionarParecer(chmd, parecer, usr);
 
