@@ -34,49 +34,42 @@
             </h:panelGrid>
         </h:form>
         <h:form id="frm">
-            <h:panelGrid columns="2" styleClass="form-grid" columnClasses="label, campo">
-                <h:outputLabel value="Escola" for="escola" />
-                <h:panelGroup >
-                    <h:inputText id="escola" size="40" value="#{usuarioBean.chmd.escola}" required="true" />
-                    <h:message for="escola" />
+            <h:panelGrid columns="5" styleClass="form-grid" columnClasses="label, campo, ,label, campo">
+                <h:outputLabel value="Nome" for="nome" />
+                <h:panelGroup>
+                    <h:message for="nome" />
+                    <br/>
+                    <h:inputText id="nome" value="#{usuarioBean.novoUsr.nome}" size="12" required="true" />
                 </h:panelGroup>
-
-                <h:outputLabel value="Cidade" for="cidade" />
-                <h:panelGroup >
-                    <h:inputText id="cidade" size="40" value="#{usuarioBean.chmd.cidade}" required="true" />
-                    <h:message for="cidade" />
-                </h:panelGroup>
-
-                <h:outputLabel value="Bairro" for="bairro" />
-                <h:panelGroup >
-                    <h:inputText id="bairro" size="40" value="#{usuarioBean.chmd.bairro}" />
-                    <h:message for="bairro" />
-                </h:panelGroup>
-
-                <h:outputLabel value="Contato" for="contato" />
-                <h:panelGroup >
-                    <h:inputText id="contato" size="40" value="#{usuarioBean.chmd.contato}" required="true" />
-                    <h:message for="contato" />
-                </h:panelGroup>
-
-                <h:outputLabel value="Telefone" for="telefone" />
-                <h:panelGroup >
-                    <h:inputText id="telefone" size="40" value="#{usuarioBean.chmd.telefone}" required="true" />
-                    <h:message for="telefone" />
-                </h:panelGroup>
-
-                <h:outputLabel value="Descrição" for="descricao" />
-                <h:inputTextarea id="descricao" cols="30" value="#{usuarioBean.chmd.descricao}" required="true" />
-
                 <h:outputLabel />
-                <h:outputLabel />
-                <br/>
-
-                <h:commandButton value="Cadastrar" action="#{usuarioBean.cadastrarChamado()}" />
                 
+                <h:outputLabel value="Sobrenome" for="sobrenome" />
+                <h:panelGroup>
+                    <h:message for="sobrenome" />
+                    <br/>
+                    <h:inputText id="sobrenome" value="#{usuarioBean.novoUsr.sobrenome}" size="12" required="true" />
+                </h:panelGroup>
+                
+                <h:outputLabel value="Setor" for="setor" />
+                <h:panelGroup>
+                    <h:message for="setor" />
+                    <br/>
+                    <h:selectOneMenu id="setor" value="#{usuarioBean.novoUsr.setor}"  label="Setor" required="true" >
+                        <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+                        <f:selectItems value="#{usuarioBean.listarTodosSetores()}" var="setor" itemValue="#{setor}" itemLabel="#{setor.nome}" rendered="#{not empty usuarioBean.listarTodosEscolaPorIdCidade()}" />
+                    </h:selectOneMenu>
+                </h:panelGroup>
+
+                <br/>
+                
+                <h:outputLabel />
+                <h:outputLabel />
+                
+                <h:commandButton value="Cadastrar" action="#{usuarioBean.cadastrarChamado()}" />
+
             </h:panelGrid>
         </h:form>
-        
+
     </h:body>
 </html>
 

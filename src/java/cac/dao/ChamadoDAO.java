@@ -62,7 +62,6 @@ public class ChamadoDAO {
 
     public boolean atualizarChamado(Chamado chmd, Parecer parecer, Usuario usr) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
-        ConverteData cDT = new ConverteData();
         ParecerDAO prcrDAO = new ParecerDAO();
 
         PreparedStatement ps;

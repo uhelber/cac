@@ -14,6 +14,7 @@ import java.io.Serializable;
 public class Regional implements Serializable {
     private Integer idregional;
     private String nome;
+    private Setor setor;
 
     public Integer getIdregional() {
         return idregional;
@@ -31,11 +32,20 @@ public class Regional implements Serializable {
         this.nome = nome;
     }
 
+    public Setor getSetor() {
+        return setor;
+    }
+
+    public void setSetor(Setor setor) {
+        this.setor = setor;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 41 * hash + (this.idregional != null ? this.idregional.hashCode() : 0);
-        hash = 41 * hash + (this.nome != null ? this.nome.hashCode() : 0);
+        int hash = 5;
+        hash = 97 * hash + (this.idregional != null ? this.idregional.hashCode() : 0);
+        hash = 97 * hash + (this.nome != null ? this.nome.hashCode() : 0);
+        hash = 97 * hash + (this.setor != null ? this.setor.hashCode() : 0);
         return hash;
     }
 
@@ -54,7 +64,10 @@ public class Regional implements Serializable {
         if ((this.nome == null) ? (other.nome != null) : !this.nome.equals(other.nome)) {
             return false;
         }
+        if (this.setor != other.setor && (this.setor == null || !this.setor.equals(other.setor))) {
+            return false;
+        }
         return true;
     }
-    
+
 }

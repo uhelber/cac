@@ -8,14 +8,18 @@ import cac.classes.Mensagem;
 import cac.dao.ChamadoDAO;
 import cac.dao.CidadeDAO;
 import cac.dao.EscolaDAO;
+import cac.dao.FuncaoDAO;
 import cac.dao.ParecerDAO;
+import cac.dao.SetorDAO;
 import cac.dao.StatusDAO;
 import cac.dao.UsuarioDAO;
 import cac.db.Chamado;
 import cac.db.Cidade;
 import cac.db.DataBase;
 import cac.db.Escola;
+import cac.db.Funcao;
 import cac.db.Parecer;
+import cac.db.Setor;
 import cac.db.Status;
 import cac.db.Usuario;
 import java.sql.SQLException;
@@ -46,6 +50,8 @@ public class UsuarioBean {
     private StatusDAO sttsDAO = new StatusDAO();
     private EscolaDAO escolaDAO;
     private CidadeDAO cidadeDAO;
+    private SetorDAO setorDAO;
+    private FuncaoDAO funcaoDAO;
     /*
      * Objetos
      */
@@ -55,6 +61,8 @@ public class UsuarioBean {
     private Parecer prcr = new Parecer();
     private Escola escola = new Escola();
     private Cidade cidade = new Cidade();
+    private Setor setor;
+    private Funcao funcao;
     /*
      * Argumentos
      */
@@ -70,6 +78,8 @@ public class UsuarioBean {
         this.prcrDAO = new ParecerDAO();
         this.escolaDAO = new EscolaDAO();
         this.cidadeDAO = new CidadeDAO();
+        this.setorDAO = new SetorDAO();
+        this.funcaoDAO = new FuncaoDAO();
 
         this.organizar = null;
         this.tipoListarChamados = null;
@@ -308,6 +318,27 @@ public class UsuarioBean {
             cidade = (LinkedList<Cidade>) this.cidadeDAO.getTodosCidades();
         }
         return cidade;
+
+    }
+
+    public List<Setor> listarTodosSetores() throws SQLException, ClassNotFoundException {
+        List<Setor> setor = new LinkedList<Setor>();
+
+        if (this.usr.getNome() != null) {
+            setor = (LinkedList<Setor>) this.setorDAO.getTodosSetor();
+        }
+        return setor;
+
+    }
+
+    
+    public List<Funcao> listarTodosFuncaos() throws SQLException, ClassNotFoundException {
+        List<Funcao> funcao = new LinkedList<Funcao>();
+
+        if (this.usr.getNome() != null) {
+            funcao = (LinkedList<Funcao>) this.funcaoDAO.getTodosFuncao();
+        }
+        return funcao;
 
     }
 

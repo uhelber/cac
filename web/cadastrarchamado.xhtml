@@ -59,7 +59,7 @@
                 <h:panelGroup>
                     <h:message for="contato" />
                     <br/>
-                    <h:inputText id="contato" value="#{usuarioBean.chmd.contato}" required="true" />
+                    <h:inputText id="contato" value="#{usuarioBean.chmd.contato}" required="true" size="38" />
                 </h:panelGroup>
 
                 <h:outputLabel value="Telefone" for="telefone"  />
@@ -71,7 +71,7 @@
 
                 <h:outputLabel value="Telefone 2" for="telefone2"  />
                 <h:inputText id="telefone2" value="#{usuarioBean.chmd.telefone2}" size="12" />
-                
+
                 <h:outputLabel value="Descrição" for="descricao" />
                 <h:panelGroup>
                     <h:message for="descricao" />
@@ -80,10 +80,10 @@
                 </h:panelGroup>
 
                 <br/>
-                
+
                 <h:outputLabel />
                 <h:outputLabel />
-                
+
                 <h:commandButton value="Cadastrar" action="#{usuarioBean.cadastrarChamado()}" />
 
             </h:panelGrid>
