@@ -312,7 +312,7 @@ public class UsuarioBean {
     public List<Chamado> listarTodosChamados() throws ClassNotFoundException, SQLException {
         List<Chamado> chamado = new LinkedList<Chamado>();
         if (this.usr.getNome() != null) {
-            chamado = (LinkedList<Chamado>) this.chmdDAO.getTodosChamados(this.tipoListarChamados, this.organizar);
+            chamado = (LinkedList<Chamado>) this.chmdDAO.getTodosChamados(this.usr, this.tipoListarChamados, this.organizar);
         } else {
             this.sair();
         }

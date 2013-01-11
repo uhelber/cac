@@ -66,7 +66,7 @@ public class ChamadoDAO {
 
         PreparedStatement ps;
         ps = (PreparedStatement) db.getPreparedStatement("UPDATE NTE.chamado SET contato = ?, telefone = ?, telefone2 = ?, status = ? WHERE idchamado = ?");
-        
+
         ps.setString(1, chmd.getContato());
         ps.setString(2, chmd.getTelefone());
         ps.setString(3, chmd.getTelefone2());
@@ -82,7 +82,7 @@ public class ChamadoDAO {
         return retorno;
     }
 
-    public List<Chamado> getTodosChamados(String tipo, String organizar) throws ClassNotFoundException, SQLException {
+    public List<Chamado> getTodosChamados(Usuario usr, String tipo, String organizar) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
         String org = "";
 
@@ -104,7 +104,13 @@ public class ChamadoDAO {
         while (rs.next()) {
             Chamado chmd = new Chamado();
             polularListaChamado(chmd, rs);
-            chamado.add(chmd);
+            if (usr.getPermissao().getIdpermissao() != 3) {
+                if (usr.getSetor().getIdsetor() == chmd.getEscola().getRegional().getSetor().getIdsetor()) {
+                    chamado.add(chmd);
+                }
+            } else {
+                chamado.add(chmd);
+            }
         }
         rs.close();
         db.getCon().close();
@@ -120,7 +126,7 @@ public class ChamadoDAO {
 
         StatusDAO stsDAO = new StatusDAO();
         Status sts = stsDAO.getPorIdStatus(rs.getInt("status"));
-        
+
         EscolaDAO escolaDAO = new EscolaDAO();
         Escola escola = escolaDAO.getPorIdEscola(rs.getInt("escola"));
 
@@ -162,10 +168,10 @@ public class ChamadoDAO {
         ResultSet rs = ps.executeQuery();
 
         Chamado chmd = new Chamado();
-        
+
         StatusDAO stsDAO = new StatusDAO();
         Status sts = stsDAO.getPorIdStatus(rs.getInt("status"));
-        
+
         EscolaDAO escolaDAO = new EscolaDAO();
         Escola escola = escolaDAO.getPorIdEscola(rs.getInt("escola"));
 
