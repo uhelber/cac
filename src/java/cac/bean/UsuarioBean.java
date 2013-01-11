@@ -55,7 +55,6 @@ public class UsuarioBean {
     private SetorDAO setorDAO;
     private FuncaoDAO funcaoDAO;
     private PermissaoDAO permissaoDAO;
-    
     /*
      * Objetos
      */
@@ -68,7 +67,6 @@ public class UsuarioBean {
     private Setor setor;
     private Funcao funcao;
     private Cidade cidadeSeleciona = null;
-    
     /*
      * Argumentos
      */
@@ -77,7 +75,7 @@ public class UsuarioBean {
     private String tipoListarChamados = null;
     private String statusFinalizado = null;
     private String confirmarSenha = "";
-    
+
     public UsuarioBean() throws ClassNotFoundException, SQLException {
         this.usrDAO = new UsuarioDAO();
         this.chmdDAO = new ChamadoDAO();
@@ -237,6 +235,34 @@ public class UsuarioBean {
 
         return usr.getNome() + " " + usr.getSobrenome();
     }
+    /*
+     * Área reservada a configurações do usuários.
+     */
+
+    public String cadastrarUsuario() throws ClassNotFoundException, SQLException {
+        String ir = "";
+        Integer teste;
+        this.novoUsr.setCadastrador(this.usr.getIdusuarios());
+
+        if (this.usr.getNome() != null) {
+            if (this.novoUsr.getSenha().equals(this.confirmarSenha)) {
+                teste = this.usrDAO.verificarUsuarioJaCadastrado(this.novoUsr);
+                if (teste == 0) {
+                    this.novoUsr = new Usuario();
+                    ir = "cadastrarusuario";
+                }
+            } else {
+                msn.EviarMensagens("frm:senha", FacesMessage.SEVERITY_ERROR, "", "Senhas não coincidem, tente outra vez...");
+                ir = "cadastrarusuario";
+            }
+        } else {
+            msn.EviarMensagens("frm:aviso", FacesMessage.SEVERITY_ERROR, "Erro na autenticação...", "Por favor, efetue login no sistema. Obrigado...");
+            ir = "index";
+        }
+
+        return ir;
+    }
+
 
     /*
      * Área reservada a configurações do chamado.
@@ -346,7 +372,6 @@ public class UsuarioBean {
 
     }
 
-    
     public List<Funcao> listarTodosFuncaos() throws SQLException, ClassNotFoundException {
         List<Funcao> funcao = new LinkedList<Funcao>();
 
@@ -365,6 +390,21 @@ public class UsuarioBean {
         }
         return permissao;
 
+    }
+
+    public List<Usuario> listarTodosUsuarios() throws SQLException, ClassNotFoundException {
+        List<Usuario> usuario = new LinkedList<Usuario>();
+
+        if (this.usr.getNome() != null) {
+            if (this.usr.getPermissao().getIdpermissao() != 1) {
+                usuario = (LinkedList<Usuario>) this.usrDAO.getTodosUsuarios();
+            }
+            else{
+                usuario = null;
+            }
+        }
+
+        return usuario;
     }
 
     /*

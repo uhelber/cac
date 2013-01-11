@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>CAC - Consulta dos usuários</title>
+        <h:outputStylesheet library="css" name="consulta-usuarios.css" />
+        <h:outputStylesheet library="css" name="sistema.css" />
+    </h:head>
+    <h:body>
+        <h1>Usuários</h1>
+
+        <h:form id="frm">
+            <h:panelGroup class="usr">
+                <h:commandButton image="imagens/sair2.png" action="#{usuarioBean.sair()}" />
+                <h:outputText value="#{usuarioBean.usr.nome}" />
+                <h:outputText value=" " />
+                <h:outputText value="#{usuarioBean.usr.sobrenome}" />
+            </h:panelGroup>
+            <br/>
+            <br/>
+            <br/>
+            <h:commandButton value="Voltar" action="listarchamados" />
+            <h:commandButton value="Cadastrar Usuário" action="cadastrarusuario" />
+            
+            <h:dataTable var="usuario" value="#{usuarioBean.listarTodosUsuarios()}" rendered="#{not empty usuarioBean.listarTodosChamados()}" width="100%" 
+                         styleClass="grid" headerClass="cabecalho" rowClasses="cor-sim, cor-nao"
+                         columnClasses="nome, editar">
+                <h:column>
+                    <f:facet name="header" >
+                        <h:commandLink value="Nome" action="listarchamados" >
+                            <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="escola" />
+                        </h:commandLink>
+                    </f:facet>
+                    <h:outputText value="#{usuario.nome} #{usuario.sobrenome}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header" />
+                    <h:commandLink  action="#{usuarioBean.irEditarChamado()}" >
+                        <f:setPropertyActionListener target="#{usuarioBean.chmd}" value="#{chamdo}" />
+                        <h:graphicImage value="/imagens/edit3.png" title="Editar" />
+                    </h:commandLink>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+    </h:body>
+</html>
+

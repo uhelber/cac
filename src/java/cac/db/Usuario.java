@@ -18,8 +18,8 @@ public class Usuario implements Serializable {
     private String sobrenome;
     private Setor setor;
     private Funcao funcao;
-    private Date datanascimento;
-    private Date datacadastro;
+    private String datanascimento;
+    private String datacadastro;
     private Integer cadastrador;
     private String telefone;
     private String matricula;
@@ -67,19 +67,19 @@ public class Usuario implements Serializable {
         this.funcao = funcao;
     }
 
-    public Date getDatanascimento() {
+    public String getDatanascimento() {
         return datanascimento;
     }
 
-    public void setDatanascimento(Date datanascimento) {
+    public void setDatanascimento(String datanascimento) {
         this.datanascimento = datanascimento;
     }
 
-    public Date getDatacadastro() {
+    public String getDatacadastro() {
         return datacadastro;
     }
 
-    public void setDatacadastro(Date datacadastro) {
+    public void setDatacadastro(String datacadastro) {
         this.datacadastro = datacadastro;
     }
 
@@ -133,20 +133,20 @@ public class Usuario implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + (this.idusuarios != null ? this.idusuarios.hashCode() : 0);
-        hash = 79 * hash + (this.nome != null ? this.nome.hashCode() : 0);
-        hash = 79 * hash + (this.sobrenome != null ? this.sobrenome.hashCode() : 0);
-        hash = 79 * hash + (this.setor != null ? this.setor.hashCode() : 0);
-        hash = 79 * hash + (this.funcao != null ? this.funcao.hashCode() : 0);
-        hash = 79 * hash + (this.datanascimento != null ? this.datanascimento.hashCode() : 0);
-        hash = 79 * hash + (this.datacadastro != null ? this.datacadastro.hashCode() : 0);
-        hash = 79 * hash + (this.cadastrador != null ? this.cadastrador.hashCode() : 0);
-        hash = 79 * hash + (this.telefone != null ? this.telefone.hashCode() : 0);
-        hash = 79 * hash + (this.matricula != null ? this.matricula.hashCode() : 0);
-        hash = 79 * hash + (this.usuario != null ? this.usuario.hashCode() : 0);
-        hash = 79 * hash + (this.senha != null ? this.senha.hashCode() : 0);
-        hash = 79 * hash + (this.permissao != null ? this.permissao.hashCode() : 0);
+        int hash = 3;
+        hash = 31 * hash + (this.idusuarios != null ? this.idusuarios.hashCode() : 0);
+        hash = 31 * hash + (this.nome != null ? this.nome.hashCode() : 0);
+        hash = 31 * hash + (this.sobrenome != null ? this.sobrenome.hashCode() : 0);
+        hash = 31 * hash + (this.setor != null ? this.setor.hashCode() : 0);
+        hash = 31 * hash + (this.funcao != null ? this.funcao.hashCode() : 0);
+        hash = 31 * hash + (this.datanascimento != null ? this.datanascimento.hashCode() : 0);
+        hash = 31 * hash + (this.datacadastro != null ? this.datacadastro.hashCode() : 0);
+        hash = 31 * hash + (this.cadastrador != null ? this.cadastrador.hashCode() : 0);
+        hash = 31 * hash + (this.telefone != null ? this.telefone.hashCode() : 0);
+        hash = 31 * hash + (this.matricula != null ? this.matricula.hashCode() : 0);
+        hash = 31 * hash + (this.usuario != null ? this.usuario.hashCode() : 0);
+        hash = 31 * hash + (this.senha != null ? this.senha.hashCode() : 0);
+        hash = 31 * hash + (this.permissao != null ? this.permissao.hashCode() : 0);
         return hash;
     }
 
@@ -174,10 +174,10 @@ public class Usuario implements Serializable {
         if (this.funcao != other.funcao && (this.funcao == null || !this.funcao.equals(other.funcao))) {
             return false;
         }
-        if (this.datanascimento != other.datanascimento && (this.datanascimento == null || !this.datanascimento.equals(other.datanascimento))) {
+        if ((this.datanascimento == null) ? (other.datanascimento != null) : !this.datanascimento.equals(other.datanascimento)) {
             return false;
         }
-        if (this.datacadastro != other.datacadastro && (this.datacadastro == null || !this.datacadastro.equals(other.datacadastro))) {
+        if ((this.datacadastro == null) ? (other.datacadastro != null) : !this.datacadastro.equals(other.datacadastro)) {
             return false;
         }
         if (this.cadastrador != other.cadastrador && (this.cadastrador == null || !this.cadastrador.equals(other.cadastrador))) {
@@ -201,4 +201,5 @@ public class Usuario implements Serializable {
         return true;
     }
 
+    
 }

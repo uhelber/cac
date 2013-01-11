@@ -1,0 +1,18 @@
+td.nome { 
+    width: 97%;
+    text-align: left;
+}
+
+td.editar { 
+    width: 3%;
+    text-align: center;
+}
+
+.grid .receita {
+    color: #0000ff;
+}
+
+.grid .despesa {
+    color: #c23030;
+}
+

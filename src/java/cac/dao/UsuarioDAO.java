@@ -4,6 +4,8 @@
  */
 package cac.dao;
 
+import cac.classes.ConverteData;
+import cac.classes.Mensagem;
 import cac.db.DataBase;
 import cac.db.Funcao;
 import cac.db.Permissao;
@@ -12,8 +14,11 @@ import cac.db.Usuario;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 
 /**
  *
@@ -43,21 +48,25 @@ public class UsuarioDAO {
 
     public boolean adicionarUsuario(Usuario usr) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
-
+        ConverteData cDT = new ConverteData();
+        
+        Date dt = new Date();
+        SimpleDateFormat frmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        
         PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("INSERT INTO NTE.USUARIOS VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         ps.setString(1, null);
         ps.setString(2, usr.getNome());
         ps.setString(3, usr.getSobrenome());
         ps.setInt(4, usr.getSetor().getIdsetor());
         ps.setInt(5, usr.getFuncao().getIdfuncao());
-        ps.setDate(6, usr.getDatanascimento());
-        ps.setDate(7, usr.getDatacadastro());
+        ps.setString(6, cDT.clu_Data(usr.getDatanascimento()));
+        ps.setString(7, frmt.format(dt));
         ps.setInt(8, usr.getCadastrador());
         ps.setString(9, usr.getTelefone());
         ps.setString(10, usr.getMatricula());
         ps.setString(11, usr.getUsuario());
         ps.setString(12, usr.getSenha());
-        ps.setObject(13, usr.getPermissao());
+        ps.setInt(13, usr.getPermissao().getIdpermissao());
 
         boolean retorno = ps.execute();
         ps.close();
@@ -75,8 +84,8 @@ public class UsuarioDAO {
         ps.setString(2, usr.getSobrenome());
         ps.setInt(3, usr.getSetor().getIdsetor());
         ps.setInt(4, usr.getFuncao().getIdfuncao());
-        ps.setDate(5, usr.getDatanascimento());
-        ps.setDate(6, usr.getDatacadastro());
+        ps.setString(5, usr.getDatanascimento());
+        ps.setString(6, usr.getDatacadastro());
         ps.setInt(7, usr.getCadastrador());
         ps.setString(8, usr.getTelefone());
         ps.setString(9, usr.getMatricula());
@@ -120,8 +129,8 @@ public class UsuarioDAO {
         usr.setSobrenome(rs.getString("sobrenome"));
         usr.setSetor(setor);
         usr.setFuncao(funcao);
-        usr.setDatanascimento(rs.getDate("datanascimento"));
-        usr.setDatacadastro(rs.getDate("datacadastro"));
+        usr.setDatanascimento(rs.getString("datanascimento"));
+        usr.setDatacadastro(rs.getString("datacadastro"));
         usr.setCadastrador(rs.getInt("cadastrador"));
         usr.setTelefone(rs.getString("telefone"));
         usr.setMatricula(rs.getString("matricula"));
@@ -157,8 +166,8 @@ public class UsuarioDAO {
                 usr.setSobrenome(rs.getString("sobrenome"));
                 usr.setSetor(setor);
                 usr.setFuncao(funcao);
-                usr.setDatanascimento(rs.getDate("datanascimento"));
-                usr.setDatacadastro(rs.getDate("datacadastro"));
+                usr.setDatanascimento(rs.getString("datanascimento"));
+                usr.setDatacadastro(rs.getString("datacadastro"));
                 usr.setCadastrador(rs.getInt("cadastrador"));
                 usr.setTelefone(rs.getString("telefone"));
                 usr.setMatricula(rs.getString("matricula"));
@@ -199,8 +208,8 @@ public class UsuarioDAO {
             usr.setSobrenome(rs.getString("sobrenome"));
             usr.setSetor(setor);
             usr.setFuncao(funcao);
-            usr.setDatanascimento(rs.getDate("datanascimento"));
-            usr.setDatacadastro(rs.getDate("datacadastro"));
+            usr.setDatanascimento(rs.getString("datanascimento"));
+            usr.setDatacadastro(rs.getString("datacadastro"));
             usr.setCadastrador(rs.getInt("cadastrador"));
             usr.setTelefone(rs.getString("telefone"));
             usr.setMatricula(rs.getString("matricula"));
@@ -213,5 +222,35 @@ public class UsuarioDAO {
         db.getCon().close();
 
         return usr;
+    }
+    
+    public Integer verificarUsuarioJaCadastrado(Usuario usr) throws ClassNotFoundException, SQLException{
+        this.db = new DataBase();
+        Mensagem msn = new Mensagem();
+        Integer ir;
+        
+        PreparedStatement ps = (PreparedStatement) this.db.getPreparedStatement("SELECT * FROM NTE.USUARIOS"
+                + " WHERE usuario = ?");
+        ps.setString(1, usr.getUsuario());
+
+        ResultSet rs = ps.executeQuery();
+        rs.last();
+        
+        if(rs.getRow() == 0)
+        {
+            this.adicionarUsuario(usr);
+            msn.EviarMensagens("", FacesMessage.SEVERITY_INFO, "Usuário cadastrado com sucesso...", "");
+            ir = 0;
+        }
+        else{
+            msn.EviarMensagens("", FacesMessage.SEVERITY_ERROR, "Já existe outro usuário com esse login...", "");
+            ir = 1;
+        }
+                
+        rs.close();
+        ps.close();
+        this.db.getCon().close();
+        
+        return ir;
     }
 }
