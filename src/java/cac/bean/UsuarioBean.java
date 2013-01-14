@@ -4,6 +4,7 @@
  */
 package cac.bean;
 
+import cac.classes.ConverteData;
 import cac.classes.Mensagem;
 import cac.dao.ChamadoDAO;
 import cac.dao.CidadeDAO;
@@ -25,6 +26,7 @@ import cac.db.Setor;
 import cac.db.Status;
 import cac.db.Usuario;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
@@ -222,7 +224,6 @@ public class UsuarioBean {
     }
 
     public String nomeCadastrador() throws ClassNotFoundException, SQLException {
-        System.out.println("this.chmd.getAbertopor() = " + this.chmd.getAbertopor());
         Usuario usr = this.usrDAO.getPorIdUsuario(this.chmd.getAbertopor());
 
         return usr.getNome() + " " + usr.getSobrenome();
@@ -328,6 +329,17 @@ public class UsuarioBean {
         }
 
         return ir;
+    }
+    
+    public String dataConclusao() throws SQLException, ClassNotFoundException, ParseException{
+        String dt = "";
+        ConverteData cDT = new ConverteData();
+        Parecer nparecer = this.prcrDAO.getParecerConclusaoPorIdChamado(this.chmd.getIdchamado());
+        
+        if(nparecer != null){
+            dt = cDT.clu_Data(nparecer.getDataconclusao());
+        }
+        return dt;
     }
 
     public List<Chamado> listarTodosChamados() throws ClassNotFoundException, SQLException {

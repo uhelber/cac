@@ -45,6 +45,9 @@
                 <h:outputText value="Data de Abertura" />
                 <h:outputText value="#{usuarioBean.chmd.dataabertura}" />
 
+                <h:outputText value="Data de Conclusão" />
+                <h:outputText value="#{usuarioBean.dataConclusao()}" />
+
                 <h:outputText value="Data de Atual" />
                 <h:outputText value="#{usuarioBean.dataAtual()}" />
 
@@ -93,7 +96,7 @@
                     <h:message for="telefone" />
                 </h:panelGroup>
 
-                
+
                 <h:outputLabel value="Telefone 2" for="telefone2" />
                 <h:panelGroup >
                     <h:outputText value="#{usuarioBean.chmd.telefone2}" rendered="#{not empty usuarioBean.statusFinalizado}" />

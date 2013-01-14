@@ -28,7 +28,7 @@ public class ParecerDAO {
 
     public void adicionarParecer(Chamado chmd, Parecer parecer, Usuario usr) throws SQLException, ClassNotFoundException {
         this.db = new DataBase();
-        
+
         PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("INSERT INTO nte.parecer VALUE (?, ?, ?, ?, ?, ?)");
 
         Date dt = new Date();
@@ -73,13 +73,13 @@ public class ParecerDAO {
 
     public List<Parecer> getTodosPareceresPorIdChamado(int idChamado) throws SQLException, ClassNotFoundException {
         this.db = new DataBase();
-        
+
         List<Parecer> parecer = new LinkedList<Parecer>();
 
         PreparedStatement ps = (PreparedStatement) this.db.getPreparedStatement("SELECT * FROM nte.parecer WHERE chamado = ?  ORDER BY dataatentimento DESC");
         ps.setInt(1, idChamado);
         ResultSet rs = ps.executeQuery();
-        
+
         while (rs.next()) {
             Parecer prcr = new Parecer();
             polularListaParecer(prcr, rs);
@@ -95,7 +95,7 @@ public class ParecerDAO {
     private void polularListaParecer(Parecer prcr, ResultSet rs) throws SQLException, ClassNotFoundException {
         UsuarioDAO usrDAO = new UsuarioDAO();
         ConverteData cDT = new ConverteData();
-        
+
         prcr.setIdparecer(rs.getInt("idparecer"));
         prcr.setTecnico(usrDAO.getPorIdUsuario(rs.getInt("tecnico")));
         prcr.setDataatentimento(cDT.clu_Data(rs.getString("dataatentimento")));
@@ -108,7 +108,7 @@ public class ParecerDAO {
     public Parecer getPorIdParecer(int id) throws ClassNotFoundException, SQLException, ParseException {
         this.db = new DataBase();
 
-        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM NTE.parecer WHERE idchamado = ?");
+        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM NTE.parecer WHERE idparecer = ?");
         ps.setInt(1, id);
 
         ResultSet rs = ps.executeQuery();
@@ -121,6 +121,35 @@ public class ParecerDAO {
         parecer.setDataconclusao(rs.getString("dataconclusao"));
         parecer.setParecer(rs.getString("parecer"));
         parecer.setChamado(rs.getInt("chamado"));
+
+        ps.close();
+        rs.close();
+        db.getCon().close();
+
+        return parecer;
+    }
+
+    public Parecer getParecerConclusaoPorIdChamado(int id) throws ClassNotFoundException, SQLException, ParseException {
+        this.db = new DataBase();
+
+        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM NTE.parecer WHERE dataconclusao != '' AND chamado = ?");
+        ps.setInt(1, id);
+
+        ResultSet rs = ps.executeQuery();
+        Parecer parecer = null;
+        UsuarioDAO usrDAO = new UsuarioDAO();
+
+        if (rs.next()) {
+            parecer = new Parecer();
+        
+            
+            parecer.setIdparecer(rs.getInt("idparecer"));
+            parecer.setTecnico(usrDAO.getPorIdUsuario(rs.getInt("tecnico")));
+            parecer.setDataatentimento(rs.getString("dataatentimento"));
+            parecer.setDataconclusao(rs.getString("dataconclusao"));
+            parecer.setParecer(rs.getString("parecer"));
+            parecer.setChamado(rs.getInt("chamado"));
+        }
 
         ps.close();
         rs.close();
