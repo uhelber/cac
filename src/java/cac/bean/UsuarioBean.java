@@ -62,7 +62,6 @@ public class UsuarioBean {
     private Usuario novoUsr = new Usuario();
     private Chamado chmd = new Chamado();
     private Parecer prcr = new Parecer();
-    private Escola escola = new Escola();
     private Cidade cidade = new Cidade();
     private Setor setor;
     private Funcao funcao;
@@ -171,14 +170,6 @@ public class UsuarioBean {
         this.novoUsr = novoUsr;
     }
 
-    public Escola getEscola() {
-        return escola;
-    }
-
-    public void setEscola(Escola escola) {
-        this.escola = escola;
-    }
-
     public Cidade getCidade() {
         return cidade;
     }
@@ -231,14 +222,15 @@ public class UsuarioBean {
     }
 
     public String nomeCadastrador() throws ClassNotFoundException, SQLException {
+        System.out.println("this.chmd.getAbertopor() = " + this.chmd.getAbertopor());
         Usuario usr = this.usrDAO.getPorIdUsuario(this.chmd.getAbertopor());
 
         return usr.getNome() + " " + usr.getSobrenome();
     }
+
     /*
      * Área reservada a configurações do usuários.
      */
-
     public String cadastrarUsuario() throws ClassNotFoundException, SQLException {
         String ir = "";
         Integer teste;
@@ -263,26 +255,55 @@ public class UsuarioBean {
         return ir;
     }
 
+    public String alterarUsuario() throws ClassNotFoundException, SQLException {
+        String ir = "";
+
+        this.novoUsr.setCadastrador(this.usr.getIdusuarios());
+
+        if (this.usr.getNome() != null) {
+            if (this.novoUsr.getSenha().equals(this.confirmarSenha)) {
+                this.usrDAO.alterarUsuario(this.novoUsr);
+                this.novoUsr = new Usuario();
+                ir = "cadastrarusuario";
+            } else {
+                msn.EviarMensagens("frm:senha", FacesMessage.SEVERITY_ERROR, "", "Senhas não coincidem, tente outra vez...");
+                ir = "cadastrarusuario";
+            }
+        } else {
+            msn.EviarMensagens("frm:aviso", FacesMessage.SEVERITY_ERROR, "Erro na autenticação...", "Por favor, efetue login no sistema. Obrigado...");
+            ir = "index";
+        }
+
+        return ir;
+    }
+
 
     /*
      * Área reservada a configurações do chamado.
      */
     public String cadastrarChamado() throws ClassNotFoundException, SQLException {
         this.msn = new Mensagem();
+        Chamado verificar = this.chmdDAO.verificarExisteChamadoAberto(this.chmd);
         String ir = "";
 
-        if (this.usr.getNome() != null) {
-            if (this.chmd.getEscola().getCidade() != null) {
-                this.chmdDAO.adicionarChamado(this.chmd, this.usr);
-                this.chmd = new Chamado();
-                this.cidade = new Cidade();
-                ir = "listarchamados";
+        if (verificar == null) {
+            if (this.usr.getNome() != null) {
+                if (this.chmd.getEscola().getCidade() != null) {
+                    this.chmdDAO.adicionarChamado(this.chmd, this.usr);
+                    this.chmd = new Chamado();
+                    this.cidade = new Cidade();
+                    ir = "listarchamados";
+                } else {
+                    this.msn.EviarMensagens("frm:escola", FacesMessage.SEVERITY_ERROR, "Atenção:", "Campo obrigatório");
+                }
             } else {
-                this.msn.EviarMensagens("frm:escola", FacesMessage.SEVERITY_ERROR, "Atenção:", "Campo obrigatório");
+                msn.EviarMensagens("frm:aviso", FacesMessage.SEVERITY_ERROR, "Erro na autenticação...", "Por favor, efetue login no sistema. Obrigado...");
+                ir = "index";
             }
         } else {
-            msn.EviarMensagens("frm:aviso", FacesMessage.SEVERITY_ERROR, "Erro na autenticação...", "Por favor, efetue login no sistema. Obrigado...");
-            ir = "index";
+            msn.EviarMensagens("", FacesMessage.SEVERITY_INFO, "Já existe um chamado aberto para a escola " + this.chmd.getEscola().getNome(), "");
+            this.chmd = verificar;
+            ir = "editarchamado";
         }
 
         return ir;
@@ -331,7 +352,6 @@ public class UsuarioBean {
 
     public List<Escola> listarTodosEscola() throws SQLException, ClassNotFoundException {
         List<Escola> escola = new LinkedList<Escola>();
-        System.out.println(this.escola.getCidade().getIdcidade());
         if (this.usr.getNome() != null) {
             escola = (List<Escola>) this.escolaDAO.getTodosEscolas();
         }
@@ -398,8 +418,7 @@ public class UsuarioBean {
         if (this.usr.getNome() != null) {
             if (this.usr.getPermissao().getIdpermissao() != 1) {
                 usuario = (LinkedList<Usuario>) this.usrDAO.getTodosUsuarios();
-            }
-            else{
+            } else {
                 usuario = null;
             }
         }
@@ -430,6 +449,13 @@ public class UsuarioBean {
         }
 
         return "editarchamado";
+    }
+
+    public String irEditarPerfil() {
+        this.organizar = null;
+        this.novoUsr = this.usr;
+
+        return "editarusuario";
     }
 
     public List<Status> verificarStatus() throws ClassNotFoundException, SQLException {
@@ -480,6 +506,8 @@ public class UsuarioBean {
     }
 
     public String organizarNull() {
+        this.chmd = new Chamado();
+
         if (this.tipoListarChamados != null) {
             return this.irChamadosFinalizados();
         } else {

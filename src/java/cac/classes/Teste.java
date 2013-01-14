@@ -4,6 +4,10 @@
  */
 package cac.classes;
 
+import cac.dao.ChamadoDAO;
+import cac.dao.UsuarioDAO;
+import cac.db.Chamado;
+import cac.db.Usuario;
 import java.sql.SQLException;
 
 
@@ -14,10 +18,12 @@ import java.sql.SQLException;
 public class Teste {
 
     public static void main(String args[]) throws ClassNotFoundException, SQLException {
-        ConverteData cDT = new ConverteData();
-        String dt = "2012-12-10";
+        ChamadoDAO chmdDAO = new ChamadoDAO();
+        UsuarioDAO usrDAO = new UsuarioDAO();
+        Chamado chmd = chmdDAO.getPorIdChamado(1);
+        Usuario usr = usrDAO.getPorIdUsuario(2);
         
-        System.out.println(cDT.clu_Data(dt));
+        
 
     }
 }

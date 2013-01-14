@@ -38,8 +38,8 @@
                 </h:column>
                 <h:column>
                     <f:facet name="header" />
-                    <h:commandLink  action="#{usuarioBean.irEditarChamado()}" >
-                        <f:setPropertyActionListener target="#{usuarioBean.chmd}" value="#{chamdo}" />
+                    <h:commandLink  action="editarusuario" >
+                        <f:setPropertyActionListener target="#{usuarioBean.novoUsr}" value="#{usuario}" />
                         <h:graphicImage value="/imagens/edit3.png" title="Editar" />
                     </h:commandLink>
                 </h:column>

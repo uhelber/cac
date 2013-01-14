@@ -38,8 +38,7 @@ public class StatusDAO {
         Status sts = new Status();
 
         if (rs.next()) {
-            sts.setIdstatus(rs.getInt("idstatus"));
-            sts.setNome(rs.getString("nome"));
+            polularListaStatus(sts, rs);
         }
 
         ps.close();
@@ -56,7 +55,7 @@ public class StatusDAO {
         ResultSet rs = db.getStatement().executeQuery("SELECT * FROM nte.status");
         while (rs.next()) {
             Status stts = new Status();
-            polularListaChamado(stts, rs);
+            polularListaStatus(stts, rs);
             status.add(stts);
         }
         rs.close();
@@ -73,7 +72,7 @@ public class StatusDAO {
             ResultSet rs = db.getStatement().executeQuery("SELECT * FROM nte.status");
             while (rs.next()) {
                 Status stts = new Status();
-                polularListaChamado(stts, rs);
+                polularListaStatus(stts, rs);
                 status.add(stts);
             }
             rs.close();
@@ -86,7 +85,7 @@ public class StatusDAO {
         return status;
     }
 
-    private void polularListaChamado(Status stts, ResultSet rs) throws SQLException, ClassNotFoundException {
+    private void polularListaStatus(Status stts, ResultSet rs) throws SQLException, ClassNotFoundException {
         stts.setIdstatus(rs.getInt("idstatus"));
         stts.setNome(rs.getString("nome"));
     }

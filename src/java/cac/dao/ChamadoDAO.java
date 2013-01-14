@@ -26,8 +26,6 @@ import java.util.List;
 public class ChamadoDAO {
 
     DataBase db;
-    private UsuarioDAO usrDAO = new UsuarioDAO();
-    private StatusDAO stsDAO = new StatusDAO();
 
     public ChamadoDAO() throws ClassNotFoundException, SQLException {
     }
@@ -64,8 +62,7 @@ public class ChamadoDAO {
         this.db = new DataBase();
         ParecerDAO prcrDAO = new ParecerDAO();
 
-        PreparedStatement ps;
-        ps = (PreparedStatement) db.getPreparedStatement("UPDATE NTE.chamado SET contato = ?, telefone = ?, telefone2 = ?, status = ? WHERE idchamado = ?");
+        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("UPDATE NTE.chamado SET contato = ?, telefone = ?, telefone2 = ?, status = ? WHERE idchamado = ?");
 
         ps.setString(1, chmd.getContato());
         ps.setString(2, chmd.getTelefone());
@@ -162,32 +159,68 @@ public class ChamadoDAO {
         this.db = new DataBase();
         ConverteData cDT = new ConverteData();
 
-        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM NTE.USUARIOS WHERE 'idchamado' = ?");
+        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM NTE.chamado WHERE 'idchamado' = ?");
+        ps.setInt(1, id);
+
+        ResultSet rs = ps.executeQuery();
+
+        Chamado chmd = new Chamado();
+        
+        if(rs.next()){
+            polularListaChamado(chmd, rs);
+        }
+        
+        
+        ps.close();
+        rs.close();
+        this.db.getCon().close();
+
+        return chmd;
+    }
+
+    public Chamado getPorIdEscola(int id) throws ClassNotFoundException, SQLException {
+        this.db = new DataBase();
+        ConverteData cDT = new ConverteData();
+
+        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM NTE.chamado WHERE escola = ?");
         ps.setInt(1, id);
 
         ResultSet rs = ps.executeQuery();
 
         Chamado chmd = new Chamado();
 
-        StatusDAO stsDAO = new StatusDAO();
-        Status sts = stsDAO.getPorIdStatus(rs.getInt("status"));
+        if (rs.next()) {
+            polularListaChamado(chmd, rs);
+            
+        }
 
-        EscolaDAO escolaDAO = new EscolaDAO();
-        Escola escola = escolaDAO.getPorIdEscola(rs.getInt("escola"));
-
-        chmd.setIdchamado(rs.getInt("idchamado"));
-        chmd.setEscola(escola);
-        chmd.setContato(rs.getString("contato"));
-        chmd.setTelefone(rs.getString("telefone"));
-        chmd.setStatus(sts);
-        chmd.setDescricao(rs.getString("descrcao"));
-        chmd.setAbertopor(rs.getInt("abertopor"));
-        chmd.setDataabertura(cDT.clu_Data(rs.getString("dataabertura")));
-
-        ps.close();
         rs.close();
+        ps.close();
+
         this.db.getCon().close();
 
         return chmd;
+    }
+
+    public Chamado verificarExisteChamadoAberto(Chamado chmd) throws SQLException, ClassNotFoundException {
+        this.db = new DataBase();
+        
+        PreparedStatement ps = (PreparedStatement) this.db.getPreparedStatement("SELECT * FROM nte.chamado WHERE status != 7 AND escola = ?");
+        ps.setInt(1, chmd.getEscola().getIdescola());
+
+        ResultSet rs = ps.executeQuery();
+        
+        Chamado novoCHMD = null;
+            
+        if(rs.next()){
+            novoCHMD = new Chamado();
+            polularListaChamado(novoCHMD, rs);
+        }
+        
+        rs.close();
+        ps.close();
+        this.db.getCon().close();
+        
+        return novoCHMD;
     }
 }

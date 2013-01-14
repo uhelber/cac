@@ -75,7 +75,7 @@ public class UsuarioDAO {
         return retorno;
     }
 
-    public boolean atualizarUsuario(Usuario usr) throws ClassNotFoundException, SQLException {
+    public boolean alterarUsuario(Usuario usr) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
 
         PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("UPDATE NTE.USUARIOS SET nome = ?, sobrenome = ?, setor = ?, funcao = ?,"
@@ -91,7 +91,7 @@ public class UsuarioDAO {
         ps.setString(9, usr.getMatricula());
         ps.setString(10, usr.getUsuario());
         ps.setString(11, usr.getSenha());
-        ps.setObject(12, usr.getPermissao());
+        ps.setInt(12, usr.getPermissao().getIdpermissao());
         ps.setInt(13, usr.getIdusuarios());
 
         boolean retorno = ps.execute();
@@ -124,6 +124,9 @@ public class UsuarioDAO {
         FuncaoDAO funcaoDAO = new FuncaoDAO();
         Funcao funcao = funcaoDAO.getPorIdFuncao(rs.getInt("funcao"));
         
+        PermissaoDAO permissaoDAO = new PermissaoDAO();
+        Permissao permissao = permissaoDAO.getPorIdPermissao(rs.getInt("permissao"));
+        
         usr.setIdusuarios(rs.getInt("idusuarios"));
         usr.setNome(rs.getString("nome"));
         usr.setSobrenome(rs.getString("sobrenome"));
@@ -136,6 +139,7 @@ public class UsuarioDAO {
         usr.setMatricula(rs.getString("matricula"));
         usr.setUsuario(rs.getString("usuario"));
         usr.setSenha(rs.getString("senha"));
+        usr.setPermissao(permissao);
     }
 
     public Usuario validarUsuario(String usuario, String senha) throws ClassNotFoundException, SQLException {
@@ -197,24 +201,7 @@ public class UsuarioDAO {
         Usuario usr = new Usuario();
 
         if (rs.next()) {
-            SetorDAO setorDAO = new SetorDAO();
-            Setor setor = setorDAO.getPorIdSetor(rs.getInt("setor"));
-            
-            FuncaoDAO funcaoDAO = new FuncaoDAO();
-            Funcao funcao = funcaoDAO.getPorIdFuncao(rs.getInt("funcao"));
-            
-            usr.setIdusuarios(rs.getInt("idusuarios"));
-            usr.setNome(rs.getString("nome"));
-            usr.setSobrenome(rs.getString("sobrenome"));
-            usr.setSetor(setor);
-            usr.setFuncao(funcao);
-            usr.setDatanascimento(rs.getString("datanascimento"));
-            usr.setDatacadastro(rs.getString("datacadastro"));
-            usr.setCadastrador(rs.getInt("cadastrador"));
-            usr.setTelefone(rs.getString("telefone"));
-            usr.setMatricula(rs.getString("matricula"));
-            usr.setUsuario(rs.getString("usuario"));
-            usr.setSenha(rs.getString("senha"));
+            polularListaUsuario(usr, rs);
         }
 
         ps.close();
