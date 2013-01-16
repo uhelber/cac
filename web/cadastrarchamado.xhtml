@@ -66,11 +66,11 @@
                 <h:panelGroup>
                     <h:message for="telefone" />
                     <br/>
-                    <h:inputText id="telefone" label="Telefone" value="#{usuarioBean.chmd.telefone}" size="12" required="true" />
+                    <h:inputText id="telefone" label="Telefone" value="#{usuarioBean.chmd.telefone}" validator="ValidarTelefone" size="12" required="true" />
                 </h:panelGroup>
 
                 <h:outputLabel value="Telefone 2" for="telefone2"  />
-                <h:inputText id="telefone2" value="#{usuarioBean.chmd.telefone2}" size="12" />
+                <h:inputText id="telefone2" value="#{usuarioBean.chmd.telefone2}" validator="ValidarTelefone" size="12" />
 
                 <h:outputLabel value="Descrição" for="descricao" />
                 <h:panelGroup>

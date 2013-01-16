@@ -25,6 +25,7 @@ import cac.db.Permissao;
 import cac.db.Setor;
 import cac.db.Status;
 import cac.db.Usuario;
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,7 +44,7 @@ import javax.faces.event.ValueChangeEvent;
  */
 @ManagedBean
 @SessionScoped
-public class UsuarioBean {
+public class UsuarioBean implements Serializable{
     /*
      * DAOs
      */
@@ -434,7 +435,7 @@ public class UsuarioBean {
                 usuario = null;
             }
         }
-
+        
         return usuario;
     }
 

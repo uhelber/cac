@@ -9,7 +9,8 @@ import cac.dao.UsuarioDAO;
 import cac.db.Chamado;
 import cac.db.Usuario;
 import java.sql.SQLException;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -18,12 +19,10 @@ import java.sql.SQLException;
 public class Teste {
 
     public static void main(String args[]) throws ClassNotFoundException, SQLException {
-        ChamadoDAO chmdDAO = new ChamadoDAO();
-        UsuarioDAO usrDAO = new UsuarioDAO();
-        Chamado chmd = chmdDAO.getPorIdChamado(1);
-        Usuario usr = usrDAO.getPorIdUsuario(2);
+        String oi = "uhelber";
         
-        
-
+        for(int i = 0; i < oi.length(); i++){
+            System.out.println(oi.substring(i, i+1));
+        }
     }
 }
