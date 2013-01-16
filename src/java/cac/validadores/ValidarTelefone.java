@@ -24,7 +24,7 @@ public class ValidarTelefone implements Validator {
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         String telefone = (String) value;
         Object campo = MessageFactory.getLabel(context, component);
-
+        
         Mensagem msn;
 
         if (telefone.length() < 13 || telefone.length() > 13) {
