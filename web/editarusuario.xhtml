@@ -10,7 +10,7 @@
         <h:outputStylesheet library="css" name="sistema.css" />
     </h:head>
     <h:body>
-        <h1><h:outputText value="Alterar Usuário" /></h1>
+        <h1><h:outputText value="Atualizar Usuário" /></h1>
         <h:form id="sair">
             <h:panelGroup class="usr">
                 <h:commandButton image="imagens/sair2.png" action="#{usuarioBean.sair()}" />
@@ -27,7 +27,7 @@
                             infoClass="info" /></h2>
 
             <h:panelGrid columns="5">
-                <h:commandButton value="Voltar" action="listarusuarios" />
+                <h:commandButton value="Voltar" action="listarchamados" />
                 <h:outputText />
                 <h:outputText />
                 <h:outputText />
@@ -75,7 +75,7 @@
                     <h:message for="datanascimento"  errorClass="error" infoClass="info" />
                     <br/>
                     <h:inputText id="datanascimento" label="Dada de nascimento" value="#{usuarioBean.novoUsr.datanascimento}" size="30" required="true" >
-                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                        <f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="America/Recife"/>
                     </h:inputText>
                 </h:panelGroup>
                 
@@ -90,7 +90,7 @@
                 <h:panelGroup>
                     <h:message for="matricula"  errorClass="error" infoClass="info" />
                     <br/>
-                    <h:inputText id="matricula" label="Matrícula" value="#{usuarioBean.novoUsr.telefone}" size="30" required="true" />
+                    <h:inputText id="matricula" label="Matrícula" value="#{usuarioBean.novoUsr.matricula}" size="30" required="true" />
                 </h:panelGroup>
                 
                 <h:outputLabel value="Login" for="login" />

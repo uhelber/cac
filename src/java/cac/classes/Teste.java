@@ -4,13 +4,13 @@
  */
 package cac.classes;
 
-import cac.dao.ChamadoDAO;
-import cac.dao.UsuarioDAO;
-import cac.db.Chamado;
-import cac.db.Usuario;
+import cac.bean.UsuarioBean;
+import cac.dao.EscolaDAO;
 import java.sql.SQLException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -18,11 +18,12 @@ import java.util.regex.Pattern;
  */
 public class Teste {
 
-    public static void main(String args[]) throws ClassNotFoundException, SQLException {
-        String oi = "uhelber";
+    public static void main(String args[]) throws ClassNotFoundException, SQLException, ParseException {
+        EscolaDAO bean = new EscolaDAO();
+        System.out.println(bean.getTodosEscolas().size());
         
-        for(int i = 0; i < oi.length(); i++){
-            System.out.println(oi.substring(i, i+1));
+        for (int i = 0; i < bean.getTodosEscolas().size(); i++) {
+            System.out.println(bean.getTodosEscolas().get(i).getNome());
         }
     }
 }

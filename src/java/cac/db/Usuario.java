@@ -5,7 +5,7 @@
 package cac.db;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 /**
  *
@@ -18,7 +18,7 @@ public class Usuario implements Serializable {
     private String sobrenome;
     private Setor setor;
     private Funcao funcao;
-    private String datanascimento;
+    private Date datanascimento;
     private String datacadastro;
     private Integer cadastrador;
     private String telefone;
@@ -26,6 +26,7 @@ public class Usuario implements Serializable {
     private String usuario;
     private String senha;
     private Permissao permissao;
+    private AtivarConta ativarconta;
 
     public Integer getIdusuarios() {
         return idusuarios;
@@ -67,11 +68,11 @@ public class Usuario implements Serializable {
         this.funcao = funcao;
     }
 
-    public String getDatanascimento() {
+    public Date getDatanascimento() {
         return datanascimento;
     }
 
-    public void setDatanascimento(String datanascimento) {
+    public void setDatanascimento(Date datanascimento) {
         this.datanascimento = datanascimento;
     }
 
@@ -131,22 +132,31 @@ public class Usuario implements Serializable {
         this.permissao = permissao;
     }
 
+    public AtivarConta getAtivarconta() {
+        return ativarconta;
+    }
+
+    public void setAtivarconta(AtivarConta ativarconta) {
+        this.ativarconta = ativarconta;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 31 * hash + (this.idusuarios != null ? this.idusuarios.hashCode() : 0);
-        hash = 31 * hash + (this.nome != null ? this.nome.hashCode() : 0);
-        hash = 31 * hash + (this.sobrenome != null ? this.sobrenome.hashCode() : 0);
-        hash = 31 * hash + (this.setor != null ? this.setor.hashCode() : 0);
-        hash = 31 * hash + (this.funcao != null ? this.funcao.hashCode() : 0);
-        hash = 31 * hash + (this.datanascimento != null ? this.datanascimento.hashCode() : 0);
-        hash = 31 * hash + (this.datacadastro != null ? this.datacadastro.hashCode() : 0);
-        hash = 31 * hash + (this.cadastrador != null ? this.cadastrador.hashCode() : 0);
-        hash = 31 * hash + (this.telefone != null ? this.telefone.hashCode() : 0);
-        hash = 31 * hash + (this.matricula != null ? this.matricula.hashCode() : 0);
-        hash = 31 * hash + (this.usuario != null ? this.usuario.hashCode() : 0);
-        hash = 31 * hash + (this.senha != null ? this.senha.hashCode() : 0);
-        hash = 31 * hash + (this.permissao != null ? this.permissao.hashCode() : 0);
+        int hash = 7;
+        hash = 29 * hash + (this.idusuarios != null ? this.idusuarios.hashCode() : 0);
+        hash = 29 * hash + (this.nome != null ? this.nome.hashCode() : 0);
+        hash = 29 * hash + (this.sobrenome != null ? this.sobrenome.hashCode() : 0);
+        hash = 29 * hash + (this.setor != null ? this.setor.hashCode() : 0);
+        hash = 29 * hash + (this.funcao != null ? this.funcao.hashCode() : 0);
+        hash = 29 * hash + (this.datanascimento != null ? this.datanascimento.hashCode() : 0);
+        hash = 29 * hash + (this.datacadastro != null ? this.datacadastro.hashCode() : 0);
+        hash = 29 * hash + (this.cadastrador != null ? this.cadastrador.hashCode() : 0);
+        hash = 29 * hash + (this.telefone != null ? this.telefone.hashCode() : 0);
+        hash = 29 * hash + (this.matricula != null ? this.matricula.hashCode() : 0);
+        hash = 29 * hash + (this.usuario != null ? this.usuario.hashCode() : 0);
+        hash = 29 * hash + (this.senha != null ? this.senha.hashCode() : 0);
+        hash = 29 * hash + (this.permissao != null ? this.permissao.hashCode() : 0);
+        hash = 29 * hash + (this.ativarconta != null ? this.ativarconta.hashCode() : 0);
         return hash;
     }
 
@@ -198,8 +208,10 @@ public class Usuario implements Serializable {
         if (this.permissao != other.permissao && (this.permissao == null || !this.permissao.equals(other.permissao))) {
             return false;
         }
+        if (this.ativarconta != other.ativarconta && (this.ativarconta == null || !this.ativarconta.equals(other.ativarconta))) {
+            return false;
+        }
         return true;
     }
 
-    
 }

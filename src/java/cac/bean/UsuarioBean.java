@@ -44,7 +44,7 @@ import javax.faces.event.ValueChangeEvent;
  */
 @ManagedBean
 @SessionScoped
-public class UsuarioBean implements Serializable{
+public class UsuarioBean implements Serializable {
     /*
      * DAOs
      */
@@ -66,6 +66,7 @@ public class UsuarioBean implements Serializable{
     private Chamado chmd = new Chamado();
     private Parecer prcr = new Parecer();
     private Cidade cidade = new Cidade();
+    private Escola escola = new Escola();
     private Setor setor;
     private Funcao funcao;
     private Cidade cidadeSeleciona = null;
@@ -197,6 +198,14 @@ public class UsuarioBean implements Serializable{
         this.confirmarSenha = confirmarSenha;
     }
 
+    public Escola getEscola() {
+        return escola;
+    }
+
+    public void setEscola(Escola escola) {
+        this.escola = escola;
+    }
+
 
     /*
      * Área reservada a configurações de usuários.
@@ -209,9 +218,14 @@ public class UsuarioBean implements Serializable{
             Usuario usuario = this.usrDAO.validarUsuario(this.usr.getUsuario(), this.usr.getSenha());
 
             if ((usuario != null)) {
-                this.usr = usuario;
+                if (usuario.getAtivarconta().getIdativarconta() == 2) {
+                    this.usr = usuario;
+                    ir = "listarchamados";
+                } else {
+                    this.msn.EviarMensagens("frm:aviso", FacesMessage.SEVERITY_ERROR, "Erro na autenticação...", "Conta destivada pelo administrador.");
+                    ir = "index";
+                }
 
-                ir = "listarchamados";
             } else {
                 this.msn.EviarMensagens("frm:usuario", FacesMessage.SEVERITY_ERROR, "Erro na autenticação...", "Verifique se o usuario e senha estão certos.");
                 ir = "index";
@@ -261,12 +275,12 @@ public class UsuarioBean implements Serializable{
         String ir = "";
 
         this.novoUsr.setCadastrador(this.usr.getIdusuarios());
-
+        
         if (this.usr.getNome() != null) {
             if (this.novoUsr.getSenha().equals(this.confirmarSenha)) {
                 this.usrDAO.alterarUsuario(this.novoUsr);
-                this.novoUsr = new Usuario();
-                ir = "cadastrarusuario";
+                msn.EviarMensagens("", FacesMessage.SEVERITY_INFO, "Dados atualizados com sucesso...", "");
+                ir = "editarusuario";
             } else {
                 msn.EviarMensagens("frm:senha", FacesMessage.SEVERITY_ERROR, "", "Senhas não coincidem, tente outra vez...");
                 ir = "cadastrarusuario";
@@ -331,13 +345,13 @@ public class UsuarioBean implements Serializable{
 
         return ir;
     }
-    
-    public String dataConclusao() throws SQLException, ClassNotFoundException, ParseException{
+
+    public String dataConclusao() throws SQLException, ClassNotFoundException, ParseException {
         String dt = "";
         ConverteData cDT = new ConverteData();
         Parecer nparecer = this.prcrDAO.getParecerConclusaoPorIdChamado(this.chmd.getIdchamado());
-        
-        if(nparecer != null){
+
+        if (nparecer != null) {
             dt = cDT.clu_Data(nparecer.getDataconclusao());
         }
         return dt;
@@ -435,7 +449,7 @@ public class UsuarioBean implements Serializable{
                 usuario = null;
             }
         }
-        
+
         return usuario;
     }
 

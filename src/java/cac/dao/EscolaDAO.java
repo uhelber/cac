@@ -73,7 +73,7 @@ public class EscolaDAO {
 
         CidadeDAO cidadeDAO = new CidadeDAO();
         Cidade cidade = cidadeDAO.getPorIdCidade(rs.getInt("cidade"));
-
+        
         escola.setIdescola(rs.getInt("idescola"));
         escola.setRegional(regional);
         escola.setCidade(cidade);
