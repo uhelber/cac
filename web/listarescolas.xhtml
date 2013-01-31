@@ -6,13 +6,13 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <title>CAC - Consulta dos chamados</title>
-        <h:outputStylesheet library="css" name="consulta-escolas" />
+        <h:outputStylesheet library="css" name="consulta-escolas.css" />
         <h:outputStylesheet library="css" name="sistema.css" />
     </h:head>
     <h:body>
         <h1>Escolas Cadastradas</h1>
 
-        <h:form id="frm">
+        <h:form id="frmMenu">
             <h:panelGroup class="usr">
                 <h:commandButton image="imagens/sair2.png" action="#{usuarioBean.sair()}" />
                 <h:outputText value="#{usuarioBean.usr.nome}" />
@@ -22,81 +22,75 @@
             <br/>
             <br/>
             <br/>
-            <h:commandButton value="Novo Chamado" action="#{usuarioBean.irCadastrarChamado()}" />
-            <h:commandButton value="Chamados Finalizados" action="chamadosfinalizados" >
-                <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="finalizado" />
-                <f:setPropertyActionListener target="#{usuarioBean.tipoListarChamados}" value="finalizado" />
-            </h:commandButton>
-            <h:commandButton value="Perfil" action="#{usuarioBean.irEditarPerfil()}" />
-            <h:commandButton value="Usuários" action="listarusuarios" rendered="#{not empty usuarioBean.listarTodosUsuarios()}" />
-            
-            <h:dataTable var="escola" value="#{usuarioBean.listarTodosEscola()}" rendered="#{not empty usuarioBean.listarTodosEscola()}" width="100%" 
-                         styleClass="grid" headerClass="cabecalho" rowClasses="cor-sim, cor-nao"
-                         columnClasses="tipo, escola, status, cidade, bairro, contato, telefone, dataabertura, descricao, editar">
-                <h:column>
-                    <f:facet name="header" >
-                        <h:commandLink value="INEP" action="listarescolas" >
-                            <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="inep" />
-                        </h:commandLink>
-                    </f:facet>
-                    <h:outputText value="#{escola.inep}" />
-                </h:column>
-                <h:column>
-                    <f:facet name="header" >
-                        <h:commandLink value="Regional" action="listarescolas" >
-                            <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="regional" />
-                        </h:commandLink>
-                    </f:facet>
-                    <h:outputText value="#{escola.regional.nome}" />
-                </h:column>
-                <h:column>
-                    <f:facet name="header" >
-                        <h:commandLink value="Escola" action="listarescolas" >
-                            <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="escola" />
-                        </h:commandLink>
-                    </f:facet>
-                    <h:outputText value="#{escola.nome}" />
-                </h:column>
-                <h:column>
-                    <f:facet name="header" >
-                        <h:commandLink value="Cidade" action="listarescolas" >
-                            <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="cidade" />
-                        </h:commandLink>
-                    </f:facet>
-                    <h:outputText value="#{escola.cidade.nome}" />
-                </h:column>
-                <h:column>
-                    <f:facet name="header" >
-                        <h:commandLink value="Endereço" action="listarescolas" >
-                            <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="endereco" />
-                        </h:commandLink>
-                    </f:facet>
-                    <h:outputText value="#{escola.endereco}" />
-                </h:column>
-                <h:column>
-                    <f:facet name="header" >
-                        <h:commandLink value="Bairro" action="listarescolas" >
-                            <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="bairro" />
-                        </h:commandLink>
-                    </f:facet>
-                    <h:outputText value="#{escola.bairro}" />
-                </h:column>
-                <h:column>
-                    <f:facet name="header" >
-                        <h:commandLink value="Telefone" action="listarescolas" >
-                            <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="telefone" />
-                        </h:commandLink>
-                    </f:facet>
-                    <h:outputText value="#{escola.bairro}" />
-                </h:column>
-                <h:column>
-                    <f:facet name="header" />
-                    <h:commandLink  action="#{usuarioBean.irEditarChamado()}" >
-                        <f:setPropertyActionListener target="#{usuarioBean.escola}" value="#{escola}" />
-                        <h:graphicImage value="/imagens/edit3.png" title="Editar" />
-                    </h:commandLink>
-                </h:column>
-            </h:dataTable>
+            <h:commandButton value="Voltar" action="listarchamados" />
+            <h:commandButton value="Nova Escola" action="#{usuarioBean.irVerificarINEP()}" />
+        </h:form>
+        <h:form id="frmCidades">
+            <h:panelGrid columns="2" styleClass="form-grid" columnClasses="label, campo">
+                <h:outputLabel for="cidade" value="Cidades" />
+                <h:panelGroup>
+                    <h:selectOneMenu id="cidade" label="Cidade" value="#{usuarioBean.cidade}" onchange="submit()" valueChangeListener="#{usuarioBean.selecionarCidade}" required="true" >
+                        <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+                        <f:selectItems value="#{usuarioBean.listarTodosCidade()}" var="cidade" itemValue="#{cidade}" itemLabel="#{cidade.nome}" />
+                    </h:selectOneMenu>
+                </h:panelGroup>
+            </h:panelGrid>
+            <br/>
+        </h:form>
+        <h:form id="frm" >
+        <h:dataTable var="escola" value="#{usuarioBean.listarTodosEscolaPorIdCidade()}" rendered="#{not empty usuarioBean.listarTodosEscolaPorIdCidade()}" width="100%" 
+                     styleClass="grid" headerClass="cabecalho" rowClasses="cor-sim, cor-nao"
+                     columnClasses="inep, regional, escola, cidade, endereco, bairro, telefone, editar">
+            <h:column>
+                <f:facet name="header" >
+                    <h:commandLink value="INEP" />
+                </f:facet>
+                <h:outputText value="#{escola.inep}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header" >
+                    <h:commandLink value="Regional" />
+                </f:facet>
+                <h:outputText value="#{escola.regional.nome}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header" >
+                    <h:commandLink value="Escola" />
+                </f:facet>
+                <h:outputText value="#{escola.nome}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header" >
+                    <h:commandLink value="Cidade" />
+                </f:facet>
+                <h:outputText value="#{escola.cidade.nome}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header" >
+                    <h:commandLink value="Endereço" />
+                </f:facet>
+                <h:outputText value="#{escola.endereco}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header" >
+                    <h:commandLink value="Bairro" />
+                </f:facet>
+                <h:outputText value="#{escola.bairro}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header" >
+                    <h:commandLink value="Telefone" />
+                </f:facet>
+                <h:outputText value="#{escola.telefone} / #{escola.telefone2}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header" />
+                <h:commandLink  action="#{usuarioBean.irEditarChamado()}" >
+                    <f:setPropertyActionListener target="#{usuarioBean.escola}" value="#{escola}" />
+                    <h:graphicImage value="/imagens/edit3.png" title="Editar" />
+                </h:commandLink>
+            </h:column>
+        </h:dataTable>
         </h:form>
     </h:body>
 </html>

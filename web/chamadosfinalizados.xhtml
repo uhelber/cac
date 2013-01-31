@@ -23,7 +23,7 @@
             <br/>
             <br/>
             <h:commandButton value="Voltar" action="#{usuarioBean.voltar()}" rendered="#{not empty usuarioBean.organizar}" />
-            <h:commandButton value="Novo Chamado" action="#{usuarioBean.irCadastrarChamado()}" />
+            <h:commandButton value="Novo Chamado" action="#{usuarioBean.irVerificarINEP()}" />
             
             <h:dataTable var="chamdo" value="#{usuarioBean.listarTodosChamados()}" width="100%" rendered="#{not empty usuarioBean.listarTodosChamados()}" 
                          styleClass="grid" headerClass="cabecalho" rowClasses="cor-sim, cor-nao"

@@ -1,10 +1,35 @@
-td.nome { 
-    width: 50%;
+td.inep { 
+    width: 5%;
     text-align: left;
 }
 
-td.permissao { 
-    width: 47%;
+td.regional { 
+    width: 15%;
+    text-align: left;
+}
+
+td.escola { 
+    width: 30%;
+    text-align: left;
+}
+
+td.cidade { 
+    width: 10%;
+    text-align: left;
+}
+
+td.endereco { 
+    width: 20%;
+    text-align: left;
+}
+
+td.bairro { 
+    width: 7%;
+    text-align: left;
+}
+
+td.telefone { 
+    width: 10%;
     text-align: left;
 }
 

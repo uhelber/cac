@@ -22,7 +22,7 @@
             <br/>
             <br/>
             <br/>
-            <h:commandButton value="Novo Chamado" action="#{usuarioBean.irCadastrarChamado()}" />
+            <h:commandButton value="Novo Chamado" action="#{usuarioBean.irVerificarINEP()}" />
             <h:commandButton value="Chamados Finalizados" action="chamadosfinalizados" >
                 <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="finalizado" />
                 <f:setPropertyActionListener target="#{usuarioBean.tipoListarChamados}" value="finalizado" />
@@ -33,9 +33,15 @@
             
             <h:dataTable var="chamdo" value="#{usuarioBean.listarTodosChamados()}" rendered="#{not empty usuarioBean.listarTodosChamados()}" width="100%" 
                          styleClass="grid" headerClass="cabecalho" rowClasses="cor-sim, cor-nao"
-                         columnClasses="tipo, escola, status, cidade, bairro, contato, telefone, dataabertura, descricao, editar">
+                         columnClasses="tipo, chamado, escola, status, cidade, bairro, contato, telefone, dataabertura, descricao, editar">
                 <h:column >
                     <h:graphicImage value="#{chamdo.imagem}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header" >
+                        <h:commandLink value="Nº Chamado" />
+                    </f:facet>
+                    <h:outputText value="#{chamdo.idchamado}" />
                 </h:column>
                 <h:column>
                     <f:facet name="header" >

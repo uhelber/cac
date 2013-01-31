@@ -27,7 +27,7 @@
                             infoClass="info" /></h2>
 
             <h:panelGrid columns="5">
-                <h:commandButton value="Voltar" action="#{usuarioBean.irListarChamados()}" />
+                <h:commandButton value="Voltar" action="listarescolas" />
                 <h:outputText />
                 <h:outputText />
                 <h:outputText />
@@ -36,11 +36,28 @@
         </h:form>
         <h:form id="frm">
             <h:panelGrid columns="2" styleClass="form-grid" columnClasses="label, campo">
+                <h:outputLabel value="INEP" for="inep"  />
+                <h:panelGroup>
+                    <h:message for="inep" />
+                    <br/>
+                    <h:inputText id="inep" label="INEP" value="#{usuarioBean.escola.inep}" required="true" size="12" />
+                </h:panelGroup>
+
+                <h:outputLabel value="Regional" for="regional" />
+                <h:panelGroup>
+                    <h:message for="regional" />
+                    <br/>
+                    <h:selectOneMenu id="regional" label="Regional" value="#{usuarioBean.escola.regional}" required="true" >
+                        <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+                        <f:selectItems value="#{usuarioBean.listarTodosRegionais()}" var="regional" itemValue="#{regional}" itemLabel="#{regional.nome}" />
+                    </h:selectOneMenu>
+                </h:panelGroup>
+
                 <h:outputLabel value="Cidade" for="cidade" />
                 <h:panelGroup>
                     <h:message for="cidade" />
                     <br/>
-                    <h:selectOneMenu id="cidade" label="Cidade" value="#{usuarioBean.cidade}" onchange="submit()" valueChangeListener="#{usuarioBean.selecionarCidade}" required="true" >
+                    <h:selectOneMenu id="cidade" label="Cidade" value="#{usuarioBean.escola.cidade}" required="true" >
                         <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
                         <f:selectItems value="#{usuarioBean.listarTodosCidade()}" var="cidade" itemValue="#{cidade}" itemLabel="#{cidade.nome}" />
                     </h:selectOneMenu>
@@ -48,40 +65,47 @@
 
                 <h:outputLabel value="Escola" for="escola" />
                 <h:panelGroup>
-                    <h:message for="escola" errorClass="error" infoClass="info" />
+                    <h:message for="escola" />
                     <br/>
-                    <h:selectOneMenu id="escola" label="Escola" value="#{usuarioBean.chmd.escola}" required="true" >
-                        <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
-                        <f:selectItems value="#{usuarioBean.listarTodosEscolaPorIdCidade()}" var="escola" itemValue="#{escola}" itemLabel="#{escola.nome}" rendered="#{not empty usuarioBean.listarTodosEscolaPorIdCidade()}" />
-                    </h:selectOneMenu>
+                    <h:inputText id="escola" label="Escola" value="#{usuarioBean.escola.nome}" size="38" />
                 </h:panelGroup>
 
-                <h:outputLabel value="Contato" for="contato"  />
+                <h:outputLabel value="Endereço" for="endereco" />
                 <h:panelGroup>
-                    <h:message for="contato" errorClass="error" infoClass="info" />
+                    <h:message for="endereco" />
                     <br/>
-                    <h:inputText id="contato" label="Contato" value="#{usuarioBean.chmd.contato}" required="true" size="38" />
+                    <h:inputTextarea id="endereco" label="Endereço" value="#{usuarioBean.escola.endereco}" required="true" cols="30" rows="5" />
+                </h:panelGroup>
+
+                <h:outputLabel value="Bairro" for="bairro" />
+                <h:panelGroup>
+                    <h:message for="bairro" />
+                    <br/>
+                    <h:inputText id="bairro" label="Bairro" value="#{usuarioBean.escola.bairro}" size="38" />
                 </h:panelGroup>
 
                 <h:outputLabel value="Telefone" for="telefone"  />
                 <h:panelGroup>
-                    <h:message for="telefone" errorClass="error" infoClass="info" />
+                    <h:message for="telefone" />
                     <br/>
-                    <h:inputText id="telefone" label="Telefone" value="#{usuarioBean.chmd.telefone}" validator="ValidarTelefone" size="12" required="true" />
+                    <h:inputText id="telefone" label="Telefone" value="#{usuarioBean.escola.telefone}" validator="ValidarTelefone" size="12" required="true" />
                 </h:panelGroup>
 
                 <h:outputLabel value="Telefone 2" for="telefone2"  />
                 <h:panelGroup>
-                    <h:message for="telefone2" errorClass="error" infoClass="info" />
+                    <h:message for="telefone2" />
                     <br/>
-                    <h:inputText id="telefone2" label="Telefone 2" value="#{usuarioBean.chmd.telefone2}" validator="ValidarTelefone" size="12" />
+                    <h:inputText id="telefone2" label="Telefone 2" value="#{usuarioBean.escola.telefone2}" validator="ValidarTelefone" size="12" />
                 </h:panelGroup>
 
-                <h:outputLabel value="Descrição" for="descricao" />
+                <h:outputLabel value="Pregão" for="pregao"  />
                 <h:panelGroup>
-                    <h:message for="descricao" errorClass="error" infoClass="info" />
+                    <h:message for="pregao" />
                     <br/>
-                    <h:inputTextarea id="descricao" label="Descrição" value="#{usuarioBean.chmd.descricao}" required="true" cols="30" rows="7" />
+                    <h:selectBooleanCheckbox id="pregao" label="Pregão" value="#{usuarioBean.escola.cidade}" required="true" >
+                        <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+                        <f:selectItems value="#{usuarioBean.listarTodosPregoes()}" var="pregao" itemValue="#{pregao}" itemLabel="#{pregao.pregao}" />
+                    </h:selectBooleanCheckbox>
                 </h:panelGroup>
 
                 <br/>
@@ -89,7 +113,7 @@
                 <h:outputLabel />
                 <h:outputLabel />
 
-                <h:commandButton value="Cadastrar" action="#{usuarioBean.cadastrarChamado()}" />
+                <h:commandButton value="Cadastrar" action="#{usuarioBean.cadastrarEscola()}" />
 
             </h:panelGrid>
         </h:form>

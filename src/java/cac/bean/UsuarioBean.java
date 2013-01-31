@@ -12,6 +12,8 @@ import cac.dao.EscolaDAO;
 import cac.dao.FuncaoDAO;
 import cac.dao.ParecerDAO;
 import cac.dao.PermissaoDAO;
+import cac.dao.PregaoDAO;
+import cac.dao.RegionalDAO;
 import cac.dao.SetorDAO;
 import cac.dao.StatusDAO;
 import cac.dao.UsuarioDAO;
@@ -22,6 +24,8 @@ import cac.db.Escola;
 import cac.db.Funcao;
 import cac.db.Parecer;
 import cac.db.Permissao;
+import cac.db.Pregao;
+import cac.db.Regional;
 import cac.db.Setor;
 import cac.db.Status;
 import cac.db.Usuario;
@@ -54,10 +58,12 @@ public class UsuarioBean implements Serializable {
     private ParecerDAO prcrDAO;
     private StatusDAO sttsDAO = new StatusDAO();
     private EscolaDAO escolaDAO;
+    private RegionalDAO regionalDAO;
     private CidadeDAO cidadeDAO;
     private SetorDAO setorDAO;
     private FuncaoDAO funcaoDAO;
     private PermissaoDAO permissaoDAO;
+    private PregaoDAO pregaoDAO;
     /*
      * Objetos
      */
@@ -78,16 +84,19 @@ public class UsuarioBean implements Serializable {
     private String tipoListarChamados = null;
     private String statusFinalizado = null;
     private String confirmarSenha = "";
+    private Integer inep = null;
 
     public UsuarioBean() throws ClassNotFoundException, SQLException {
         this.usrDAO = new UsuarioDAO();
         this.chmdDAO = new ChamadoDAO();
         this.prcrDAO = new ParecerDAO();
         this.escolaDAO = new EscolaDAO();
+        this.regionalDAO = new RegionalDAO();
         this.cidadeDAO = new CidadeDAO();
         this.setorDAO = new SetorDAO();
         this.funcaoDAO = new FuncaoDAO();
         this.permissaoDAO = new PermissaoDAO();
+        this.pregaoDAO = new PregaoDAO();
 
         this.organizar = null;
         this.tipoListarChamados = null;
@@ -206,6 +215,14 @@ public class UsuarioBean implements Serializable {
         this.escola = escola;
     }
 
+    public Integer getInep() {
+        return inep;
+    }
+
+    public void setInep(Integer inep) {
+        this.inep = inep;
+    }
+
 
     /*
      * Área reservada a configurações de usuários.
@@ -275,7 +292,7 @@ public class UsuarioBean implements Serializable {
         String ir = "";
 
         this.novoUsr.setCadastrador(this.usr.getIdusuarios());
-        
+
         if (this.usr.getNome() != null) {
             if (this.novoUsr.getSenha().equals(this.confirmarSenha)) {
                 this.usrDAO.alterarUsuario(this.novoUsr);
@@ -308,6 +325,7 @@ public class UsuarioBean implements Serializable {
                     this.chmdDAO.adicionarChamado(this.chmd, this.usr);
                     this.chmd = new Chamado();
                     this.cidade = new Cidade();
+                    this.cidadeSeleciona = null;
                     ir = "listarchamados";
                 } else {
                     this.msn.EviarMensagens("frm:escola", FacesMessage.SEVERITY_ERROR, "Atenção:", "Campo obrigatório");
@@ -317,7 +335,7 @@ public class UsuarioBean implements Serializable {
                 ir = "index";
             }
         } else {
-            msn.EviarMensagens("", FacesMessage.SEVERITY_INFO, "Já existe um chamado aberto para a escola " + this.chmd.getEscola().getNome(), "");
+            msn.EviarMensagens("", FacesMessage.SEVERITY_ERROR, "Já existe um chamado aberto para a escola " + this.chmd.getEscola().getNome(), "");
             this.chmd = verificar;
             ir = "editarchamado";
         }
@@ -332,6 +350,7 @@ public class UsuarioBean implements Serializable {
             if (!this.prcr.getParecer().equals("")) {
                 this.chmdDAO.atualizarChamado(this.chmd, this.prcr, this.usr);
                 this.prcr = new Parecer();
+                this.cidadeSeleciona = null;
                 msn.EviarMensagens("frm:parecer", FacesMessage.SEVERITY_INFO, "Atualização realizada com sucesso!!!", "");
             } else {
                 msn.EviarMensagens("frm:parecer", FacesMessage.SEVERITY_ERROR, "Não se pode atualizar o chamado sem haver um parecer...", "");
@@ -344,6 +363,29 @@ public class UsuarioBean implements Serializable {
         }
 
         return ir;
+    }
+
+    public void cadastrarEscola() throws ClassNotFoundException, SQLException {
+        this.msn = new Mensagem();
+        Escola escola = this.escolaDAO.getPorINEP(this.inep);
+        String ir;
+
+        if (this.usr.getNome() != null) {
+            if (escola == null) {
+                this.escolaDAO.cadastrarEscola(this.escola);
+                this.escola = new Escola();
+                this.inep = null;
+                msn.EviarMensagens("frm:inep", FacesMessage.SEVERITY_INFO, "Atualização realizada com sucesso!!!", "");
+                ir = "cadastrarescola";
+            } else {
+                this.escola = escola;
+                msn.EviarMensagens("frm:inep", FacesMessage.SEVERITY_ERROR, "Escola já está cadastrada!!!", "");
+                ir = "editarescola";
+            }
+        } else {
+            msn.EviarMensagens("frm:aviso", FacesMessage.SEVERITY_ERROR, "Erro na autenticação...", "Por favor, efetue login no sistema. Obrigado...");
+            ir = "index";
+        }
     }
 
     public String dataConclusao() throws SQLException, ClassNotFoundException, ParseException {
@@ -380,7 +422,8 @@ public class UsuarioBean implements Serializable {
     public List<Escola> listarTodosEscola() throws SQLException, ClassNotFoundException {
         List<Escola> escola = new LinkedList<Escola>();
         if (this.usr.getNome() != null) {
-            escola = (List<Escola>) this.escolaDAO.getTodosEscolas();
+            escola = (List<Escola>) this.escolaDAO.getTodosEscolas(this.organizar);
+            this.organizar = null;
         }
         return escola;
 
@@ -396,6 +439,16 @@ public class UsuarioBean implements Serializable {
         }
 
         return escola;
+
+    }
+
+    public List<Regional> listarTodosRegionais() throws SQLException, ClassNotFoundException {
+        List<Regional> regional = new LinkedList<Regional>();
+        if (this.usr.getNome() != null) {
+            regional = (List<Regional>) this.regionalDAO.getTodosRegionais();
+            this.organizar = null;
+        }
+        return regional;
 
     }
 
@@ -453,6 +506,20 @@ public class UsuarioBean implements Serializable {
         return usuario;
     }
 
+    public List<Pregao> listarTodosPregoes() throws SQLException, ClassNotFoundException {
+        List<Pregao> pregao = new LinkedList<Pregao>();
+
+        if (this.usr.getNome() != null) {
+            if (this.usr.getPermissao().getIdpermissao() != 1) {
+                pregao = (LinkedList<Pregao>) this.pregaoDAO.getTodosPregoes();
+            } else {
+                pregao = null;
+            }
+        }
+
+        return pregao;
+    }
+
     /*
      * Sistemas
      */
@@ -462,6 +529,8 @@ public class UsuarioBean implements Serializable {
 
     public String irCadastrarChamado() {
         this.chmd = new Chamado();
+        this.cidadeSeleciona = null;
+        this.escola = new Escola();
         this.organizar = null;
         return "cadastrarchamado";
     }
@@ -512,6 +581,8 @@ public class UsuarioBean implements Serializable {
             this.organizar = null;
             this.tipoListarChamados = null;
             this.statusFinalizado = null;
+            this.cidadeSeleciona = null;
+            this.inep = null;
         }
 
         return "listarchamados";
@@ -532,6 +603,20 @@ public class UsuarioBean implements Serializable {
         return "listarchamados";
     }
 
+    public String irCadastrarEscolas() {
+        this.cidadeSeleciona = null;
+        this.cidade = new Cidade();
+
+        return "cadastrarescola";
+    }
+
+    public String irVerificarINEP() {
+        this.escola = new Escola();
+        this.inep = null;
+
+        return "verificarinep";
+    }
+
     public String organizarNull() {
         this.chmd = new Chamado();
 
@@ -544,5 +629,43 @@ public class UsuarioBean implements Serializable {
 
     public void selecionarCidade(ValueChangeEvent evento) {
         this.cidadeSeleciona = (Cidade) evento.getNewValue();
+    }
+
+    public void verificarINEP(ValueChangeEvent evento) throws ClassNotFoundException, SQLException {
+        this.inep = (Integer) evento.getNewValue();
+
+        Escola escola = this.escolaDAO.getPorINEP(this.inep);
+
+        if (escola != null) {
+            msn.EviarMensagens("frm:inep", FacesMessage.SEVERITY_ERROR, "A escola referente ao INEP " + this.inep + " já está cadastrada...", "INEP já existente...");
+        }
+    }
+
+    public String inep() throws ClassNotFoundException, SQLException {
+        String ir;
+
+        Escola escola = this.escolaDAO.getPorINEP(this.inep);
+
+        if (escola != null) {
+            this.escola = escola;
+            this.inep = null;
+            Chamado chmd = new Chamado();
+            chmd.setEscola(escola);
+            chmd = this.chmdDAO.verificarExisteChamadoAberto(chmd);
+
+            if (chmd != null) {
+                this.chmd = chmd;
+                msn.EviarMensagens("", FacesMessage.SEVERITY_ERROR, "Já existe um chamado aberto para a essa escola.", "");
+                ir = this.irEditarChamado();
+            } else {
+                ir = this.irCadastrarChamado();
+            }
+        } else {
+            this.escola.setInep(this.inep);
+            msn.EviarMensagens("", FacesMessage.SEVERITY_ERROR, "A escola referente ao INEP " + this.inep + " não está cadastrada...", "");
+            ir = "cadastrarescola";
+        }
+
+        return ir;
     }
 }

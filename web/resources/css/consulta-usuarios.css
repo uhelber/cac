@@ -1,10 +1,15 @@
 td.nome { 
-    width: 50%;
+    width: 33%;
     text-align: left;
 }
 
 td.permissao { 
-    width: 47%;
+    width: 25%;
+    text-align: left;
+}
+
+td.ativarconta { 
+    width: 25%;
     text-align: left;
 }
 

@@ -27,22 +27,24 @@
             
             <h:dataTable var="usuario" value="#{usuarioBean.listarTodosUsuarios()}" rendered="#{not empty usuarioBean.listarTodosUsuarios()}" width="100%" 
                          styleClass="grid" headerClass="cabecalho" rowClasses="cor-sim, cor-nao"
-                         columnClasses="nome, permissao, editar">
+                         columnClasses="nome, permissao, ativarconta, editar">
                 <h:column>
                     <f:facet name="header" >
-                        <h:commandLink value="Nome" action="listarusuarios" >
-                            <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="nome" />
-                        </h:commandLink>
+                        <h:commandLink value="Nome" />
                     </f:facet>
                     <h:outputText value="#{usuario.nome} #{usuario.sobrenome}" />
                 </h:column>
                 <h:column>
                     <f:facet name="header" >
-                        <h:commandLink value="Permissão" action="listarusuarios" >
-                            <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="tipo" />
-                        </h:commandLink>
+                        <h:commandLink value="Permissão" />
                     </f:facet>
                     <h:outputText value="#{usuario.permissao.tipo}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header" >
+                        <h:commandLink value="Status"/>
+                    </f:facet>
+                    <h:outputText value="#{usuario.ativarconta.nome}" />
                 </h:column>
                 <h:column>
                     <f:facet name="header" />

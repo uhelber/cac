@@ -19,11 +19,8 @@ import java.util.Date;
 public class Teste {
 
     public static void main(String args[]) throws ClassNotFoundException, SQLException, ParseException {
-        EscolaDAO bean = new EscolaDAO();
-        System.out.println(bean.getTodosEscolas().size());
+        UsuarioBean bean = new UsuarioBean();
         
-        for (int i = 0; i < bean.getTodosEscolas().size(); i++) {
-            System.out.println(bean.getTodosEscolas().get(i).getNome());
-        }
+        System.out.println(bean.listarTodosPregoes().size());
     }
 }

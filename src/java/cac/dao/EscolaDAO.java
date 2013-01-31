@@ -26,11 +26,45 @@ public class EscolaDAO {
     public EscolaDAO() throws ClassNotFoundException, SQLException {
     }
 
-    public List<Escola> getTodosEscolas() throws ClassNotFoundException, SQLException {
+    public boolean cadastrarEscola(Escola escola) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
 
+        PreparedStatement ps = (PreparedStatement) this.db.getPreparedStatement("INSERT INTO nte.escola VALUE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        boolean retorno = false;
+        
+        if (escola != null) {
+            ps.setString(1, null);
+            ps.setInt(2, escola.getRegional().getIdregional());
+            ps.setInt(3, escola.getCidade().getIdcidade());
+            ps.setInt(4, escola.getInep());
+            ps.setString(5, escola.getNome());
+            ps.setString(6, escola.getEndereco());
+            ps.setString(7, escola.getBairro());
+            ps.setString(8, escola.getTelefone());
+            ps.setString(9, escola.getTelefone2());
+            ps.setInt(10, escola.getLaboratorio().getIdlaboratorio());
+            
+            retorno = ps.execute();
+        }
+        
+        ps.close();
+        this.db.getCon().close();
+        
+        return retorno;
+    }
+
+    public List<Escola> getTodosEscolas(String organizar) throws ClassNotFoundException, SQLException {
+        this.db = new DataBase();
+        String org = "";
+
+        if (organizar != null) {
+            org = " ORDER BY " + organizar;
+        } else {
+            org = " ORDER BY regional";
+        }
+
         List<Escola> escola = new LinkedList<Escola>();
-        ResultSet rs = this.db.getStatement().executeQuery("SELECT * FROM nte.escola");
+        ResultSet rs = this.db.getStatement().executeQuery("SELECT * FROM nte.escola" + org);
         while (rs.next()) {
             Escola scl = new Escola();
             polularListaEscola(scl, rs);
@@ -51,7 +85,7 @@ public class EscolaDAO {
         ps.setInt(1, cdd.getIdcidade());
 
         ResultSet rs = ps.executeQuery();
-        
+
         while (rs.next()) {
             Escola scl = new Escola();
             polularListaEscola(scl, rs);
@@ -73,7 +107,7 @@ public class EscolaDAO {
 
         CidadeDAO cidadeDAO = new CidadeDAO();
         Cidade cidade = cidadeDAO.getPorIdCidade(rs.getInt("cidade"));
-        
+
         escola.setIdescola(rs.getInt("idescola"));
         escola.setRegional(regional);
         escola.setCidade(cidade);
@@ -81,6 +115,8 @@ public class EscolaDAO {
         escola.setNome(rs.getString("escola"));
         escola.setEndereco(rs.getString("endereco"));
         escola.setBairro(rs.getString("bairro"));
+        escola.setTelefone(rs.getString("telefone"));
+        escola.setTelefone2(rs.getString("telefone2"));
         escola.setLaboratorio(laboratorio);
     }
 
@@ -124,5 +160,28 @@ public class EscolaDAO {
         this.db.getCon().close();
 
         return escola;
+    }
+
+    public Escola getPorINEP(Integer inep) throws ClassNotFoundException, SQLException {
+        this.db = new DataBase();
+
+
+        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("SELECT * FROM nte.escola WHERE inep = ?");
+        ps.setInt(1, inep);
+
+        ResultSet rs = ps.executeQuery();
+
+        Escola scl = null;
+
+        if (rs.next()) {
+            scl = new Escola();
+            polularListaEscola(scl, rs);
+        }
+
+        ps.close();
+        rs.close();
+        this.db.getCon().close();
+
+        return scl;
     }
 }
