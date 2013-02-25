@@ -125,6 +125,37 @@ public class UsuarioDAO {
         return usuarios;
     }
 
+    public List<Usuario> getTodosUsuariosAvancados(Usuario usuario) throws ClassNotFoundException, SQLException {
+        this.db = new DataBase();
+
+        List<Usuario> usuarios = new LinkedList<Usuario>();
+        List<Usuario> novosUsuarios = new LinkedList<Usuario>();
+        
+        ResultSet rs = db.getStatement().executeQuery("SELECT * FROM NTE.USUARIOS WHERE permissao != 1 && idusuarios != 1");
+        
+        while (rs.next()) {
+            Usuario usr = new Usuario();
+            polularListaUsuario(usr, rs);
+            usuarios.add(usr);
+        }
+        
+        for(int i = 0; i < usuarios.size(); i++){
+            if(usuario.getPermissao().getIdpermissao() != 3){
+                if(usuario.getSetor().getIdsetor() == usuarios.get(i).getSetor().getIdsetor()){
+                    novosUsuarios.add(usuarios.get(i));
+                }
+            }
+            else{
+                novosUsuarios = usuarios;
+            }
+        }
+        
+        rs.close();
+        db.getCon().close();
+
+        return novosUsuarios;
+    }
+
     private void polularListaUsuario(Usuario usr, ResultSet rs) throws SQLException, ClassNotFoundException {
         ConverteData cDT = new ConverteData();
 

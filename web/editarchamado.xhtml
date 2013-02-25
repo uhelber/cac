@@ -72,6 +72,14 @@
                     </h:selectOneMenu>
                 </h:panelGroup>
 
+                <h:outputLabel value="Técnico" />
+                <h:panelGroup>
+                    <h:selectOneMenu value="" label="Usuario" required="true" rendered="#{empty usuarioBean.statusFinalizado}">
+                        <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+                        <f:selectItems value="#{usuarioBean.listarTodosUsuariosAvancados()}" var="usuario" itemValue="#{usuario}" itemLabel="#{usuario.nome}" />
+                    </h:selectOneMenu>
+                </h:panelGroup>
+
                 <h:outputLabel value="Bairro" for="bairro" />
                 <h:panelGroup >
                     <h:message for="bairro" />

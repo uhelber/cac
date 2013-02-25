@@ -519,6 +519,20 @@ public class UsuarioBean implements Serializable {
         return usuario;
     }
 
+    public List<Usuario> listarTodosUsuariosAvancados() throws SQLException, ClassNotFoundException {
+        List<Usuario> usuario = new LinkedList<Usuario>();
+
+        if (this.usr.getNome() != null) {
+            if (this.usr.getPermissao().getIdpermissao() != 1) {
+                usuario = (LinkedList<Usuario>) this.usrDAO.getTodosUsuariosAvancados(this.usr);
+            } else {
+                usuario = null;
+            }
+        }
+
+        return usuario;
+    }
+
     public List<Pregao> listarTodosPregoes() throws SQLException, ClassNotFoundException {
         List<Pregao> pregoes = new LinkedList<Pregao>();
 
