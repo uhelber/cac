@@ -13,8 +13,7 @@ import java.io.Serializable;
  */
 public class Laboratorio implements Serializable {
     private Integer idlaboratorio;
-    private String pregao;
-    private String contrato;
+    private Pregao pregao;
 
     public Integer getIdlaboratorio() {
         return idlaboratorio;
@@ -24,28 +23,19 @@ public class Laboratorio implements Serializable {
         this.idlaboratorio = idlaboratorio;
     }
 
-    public String getPregao() {
+    public Pregao getPregao() {
         return pregao;
     }
 
-    public void setPregao(String pregao) {
+    public void setPregao(Pregao pregao) {
         this.pregao = pregao;
-    }
-
-    public String getContrato() {
-        return contrato;
-    }
-
-    public void setContrato(String contrato) {
-        this.contrato = contrato;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 37 * hash + (this.idlaboratorio != null ? this.idlaboratorio.hashCode() : 0);
-        hash = 37 * hash + (this.pregao != null ? this.pregao.hashCode() : 0);
-        hash = 37 * hash + (this.contrato != null ? this.contrato.hashCode() : 0);
+        int hash = 7;
+        hash = 29 * hash + (this.idlaboratorio != null ? this.idlaboratorio.hashCode() : 0);
+        hash = 29 * hash + (this.pregao != null ? this.pregao.hashCode() : 0);
         return hash;
     }
 
@@ -61,13 +51,11 @@ public class Laboratorio implements Serializable {
         if (this.idlaboratorio != other.idlaboratorio && (this.idlaboratorio == null || !this.idlaboratorio.equals(other.idlaboratorio))) {
             return false;
         }
-        if ((this.pregao == null) ? (other.pregao != null) : !this.pregao.equals(other.pregao)) {
-            return false;
-        }
-        if ((this.contrato == null) ? (other.contrato != null) : !this.contrato.equals(other.contrato)) {
+        if (this.pregao != other.pregao && (this.pregao == null || !this.pregao.equals(other.pregao))) {
             return false;
         }
         return true;
     }
+
     
 }

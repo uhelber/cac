@@ -4,13 +4,16 @@
  */
 package cac.classes;
 
-import cac.bean.UsuarioBean;
+import cac.dao.CidadeDAO;
 import cac.dao.EscolaDAO;
+import cac.db.Cidade;
+import cac.db.DataBase;
+import cac.db.Escola;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.List;
+
+
 
 /**
  *
@@ -18,9 +21,7 @@ import java.util.Date;
  */
 public class Teste {
 
-    public static void main(String args[]) throws ClassNotFoundException, SQLException, ParseException {
-        UsuarioBean bean = new UsuarioBean();
-        
-        System.out.println(bean.listarTodosPregoes().size());
+    public static void main(String args[]) throws ClassNotFoundException, SQLException{
+       
     }
 }

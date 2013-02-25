@@ -40,9 +40,9 @@ public class Pregao {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 43 * hash + (this.idpregao != null ? this.idpregao.hashCode() : 0);
-        hash = 43 * hash + (this.pregao != null ? this.pregao.hashCode() : 0);
-        hash = 43 * hash + (this.contrato != null ? this.contrato.hashCode() : 0);
+        hash = 67 * hash + (this.idpregao != null ? this.idpregao.hashCode() : 0);
+        hash = 67 * hash + (this.pregao != null ? this.pregao.hashCode() : 0);
+        hash = 67 * hash + (this.contrato != null ? this.contrato.hashCode() : 0);
         return hash;
     }
 
@@ -66,5 +66,6 @@ public class Pregao {
         }
         return true;
     }
+
     
 }

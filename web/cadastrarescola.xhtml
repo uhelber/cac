@@ -102,10 +102,9 @@
                 <h:panelGroup>
                     <h:message for="pregao" />
                     <br/>
-                    <h:selectBooleanCheckbox id="pregao" label="Pregão" value="#{usuarioBean.escola.cidade}" required="true" >
-                        <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+                    <h:selectManyCheckbox id="pregao" label="Pregão" value="#{usuarioBean.escola.pregao}" layout="lineDirection" required="true" >
                         <f:selectItems value="#{usuarioBean.listarTodosPregoes()}" var="pregao" itemValue="#{pregao}" itemLabel="#{pregao.pregao}" />
-                    </h:selectBooleanCheckbox>
+                    </h:selectManyCheckbox>
                 </h:panelGroup>
 
                 <br/>

@@ -36,11 +36,14 @@
         </h:form>
         <h:form id="frm">
             <h:panelGrid columns="2" styleClass="form-grid" columnClasses="label, campo">
+                <h:outputLabel value="INEP" for="inep" />
+                <h:inputText id="inep" value="#{usuarioBean.inep}" />
+                
                 <h:outputLabel value="Cidade" for="cidade" />
                 <h:panelGroup>
                     <h:message for="cidade" />
                     <br/>
-                    <h:selectOneMenu id="cidade" label="Cidade" value="#{usuarioBean.cidade}" onchange="submit()" valueChangeListener="#{usuarioBean.selecionarCidade}" required="true" >
+                    <h:selectOneMenu id="cidade" label="Cidade" value="#{usuarioBean.chmd.escola.cidade}" required="true" >
                         <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
                         <f:selectItems value="#{usuarioBean.listarTodosCidade()}" var="cidade" itemValue="#{cidade}" itemLabel="#{cidade.nome}" />
                     </h:selectOneMenu>
@@ -52,7 +55,7 @@
                     <br/>
                     <h:selectOneMenu id="escola" label="Escola" value="#{usuarioBean.chmd.escola}" required="true" >
                         <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
-                        <f:selectItems value="#{usuarioBean.listarTodosEscolaPorIdCidade()}" var="escola" itemValue="#{escola}" itemLabel="#{escola.nome}" rendered="#{not empty usuarioBean.listarTodosEscolaPorIdCidade()}" />
+                        <f:selectItems value="#{usuarioBean.listarTodosEscola()}" var="escola" itemValue="#{escola}" itemLabel="#{escola.nome}" rendered="#{not empty usuarioBean.listarTodosEscolaPorIdCidade()}" />
                     </h:selectOneMenu>
                 </h:panelGroup>
 

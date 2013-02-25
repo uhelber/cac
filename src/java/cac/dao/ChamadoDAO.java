@@ -97,7 +97,7 @@ public class ChamadoDAO {
 
 
         List<Chamado> chamado = new LinkedList<Chamado>();
-        ResultSet rs = this.db.getStatement().executeQuery("SELECT * FROM NTE.chamado" + org);
+        ResultSet rs = this.db.getStatement().executeQuery("SELECT * FROM nte.chamado" + org);
         while (rs.next()) {
             Chamado chmd = new Chamado();
             polularListaChamado(chmd, rs);
@@ -202,11 +202,11 @@ public class ChamadoDAO {
         return chmd;
     }
 
-    public Chamado verificarExisteChamadoAberto(Chamado chmd) throws SQLException, ClassNotFoundException {
+    public Chamado verificarExisteChamadoAberto(Escola escola) throws SQLException, ClassNotFoundException {
         this.db = new DataBase();
         
         PreparedStatement ps = (PreparedStatement) this.db.getPreparedStatement("SELECT * FROM nte.chamado WHERE status != 7 AND escola = ?");
-        ps.setInt(1, chmd.getEscola().getIdescola());
+        ps.setInt(1, escola.getIdescola());
 
         ResultSet rs = ps.executeQuery();
         

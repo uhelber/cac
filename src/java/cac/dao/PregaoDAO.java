@@ -5,6 +5,7 @@
 package cac.dao;
 
 import cac.db.DataBase;
+import cac.db.Escola;
 import cac.db.Pregao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,7 +19,7 @@ import java.util.List;
  */
 public class PregaoDAO {
 
-    DataBase db;
+    private DataBase db;
 
     public PregaoDAO() throws ClassNotFoundException, SQLException {
     }
@@ -39,7 +40,25 @@ public class PregaoDAO {
         return pregao;
     }
 
-    private void polularListaPregao(Pregao pregao, ResultSet rs) throws SQLException, ClassNotFoundException {
+    public List<Pregao> getTodosPregoesArray() throws ClassNotFoundException, SQLException {
+        this.db = new DataBase();
+        List<Pregao> pregoes = new LinkedList<Pregao>();
+        
+        ResultSet rs = this.db.getStatement().executeQuery("SELECT * FROM nte.pregao");
+        
+        while (rs.next()) {
+            Pregao prg = new Pregao();
+            polularListaPregao(prg, rs);
+            pregoes.add(prg);
+        }
+        
+        rs.close();
+        db.getCon().close();
+
+        return pregoes;
+    }
+
+    public void polularListaPregao(Pregao pregao, ResultSet rs) throws SQLException, ClassNotFoundException {
         pregao.setIdpregao(rs.getInt("idpregao"));
         pregao.setPregao(rs.getString("pregao"));
         pregao.setContrato(rs.getString("contrato"));

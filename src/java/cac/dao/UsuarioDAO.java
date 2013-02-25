@@ -51,12 +51,12 @@ public class UsuarioDAO {
     public boolean adicionarUsuario(Usuario usr) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
         ConverteData cDT = new ConverteData();
-        
+
         Date dt = new Date(System.currentTimeMillis());
         SimpleDateFormat frmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        
+
         DateFormat dt_nasc = new SimpleDateFormat("yyyy-MM-dd");
-        
+
         PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("INSERT INTO NTE.USUARIOS VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         ps.setString(1, null);
         ps.setString(2, usr.getNome());
@@ -80,12 +80,13 @@ public class UsuarioDAO {
         return retorno;
     }
 
-    public boolean alterarUsuario(Usuario usr) throws ClassNotFoundException, SQLException{
+    public boolean alterarUsuario(Usuario usr) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
         DateFormat dt_nasc = new SimpleDateFormat("yyyy-MM-dd");
-        
+
         PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("UPDATE NTE.USUARIOS SET nome = ?, sobrenome = ?, setor = ?, funcao = ?,"
                 + " datanascimento = ?, cadastrador = ?, telefone = ?, matricula = ?, usuario = ?, senha = ?, permissao = ?, ativarconta = ? WHERE idusuarios = ?");
+
         ps.setString(1, usr.getNome());
         ps.setString(2, usr.getSobrenome());
         ps.setInt(3, usr.getSetor().getIdsetor());
@@ -99,9 +100,9 @@ public class UsuarioDAO {
         ps.setInt(11, usr.getPermissao().getIdpermissao());
         ps.setInt(12, usr.getAtivarconta().getIdativarconta());
         ps.setInt(13, usr.getIdusuarios());
-         
+
         boolean retorno = ps.execute();
-        
+
         ps.close();
         db.getCon().close();
 
@@ -126,19 +127,19 @@ public class UsuarioDAO {
 
     private void polularListaUsuario(Usuario usr, ResultSet rs) throws SQLException, ClassNotFoundException {
         ConverteData cDT = new ConverteData();
-        
+
         SetorDAO setorDAO = new SetorDAO();
         Setor setor = setorDAO.getPorIdSetor(rs.getInt("setor"));
-        
+
         FuncaoDAO funcaoDAO = new FuncaoDAO();
         Funcao funcao = funcaoDAO.getPorIdFuncao(rs.getInt("funcao"));
-        
+
         PermissaoDAO permissaoDAO = new PermissaoDAO();
         Permissao permissao = permissaoDAO.getPorIdPermissao(rs.getInt("permissao"));
-        
+
         AtivarContaDAO ativarcontaDAO = new AtivarContaDAO();
         AtivarConta ativarconta = ativarcontaDAO.getPorIdAtivarConta(rs.getInt("ativarconta"));
-        
+
         usr.setIdusuarios(rs.getInt("idusuarios"));
         usr.setNome(rs.getString("nome"));
         usr.setSobrenome(rs.getString("sobrenome"));
@@ -169,6 +170,7 @@ public class UsuarioDAO {
             if (rs.next()) {
                 usr = new Usuario();
                 polularListaUsuario(usr, rs);
+
             }
 
             ps.close();
@@ -200,34 +202,32 @@ public class UsuarioDAO {
 
         return usr;
     }
-    
-    public Integer verificarUsuarioJaCadastrado(Usuario usr) throws ClassNotFoundException, SQLException{
+
+    public Integer verificarUsuarioJaCadastrado(Usuario usr) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
         Mensagem msn = new Mensagem();
         Integer ir;
-        
+
         PreparedStatement ps = (PreparedStatement) this.db.getPreparedStatement("SELECT * FROM NTE.USUARIOS"
                 + " WHERE usuario = ?");
         ps.setString(1, usr.getUsuario());
 
         ResultSet rs = ps.executeQuery();
         rs.last();
-        
-        if(rs.getRow() == 0)
-        {
+
+        if (rs.getRow() == 0) {
             this.adicionarUsuario(usr);
             msn.EviarMensagens("", FacesMessage.SEVERITY_INFO, "Usuário cadastrado com sucesso...", "");
             ir = 0;
-        }
-        else{
+        } else {
             msn.EviarMensagens("", FacesMessage.SEVERITY_ERROR, "Já existe outro usuário com esse login...", "");
             ir = 1;
         }
-                
+
         rs.close();
         ps.close();
         this.db.getCon().close();
-        
+
         return ir;
     }
 }

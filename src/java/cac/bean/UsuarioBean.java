@@ -10,6 +10,7 @@ import cac.dao.ChamadoDAO;
 import cac.dao.CidadeDAO;
 import cac.dao.EscolaDAO;
 import cac.dao.FuncaoDAO;
+import cac.dao.LaboratorioDAO;
 import cac.dao.ParecerDAO;
 import cac.dao.PermissaoDAO;
 import cac.dao.PregaoDAO;
@@ -22,6 +23,7 @@ import cac.db.Cidade;
 import cac.db.DataBase;
 import cac.db.Escola;
 import cac.db.Funcao;
+import cac.db.Laboratorio;
 import cac.db.Parecer;
 import cac.db.Permissao;
 import cac.db.Pregao;
@@ -64,6 +66,7 @@ public class UsuarioBean implements Serializable {
     private FuncaoDAO funcaoDAO;
     private PermissaoDAO permissaoDAO;
     private PregaoDAO pregaoDAO;
+    private LaboratorioDAO laboratorioDAO = new LaboratorioDAO();
     /*
      * Objetos
      */
@@ -76,6 +79,7 @@ public class UsuarioBean implements Serializable {
     private Setor setor;
     private Funcao funcao;
     private Cidade cidadeSeleciona = null;
+    private Pregao pregao = new Pregao();
     /*
      * Argumentos
      */
@@ -223,6 +227,14 @@ public class UsuarioBean implements Serializable {
         this.inep = inep;
     }
 
+    public Pregao getPregao() {
+        return pregao;
+    }
+
+    public void setPregao(Pregao pregao) {
+        this.pregao = pregao;
+    }
+
 
     /*
      * Área reservada a configurações de usuários.
@@ -316,7 +328,7 @@ public class UsuarioBean implements Serializable {
      */
     public String cadastrarChamado() throws ClassNotFoundException, SQLException {
         this.msn = new Mensagem();
-        Chamado verificar = this.chmdDAO.verificarExisteChamadoAberto(this.chmd);
+        Chamado verificar = this.chmdDAO.verificarExisteChamadoAberto(this.chmd.getEscola());
         String ir = "";
 
         if (verificar == null) {
@@ -372,6 +384,7 @@ public class UsuarioBean implements Serializable {
 
         if (this.usr.getNome() != null) {
             if (escola == null) {
+                System.out.println(this.escola.getCidade());
                 this.escolaDAO.cadastrarEscola(this.escola);
                 this.escola = new Escola();
                 this.inep = null;
@@ -507,17 +520,17 @@ public class UsuarioBean implements Serializable {
     }
 
     public List<Pregao> listarTodosPregoes() throws SQLException, ClassNotFoundException {
-        List<Pregao> pregao = new LinkedList<Pregao>();
+        List<Pregao> pregoes = new LinkedList<Pregao>();
 
         if (this.usr.getNome() != null) {
             if (this.usr.getPermissao().getIdpermissao() != 1) {
-                pregao = (LinkedList<Pregao>) this.pregaoDAO.getTodosPregoes();
+                pregoes = this.pregaoDAO.getTodosPregoesArray();
             } else {
                 pregao = null;
             }
         }
 
-        return pregao;
+        return pregoes;
     }
 
     /*
@@ -528,7 +541,6 @@ public class UsuarioBean implements Serializable {
     }
 
     public String irCadastrarChamado() {
-        this.chmd = new Chamado();
         this.cidadeSeleciona = null;
         this.escola = new Escola();
         this.organizar = null;
@@ -610,6 +622,12 @@ public class UsuarioBean implements Serializable {
         return "cadastrarescola";
     }
 
+    public String irCadastrarUsuarios() {
+        this.novoUsr = new Usuario();
+
+        return "cadastrarusuario";
+    }
+
     public String irVerificarINEP() {
         this.escola = new Escola();
         this.inep = null;
@@ -648,22 +666,25 @@ public class UsuarioBean implements Serializable {
 
         if (escola != null) {
             this.escola = escola;
-            this.inep = null;
             Chamado chmd = new Chamado();
-            chmd.setEscola(escola);
-            chmd = this.chmdDAO.verificarExisteChamadoAberto(chmd);
+            chmd = this.chmdDAO.verificarExisteChamadoAberto(escola);
 
             if (chmd != null) {
                 this.chmd = chmd;
                 msn.EviarMensagens("", FacesMessage.SEVERITY_ERROR, "Já existe um chamado aberto para a essa escola.", "");
                 ir = this.irEditarChamado();
             } else {
+                this.chmd.setEscola(escola);
+                this.cidade = escola.getCidade();
+                this.cidadeSeleciona = escola.getCidade();
+                this.listarTodosEscolaPorIdCidade();
+
                 ir = this.irCadastrarChamado();
             }
         } else {
             this.escola.setInep(this.inep);
             msn.EviarMensagens("", FacesMessage.SEVERITY_ERROR, "A escola referente ao INEP " + this.inep + " não está cadastrada...", "");
-            ir = "cadastrarescola";
+            ir = "";
         }
 
         return ir;

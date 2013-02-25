@@ -4,7 +4,7 @@ USE `nte`;
 --
 -- Host: localhost    Database: nte
 -- ------------------------------------------------------
--- Server version	5.1.67-community
+-- Server version	5.5.28-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -28,7 +28,7 @@ CREATE TABLE `status` (
   `idstatus` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idstatus`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,7 @@ CREATE TABLE `status` (
 
 LOCK TABLES `status` WRITE;
 /*!40000 ALTER TABLE `status` DISABLE KEYS */;
-INSERT INTO `status` VALUES (1,'Crítico'),(2,'Prioridade'),(3,'Andamento'),(4,'Espera'),(5,'Aguardando Garantia'),(6,'Aguardando Oi');
+INSERT INTO `status` VALUES (1,'Crítico'),(2,'Prioridade'),(3,'Andamento'),(4,'Espera'),(5,'Aguardando Garantia'),(6,'Aguardando Oi'),(7,'Finalizado');
 /*!40000 ALTER TABLE `status` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-01-09 11:26:55
+-- Dump completed on 2013-02-19 10:25:33

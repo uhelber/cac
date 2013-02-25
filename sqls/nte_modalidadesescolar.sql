@@ -18,39 +18,31 @@ USE `nte`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `chamado`
+-- Table structure for table `modalidadesescolar`
 --
 
-DROP TABLE IF EXISTS `chamado`;
+DROP TABLE IF EXISTS `modalidadesescolar`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `chamado` (
-  `idchamado` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `modalidadesescolar` (
+  `idmodalidadeescolar` int(11) NOT NULL AUTO_INCREMENT,
   `escola` int(11) DEFAULT NULL,
-  `contato` varchar(45) DEFAULT NULL,
-  `telefone` varchar(45) DEFAULT NULL,
-  `telefone2` varchar(45) DEFAULT NULL,
-  `status` int(11) DEFAULT NULL,
-  `descricao` text,
-  `abertopor` int(11) DEFAULT NULL,
-  `dataabertura` datetime DEFAULT NULL,
-  PRIMARY KEY (`idchamado`),
-  KEY `ks_chamado_usuario_idx` (`abertopor`),
-  KEY `ks_chamdo_status_idx` (`status`),
-  KEY `ks_chamado_escola_idx` (`escola`),
-  CONSTRAINT `ks_chamado_escola` FOREIGN KEY (`escola`) REFERENCES `escola` (`idescola`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `ks_chamado_usuario` FOREIGN KEY (`abertopor`) REFERENCES `usuarios` (`idusuarios`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `ks_chamdo_status` FOREIGN KEY (`status`) REFERENCES `status` (`idstatus`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+  `modalidade` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idmodalidadeescolar`),
+  KEY `fk_modalidadesescolare_escola_idx` (`escola`),
+  KEY `fk_modalidadesescolar_modalidades_idx` (`modalidade`),
+  CONSTRAINT `fk_modalidadesescolare_escola` FOREIGN KEY (`escola`) REFERENCES `escola` (`idescola`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_modalidadesescolar_modalidades` FOREIGN KEY (`modalidade`) REFERENCES `modalidades` (`idmodalidades`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `chamado`
+-- Dumping data for table `modalidadesescolar`
 --
 
-LOCK TABLES `chamado` WRITE;
-/*!40000 ALTER TABLE `chamado` DISABLE KEYS */;
-/*!40000 ALTER TABLE `chamado` ENABLE KEYS */;
+LOCK TABLES `modalidadesescolar` WRITE;
+/*!40000 ALTER TABLE `modalidadesescolar` DISABLE KEYS */;
+/*!40000 ALTER TABLE `modalidadesescolar` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -62,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-02-19 10:25:34
+-- Dump completed on 2013-02-19 10:25:44

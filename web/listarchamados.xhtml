@@ -29,7 +29,7 @@
             </h:commandButton>
             <h:commandButton value="Perfil" action="#{usuarioBean.irEditarPerfil()}" />
             <h:commandButton value="Usuários" action="listarusuarios" rendered="#{not empty usuarioBean.listarTodosUsuarios()}" />
-            <h:commandButton value="Escolas" action="listarescolas" rendered="#{not empty usuarioBean.listarTodosUsuarios()}" />
+            
             
             <h:dataTable var="chamdo" value="#{usuarioBean.listarTodosChamados()}" rendered="#{not empty usuarioBean.listarTodosChamados()}" width="100%" 
                          styleClass="grid" headerClass="cabecalho" rowClasses="cor-sim, cor-nao"

@@ -8,6 +8,7 @@ import cac.db.Cidade;
 import cac.db.DataBase;
 import cac.db.Escola;
 import cac.db.Laboratorio;
+import cac.db.Pregao;
 import cac.db.Regional;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,10 +29,11 @@ public class EscolaDAO {
 
     public boolean cadastrarEscola(Escola escola) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
+        LaboratorioDAO laboratorioDAO = new LaboratorioDAO();
 
-        PreparedStatement ps = (PreparedStatement) this.db.getPreparedStatement("INSERT INTO nte.escola VALUE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        PreparedStatement ps = (PreparedStatement) this.db.getPreparedStatement("INSERT INTO nte.escola VALUE(?, ?, ?, ?, ?, ?, ?, ?, ?)");
         boolean retorno = false;
-        
+
         if (escola != null) {
             ps.setString(1, null);
             ps.setInt(2, escola.getRegional().getIdregional());
@@ -42,14 +44,16 @@ public class EscolaDAO {
             ps.setString(7, escola.getBairro());
             ps.setString(8, escola.getTelefone());
             ps.setString(9, escola.getTelefone2());
-            ps.setInt(10, escola.getLaboratorio().getIdlaboratorio());
-            
+
+            for (int i = 0; i < escola.getPregao().length; i++) {
+                laboratorioDAO.cadastrarLaboratorio(escola, i);
+            }
             retorno = ps.execute();
         }
-        
+
         ps.close();
         this.db.getCon().close();
-        
+
         return retorno;
     }
 
@@ -103,7 +107,13 @@ public class EscolaDAO {
         Regional regional = regionalDAO.getPorIdRegional(rs.getInt("regional"));
 
         LaboratorioDAO laboratorioDAO = new LaboratorioDAO();
-        Laboratorio laboratorio = laboratorioDAO.getPorIdLaboratorio(rs.getInt("laboratorio"));
+        List<Pregao> pregoes = laboratorioDAO.getTodosPregoesPorIdEscola(rs.getInt("idescola"));
+        
+        Pregao[] pregaoArray = null;
+        
+        for(int i = 0; i < pregoes.size(); i++){
+            pregaoArray[i] = pregoes.get(i);
+        }
 
         CidadeDAO cidadeDAO = new CidadeDAO();
         Cidade cidade = cidadeDAO.getPorIdCidade(rs.getInt("cidade"));
@@ -117,7 +127,7 @@ public class EscolaDAO {
         escola.setBairro(rs.getString("bairro"));
         escola.setTelefone(rs.getString("telefone"));
         escola.setTelefone2(rs.getString("telefone2"));
-        escola.setLaboratorio(laboratorio);
+        escola.setPregao(pregaoArray);
     }
 
     public Escola getPorIdEscola(int id) throws ClassNotFoundException, SQLException {

@@ -23,7 +23,7 @@
             <br/>
             <br/>
             <h:commandButton value="Voltar" action="listarchamados" />
-            <h:commandButton value="Cadastrar Usuário" action="cadastrarusuario" />
+            <h:commandButton value="Cadastrar Usuário" action="#{usuarioBean.irCadastrarUsuarios()}" />
             
             <h:dataTable var="usuario" value="#{usuarioBean.listarTodosUsuarios()}" rendered="#{not empty usuarioBean.listarTodosUsuarios()}" width="100%" 
                          styleClass="grid" headerClass="cabecalho" rowClasses="cor-sim, cor-nao"

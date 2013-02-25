@@ -4,7 +4,7 @@ USE `nte`;
 --
 -- Host: localhost    Database: nte
 -- ------------------------------------------------------
--- Server version	5.1.67-community
+-- Server version	5.5.28-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -27,7 +27,10 @@ DROP TABLE IF EXISTS `regional`;
 CREATE TABLE `regional` (
   `idregional` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`idregional`)
+  `setor` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idregional`),
+  KEY `fk_regional_setor_idx` (`setor`),
+  CONSTRAINT `fk_regional_setor` FOREIGN KEY (`setor`) REFERENCES `setor` (`idsetor`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -37,7 +40,7 @@ CREATE TABLE `regional` (
 
 LOCK TABLES `regional` WRITE;
 /*!40000 ALTER TABLE `regional` DISABLE KEYS */;
-INSERT INTO `regional` VALUES (1,'João Pessoa'),(2,'Guarabira'),(3,'Campina Grande'),(4,'Cuité'),(5,'Monteiro'),(6,'Patos'),(7,'Itaporanga'),(8,'Catolé do Rocha'),(9,'Cajazeiras'),(10,'Sousa'),(11,'Princesa Isabel'),(12,'Itabaiana'),(13,'Pombal'),(14,'Mamanguape');
+INSERT INTO `regional` VALUES (1,'João Pessoa',2),(2,'Guarabira',2),(3,'Campina Grande',3),(4,'Cuité',3),(5,'Monteiro',3),(6,'Patos',4),(7,'Itaporanga',4),(8,'Catolé do Rocha',5),(9,'Cajazeiras',5),(10,'Sousa',5),(11,'Princesa Isabel',4),(12,'Itabaiana',2),(13,'Pombal',5),(14,'Mamanguape',2);
 /*!40000 ALTER TABLE `regional` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-01-09 11:26:56
+-- Dump completed on 2013-02-19 10:25:39

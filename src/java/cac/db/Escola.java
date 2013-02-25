@@ -5,6 +5,8 @@
 package cac.db;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -21,7 +23,7 @@ public class Escola implements Serializable {
     private String bairro;
     private String telefone;
     private String telefone2;
-    private Laboratorio laboratorio;
+    private Pregao[] pregao;
 
     public Integer getIdescola() {
         return idescola;
@@ -95,27 +97,27 @@ public class Escola implements Serializable {
         this.telefone2 = telefone2;
     }
 
-    public Laboratorio getLaboratorio() {
-        return laboratorio;
+    public Pregao[] getPregao() {
+        return pregao;
     }
 
-    public void setLaboratorio(Laboratorio laboratorio) {
-        this.laboratorio = laboratorio;
+    public void setPregao(Pregao[] pregao) {
+        this.pregao = pregao;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + (this.idescola != null ? this.idescola.hashCode() : 0);
-        hash = 97 * hash + (this.regional != null ? this.regional.hashCode() : 0);
-        hash = 97 * hash + (this.cidade != null ? this.cidade.hashCode() : 0);
-        hash = 97 * hash + (this.inep != null ? this.inep.hashCode() : 0);
-        hash = 97 * hash + (this.nome != null ? this.nome.hashCode() : 0);
-        hash = 97 * hash + (this.endereco != null ? this.endereco.hashCode() : 0);
-        hash = 97 * hash + (this.bairro != null ? this.bairro.hashCode() : 0);
-        hash = 97 * hash + (this.telefone != null ? this.telefone.hashCode() : 0);
-        hash = 97 * hash + (this.telefone2 != null ? this.telefone2.hashCode() : 0);
-        hash = 97 * hash + (this.laboratorio != null ? this.laboratorio.hashCode() : 0);
+        hash = 41 * hash + (this.idescola != null ? this.idescola.hashCode() : 0);
+        hash = 41 * hash + (this.regional != null ? this.regional.hashCode() : 0);
+        hash = 41 * hash + (this.cidade != null ? this.cidade.hashCode() : 0);
+        hash = 41 * hash + (this.inep != null ? this.inep.hashCode() : 0);
+        hash = 41 * hash + (this.nome != null ? this.nome.hashCode() : 0);
+        hash = 41 * hash + (this.endereco != null ? this.endereco.hashCode() : 0);
+        hash = 41 * hash + (this.bairro != null ? this.bairro.hashCode() : 0);
+        hash = 41 * hash + (this.telefone != null ? this.telefone.hashCode() : 0);
+        hash = 41 * hash + (this.telefone2 != null ? this.telefone2.hashCode() : 0);
+        hash = 41 * hash + Arrays.deepHashCode(this.pregao);
         return hash;
     }
 
@@ -155,10 +157,11 @@ public class Escola implements Serializable {
         if ((this.telefone2 == null) ? (other.telefone2 != null) : !this.telefone2.equals(other.telefone2)) {
             return false;
         }
-        if (this.laboratorio != other.laboratorio && (this.laboratorio == null || !this.laboratorio.equals(other.laboratorio))) {
+        if (!Arrays.deepEquals(this.pregao, other.pregao)) {
             return false;
         }
         return true;
     }
 
+    
 }

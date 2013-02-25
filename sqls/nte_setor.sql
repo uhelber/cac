@@ -4,7 +4,7 @@ USE `nte`;
 --
 -- Host: localhost    Database: nte
 -- ------------------------------------------------------
--- Server version	5.1.67-community
+-- Server version	5.5.28-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-01-09 11:26:58
+-- Dump completed on 2013-02-19 10:25:48
