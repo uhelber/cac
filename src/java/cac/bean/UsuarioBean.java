@@ -23,7 +23,6 @@ import cac.db.Cidade;
 import cac.db.DataBase;
 import cac.db.Escola;
 import cac.db.Funcao;
-import cac.db.Laboratorio;
 import cac.db.Parecer;
 import cac.db.Permissao;
 import cac.db.Pregao;
@@ -84,7 +83,6 @@ public class UsuarioBean implements Serializable {
      * Argumentos
      */
     private Mensagem msn;
-    private String organizar = null;
     private String tipoListarChamados = null;
     private String statusFinalizado = null;
     private String confirmarSenha = "";
@@ -102,7 +100,6 @@ public class UsuarioBean implements Serializable {
         this.permissaoDAO = new PermissaoDAO();
         this.pregaoDAO = new PregaoDAO();
 
-        this.organizar = null;
         this.tipoListarChamados = null;
         this.statusFinalizado = null;
     }
@@ -153,14 +150,6 @@ public class UsuarioBean implements Serializable {
 
     public void setPrcr(Parecer prcr) {
         this.prcr = prcr;
-    }
-
-    public String getOrganizar() {
-        return organizar;
-    }
-
-    public void setOrganizar(String organizar) {
-        this.organizar = organizar;
     }
 
     public String getTipoListarChamados() {
@@ -415,7 +404,7 @@ public class UsuarioBean implements Serializable {
     public List<Chamado> listarTodosChamados() throws ClassNotFoundException, SQLException {
         List<Chamado> chamado = new LinkedList<Chamado>();
         if (this.usr.getNome() != null) {
-            chamado = (LinkedList<Chamado>) this.chmdDAO.getTodosChamados(this.usr, this.tipoListarChamados, this.organizar);
+            chamado = (LinkedList<Chamado>) this.chmdDAO.getTodosChamados(this.usr, this.tipoListarChamados);
         } else {
             this.sair();
         }
@@ -435,8 +424,7 @@ public class UsuarioBean implements Serializable {
     public List<Escola> listarTodosEscola() throws SQLException, ClassNotFoundException {
         List<Escola> escola = new LinkedList<Escola>();
         if (this.usr.getNome() != null) {
-            escola = (List<Escola>) this.escolaDAO.getTodosEscolas(this.organizar);
-            this.organizar = null;
+            escola = (List<Escola>) this.escolaDAO.getTodosEscolas();
         }
         return escola;
 
@@ -459,7 +447,6 @@ public class UsuarioBean implements Serializable {
         List<Regional> regional = new LinkedList<Regional>();
         if (this.usr.getNome() != null) {
             regional = (List<Regional>) this.regionalDAO.getTodosRegionais();
-            this.organizar = null;
         }
         return regional;
 
@@ -557,13 +544,10 @@ public class UsuarioBean implements Serializable {
     public String irCadastrarChamado() {
         this.cidadeSeleciona = null;
         this.escola = new Escola();
-        this.organizar = null;
         return "cadastrarchamado";
     }
 
     public String irEditarChamado() {
-        this.organizar = null;
-
         if (this.chmd.getStatus().getIdstatus() == 7) {
             this.statusFinalizado = "finalizado";
         } else {
@@ -574,7 +558,6 @@ public class UsuarioBean implements Serializable {
     }
 
     public String irEditarPerfil() {
-        this.organizar = null;
         this.novoUsr = this.usr;
 
         return "editarusuario";
@@ -604,7 +587,6 @@ public class UsuarioBean implements Serializable {
 
     public String voltar() {
         if (this.tipoListarChamados.equals("finalizado")) {
-            this.organizar = null;
             this.tipoListarChamados = null;
             this.statusFinalizado = null;
             this.cidadeSeleciona = null;
@@ -615,14 +597,12 @@ public class UsuarioBean implements Serializable {
     }
 
     public String irChamadosFinalizados() {
-        this.organizar = "finalizado";
         this.tipoListarChamados = "finalizado";
 
         return "chamadosfinalizados";
     }
 
     public String irListarChamados() {
-        this.organizar = null;
         this.tipoListarChamados = null;
         this.statusFinalizado = null;
 

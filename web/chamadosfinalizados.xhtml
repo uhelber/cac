@@ -22,7 +22,7 @@
             <br/>
             <br/>
             <br/>
-            <h:commandButton value="Voltar" action="#{usuarioBean.voltar()}" rendered="#{not empty usuarioBean.organizar}" />
+            <h:commandButton value="Voltar" action="#{usuarioBean.voltar()}" />
             <h:commandButton value="Novo Chamado" action="#{usuarioBean.irVerificarINEP()}" />
             
             <h:dataTable var="chamdo" value="#{usuarioBean.listarTodosChamados()}" width="100%" rendered="#{not empty usuarioBean.listarTodosChamados()}" 
@@ -33,57 +33,43 @@
                 </h:column>
                 <h:column>
                     <f:facet name="header" >
-                        <h:commandLink value="Escola" action="listarchamados" >
-                            <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="escola" />
-                        </h:commandLink>
+                        <h:outputText value="Escola" />
                     </f:facet>
                     <h:outputText value="#{chamdo.escola.nome}" />
                 </h:column>
                 <h:column>
                     <f:facet name="header" >
-                        <h:commandLink value="Status" action="listarchamados" >
-                            <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="status" />
-                        </h:commandLink>
+                        <h:outputText value="Status" />
                     </f:facet>
                     <h:outputText value="#{chamdo.status.nome}" />
                 </h:column>
                 <h:column>
                     <f:facet name="header" >
-                        <h:commandLink value="Cidade" action="listarchamados" >
-                            <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="cidade" />
-                        </h:commandLink>
+                        <h:outputText value="Cidade" />
                     </f:facet>
                     <h:outputText value="#{chamdo.escola.cidade.nome}" />
                 </h:column>
                 <h:column>
                     <f:facet name="header" >
-                        <h:commandLink value="Bairro" action="listarchamados" >
-                            <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="bairro" />
-                        </h:commandLink>
+                        <h:outputText value="Bairro" />
                     </f:facet>
                     <h:outputText value="#{chamdo.escola.bairro}" />
                 </h:column>
                 <h:column>
                     <f:facet name="header" >
-                        <h:commandLink value="Nome do Contato" action="listarchamados" >
-                            <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="contato" />
-                        </h:commandLink>
+                        <h:outputText value="Nome do Contato" />
                     </f:facet>
                     <h:outputText value="#{chamdo.contato}" />
                 </h:column>
                 <h:column>
                     <f:facet name="header" >
-                        <h:commandLink value="Telefone" action="listarchamados" >
-                            <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="telefone" />
-                        </h:commandLink>
+                        <h:outputText value="Telefone" />
                     </f:facet>
                     <h:outputText value="#{chamdo.telefone}" />
                 </h:column>
                 <h:column>
                     <f:facet name="header" >
-                        <h:commandLink value="Data da Abertura" action="listarchamados" >
-                            <f:setPropertyActionListener target="#{usuarioBean.organizar}" value="dataabertura" />
-                        </h:commandLink>
+                        <h:outputText value="Data da Abertura" />
                     </f:facet>
                     <h:outputText value="#{chamdo.dataabertura}" >
                         <f:convertDateTime parent="dd/MM/yyyy" />

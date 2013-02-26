@@ -3,9 +3,14 @@ td.tipo {
     text-align: center;
 }
 
-td.chamado { 
+td.tecnico { 
     width: 5%;
     text-align: right;
+}
+
+td.chamado { 
+    width: 2%;
+    text-align: center;
 }
 
 td.escola {
@@ -14,7 +19,7 @@ td.escola {
 }
 
 td.status { 
-    width: 10%;
+    width: 8%;
     text-align: left;
 }
 

@@ -74,7 +74,7 @@
 
                 <h:outputLabel value="Técnico" />
                 <h:panelGroup>
-                    <h:selectOneMenu value="" label="Usuario" required="true" rendered="#{empty usuarioBean.statusFinalizado}">
+                    <h:selectOneMenu value="#{usuarioBean.chmd.tecnico}" label="Técnico" >
                         <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
                         <f:selectItems value="#{usuarioBean.listarTodosUsuariosAvancados()}" var="usuario" itemValue="#{usuario}" itemLabel="#{usuario.nome}" />
                     </h:selectOneMenu>

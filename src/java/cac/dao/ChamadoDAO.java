@@ -33,7 +33,7 @@ public class ChamadoDAO {
     public boolean adicionarChamado(Chamado chmd, Usuario usr) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
 
-        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("INSERT INTO NTE.chamado VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("INSERT INTO NTE.chamado VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         Date dt = new Date();
         SimpleDateFormat frmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         boolean retorno = false;
@@ -48,6 +48,7 @@ public class ChamadoDAO {
             ps.setString(7, chmd.getDescricao());
             ps.setInt(8, usr.getIdusuarios());
             ps.setString(9, frmt.format(dt));
+            ps.setString(10, null);
 
             retorno = ps.execute();
         }
@@ -62,13 +63,14 @@ public class ChamadoDAO {
         this.db = new DataBase();
         ParecerDAO prcrDAO = new ParecerDAO();
 
-        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("UPDATE NTE.chamado SET contato = ?, telefone = ?, telefone2 = ?, status = ? WHERE idchamado = ?");
+        PreparedStatement ps = (PreparedStatement) db.getPreparedStatement("UPDATE NTE.chamado SET contato = ?, telefone = ?, telefone2 = ?, status = ?, tecnico = ? WHERE idchamado = ?");
 
         ps.setString(1, chmd.getContato());
         ps.setString(2, chmd.getTelefone());
         ps.setString(3, chmd.getTelefone2());
         ps.setInt(4, chmd.getStatus().getIdstatus());
-        ps.setInt(5, chmd.getIdchamado());
+        ps.setInt(5, chmd.getTecnico().getIdusuarios());
+        ps.setInt(6, chmd.getIdchamado());
 
         prcrDAO.adicionarParecer(chmd, parecer, usr);
 
@@ -79,20 +81,18 @@ public class ChamadoDAO {
         return retorno;
     }
 
-    public List<Chamado> getTodosChamados(Usuario usr, String tipo, String organizar) throws ClassNotFoundException, SQLException {
+    public List<Chamado> getTodosChamados(Usuario usr, String tipo) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
         String org = "";
+        String organizar = null;
 
         if (tipo == null) {
             if (organizar == null || organizar.equals("")) {
-                org = " WHERE status <> '7' ORDER BY dataabertura";
-            } else {
-                org = " WHERE status <> '7' ORDER BY " + organizar;
-            }
+                org = " WHERE status <> '7' ORDER BY status, dataabertura";
+            } 
         } else if (tipo.equals("finalizado")) {
-            if (organizar.equals("finalizado")) {
-                org = " WHERE status = '7' ORDER BY dataabertura";
-            }
+            org = " WHERE status = '7' ORDER BY status, dataabertura";
+            
         }
 
 
@@ -121,6 +121,8 @@ public class ChamadoDAO {
         UsuarioDAO usrDAO = new UsuarioDAO();
         Usuario usr = usrDAO.getPorIdUsuario(rs.getInt("abertopor"));
 
+        Usuario tecnico = usrDAO.getPorIdUsuario(rs.getInt("tecnico"));
+
         StatusDAO stsDAO = new StatusDAO();
         Status sts = stsDAO.getPorIdStatus(rs.getInt("status"));
 
@@ -136,6 +138,7 @@ public class ChamadoDAO {
         chmd.setDescricao(rs.getString("descricao"));
         chmd.setAbertopor(rs.getInt("abertopor"));
         chmd.setDataabertura(cDT.clu_Data(rs.getString("dataabertura")));
+        chmd.setTecnico(tecnico);
 
         if (sts.getIdstatus() == 1) {
             chmd.setImagem("/imagens/alerta1.2.png");

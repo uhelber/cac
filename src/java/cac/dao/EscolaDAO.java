@@ -57,18 +57,11 @@ public class EscolaDAO {
         return retorno;
     }
 
-    public List<Escola> getTodosEscolas(String organizar) throws ClassNotFoundException, SQLException {
+    public List<Escola> getTodosEscolas() throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
-        String org = "";
-
-        if (organizar != null) {
-            org = " ORDER BY " + organizar;
-        } else {
-            org = " ORDER BY regional";
-        }
-
+        
         List<Escola> escola = new LinkedList<Escola>();
-        ResultSet rs = this.db.getStatement().executeQuery("SELECT * FROM nte.escola" + org);
+        ResultSet rs = this.db.getStatement().executeQuery("SELECT * FROM nte.escola ORDER BY regional");
         while (rs.next()) {
             Escola scl = new Escola();
             polularListaEscola(scl, rs);

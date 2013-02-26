@@ -22,9 +22,7 @@ public class Chamado implements Serializable{
     private Integer abertopor;
     private String dataabertura;
     private String imagem;
-
-    public Chamado() {
-    }
+    private Usuario tecnico;
 
     public Integer getIdchamado() {
         return idchamado;
@@ -106,19 +104,28 @@ public class Chamado implements Serializable{
         this.imagem = imagem;
     }
 
+    public Usuario getTecnico() {
+        return tecnico;
+    }
+
+    public void setTecnico(Usuario tecnico) {
+        this.tecnico = tecnico;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 43 * hash + (this.idchamado != null ? this.idchamado.hashCode() : 0);
-        hash = 43 * hash + (this.escola != null ? this.escola.hashCode() : 0);
-        hash = 43 * hash + (this.contato != null ? this.contato.hashCode() : 0);
-        hash = 43 * hash + (this.telefone != null ? this.telefone.hashCode() : 0);
-        hash = 43 * hash + (this.telefone2 != null ? this.telefone2.hashCode() : 0);
-        hash = 43 * hash + (this.status != null ? this.status.hashCode() : 0);
-        hash = 43 * hash + (this.descricao != null ? this.descricao.hashCode() : 0);
-        hash = 43 * hash + (this.abertopor != null ? this.abertopor.hashCode() : 0);
-        hash = 43 * hash + (this.dataabertura != null ? this.dataabertura.hashCode() : 0);
-        hash = 43 * hash + (this.imagem != null ? this.imagem.hashCode() : 0);
+        int hash = 3;
+        hash = 41 * hash + (this.idchamado != null ? this.idchamado.hashCode() : 0);
+        hash = 41 * hash + (this.escola != null ? this.escola.hashCode() : 0);
+        hash = 41 * hash + (this.contato != null ? this.contato.hashCode() : 0);
+        hash = 41 * hash + (this.telefone != null ? this.telefone.hashCode() : 0);
+        hash = 41 * hash + (this.telefone2 != null ? this.telefone2.hashCode() : 0);
+        hash = 41 * hash + (this.status != null ? this.status.hashCode() : 0);
+        hash = 41 * hash + (this.descricao != null ? this.descricao.hashCode() : 0);
+        hash = 41 * hash + (this.abertopor != null ? this.abertopor.hashCode() : 0);
+        hash = 41 * hash + (this.dataabertura != null ? this.dataabertura.hashCode() : 0);
+        hash = 41 * hash + (this.imagem != null ? this.imagem.hashCode() : 0);
+        hash = 41 * hash + (this.tecnico != null ? this.tecnico.hashCode() : 0);
         return hash;
     }
 
@@ -159,6 +166,9 @@ public class Chamado implements Serializable{
             return false;
         }
         if ((this.imagem == null) ? (other.imagem != null) : !this.imagem.equals(other.imagem)) {
+            return false;
+        }
+        if (this.tecnico != other.tecnico && (this.tecnico == null || !this.tecnico.equals(other.tecnico))) {
             return false;
         }
         return true;
