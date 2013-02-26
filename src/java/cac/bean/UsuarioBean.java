@@ -466,7 +466,7 @@ public class UsuarioBean implements Serializable {
         List<Setor> setor = new LinkedList<Setor>();
 
         if (this.usr.getNome() != null) {
-            setor = (LinkedList<Setor>) this.setorDAO.getTodosSetor();
+            setor = (LinkedList<Setor>) this.setorDAO.getTodosSetor(this.usr);
         }
         return setor;
 
@@ -497,7 +497,7 @@ public class UsuarioBean implements Serializable {
 
         if (this.usr.getNome() != null) {
             if (this.usr.getPermissao().getIdpermissao() != 1) {
-                usuario = (LinkedList<Usuario>) this.usrDAO.getTodosUsuarios();
+                usuario = (LinkedList<Usuario>) this.usrDAO.getTodosUsuarios(this.usr);
             } else {
                 usuario = null;
             }

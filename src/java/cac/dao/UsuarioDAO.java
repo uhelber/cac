@@ -109,20 +109,35 @@ public class UsuarioDAO {
         return retorno;
     }
 
-    public List<Usuario> getTodosUsuarios() throws ClassNotFoundException, SQLException {
+    public List<Usuario> getTodosUsuarios(Usuario usuario) throws ClassNotFoundException, SQLException {
         this.db = new DataBase();
 
         List<Usuario> usuarios = new LinkedList<Usuario>();
+        List<Usuario> novosUsuarios = new LinkedList<Usuario>();
+
         ResultSet rs = db.getStatement().executeQuery("SELECT * FROM NTE.USUARIOS");
         while (rs.next()) {
             Usuario usr = new Usuario();
             polularListaUsuario(usr, rs);
             usuarios.add(usr);
         }
+
+        for (int i = 0; i < usuarios.size(); i++) {
+            if (usuario.getPermissao().getIdpermissao() != 3) {
+                if (usuario.getPermissao().getIdpermissao() == 2) {
+                    if (usuario.getSetor().getIdsetor() == usuarios.get(i).getSetor().getIdsetor()) {
+                        novosUsuarios.add(usuarios.get(i));
+                    }
+                }
+            } else {
+                novosUsuarios.add(usuarios.get(i));
+            }
+        }
+
         rs.close();
         db.getCon().close();
 
-        return usuarios;
+        return novosUsuarios;
     }
 
     public List<Usuario> getTodosUsuariosAvancados(Usuario usuario) throws ClassNotFoundException, SQLException {
@@ -130,26 +145,25 @@ public class UsuarioDAO {
 
         List<Usuario> usuarios = new LinkedList<Usuario>();
         List<Usuario> novosUsuarios = new LinkedList<Usuario>();
-        
+
         ResultSet rs = db.getStatement().executeQuery("SELECT * FROM NTE.USUARIOS WHERE permissao != 1 && idusuarios != 1");
-        
+
         while (rs.next()) {
             Usuario usr = new Usuario();
             polularListaUsuario(usr, rs);
             usuarios.add(usr);
         }
-        
-        for(int i = 0; i < usuarios.size(); i++){
-            if(usuario.getPermissao().getIdpermissao() != 3){
-                if(usuario.getSetor().getIdsetor() == usuarios.get(i).getSetor().getIdsetor()){
+
+        for (int i = 0; i < usuarios.size(); i++) {
+            if (usuario.getPermissao().getIdpermissao() != 3) {
+                if (usuario.getSetor().getIdsetor() == usuarios.get(i).getSetor().getIdsetor()) {
                     novosUsuarios.add(usuarios.get(i));
                 }
-            }
-            else{
+            } else {
                 novosUsuarios = usuarios;
             }
         }
-        
+
         rs.close();
         db.getCon().close();
 
