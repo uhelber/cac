@@ -114,11 +114,11 @@
                     <h:inputSecret id="csenha" label="Confirmar senha" value="#{usuarioBean.confirmarSenha}" size="30" required="true" />
                 </h:panelGroup>
                 
-                <h:outputLabel value="Permissão" for="permissao" />
+                <h:outputLabel value="Permissão" for="permissao" rendered="#{usuarioBean.usr.permissao.idpermissao == 3}" />
                 <h:panelGroup>
                     <h:message for="permissao"  errorClass="error" infoClass="info" />
                     <br/>
-                    <h:selectOneMenu id="permissao"  label="Permissão" value="#{usuarioBean.novoUsr.permissao}" required="true" >
+                    <h:selectOneMenu id="permissao"  label="Permissão" value="#{usuarioBean.novoUsr.permissao}" required="true" rendered="#{usuarioBean.usr.permissao.idpermissao == 3}" >
                         <f:selectItem itemLabel="Selecione um tipo" noSelectionOption="true" />
                         <f:selectItems value="#{usuarioBean.listarTodosPermissoes()}" var="permissao" itemValue="#{permissao}" itemLabel="#{permissao.tipo}" />
                     </h:selectOneMenu>
