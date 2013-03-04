@@ -69,6 +69,7 @@ h1 {
 	border-radius: 8px;
 	border: 1px solid #cccccc;
 	margin-top: 8px;
+        width: 30%;
 }
 
 .form-grid .label {

@@ -20,7 +20,7 @@ public class DataBase {
     private String usuario = "nte";
     private String senha = "nte";
     private String db = "nte";
-    private String srv = "localhost:3306";
+    private String srv = "127.0.0.1:3306";
 
     public DataBase() throws SQLException, ClassNotFoundException{
         this.Conexao();
