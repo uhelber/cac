@@ -10,4 +10,29 @@
     <application>
         <message-bundle>cac.resources.Messages</message-bundle>
     </application>
+    
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>listarchamados</from-outcome>
+            <to-view-id>/listarchamados.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>editarchamado</from-outcome>
+            <to-view-id>/editarchamado.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>cadastrarchamado</from-outcome>
+            <to-view-id>/cadastrarchamado.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
 </faces-config>

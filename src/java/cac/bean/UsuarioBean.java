@@ -40,15 +40,16 @@ import java.util.List;
 import javax.annotation.PreDestroy;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.event.ValueChangeEvent;
+import regrasdenegocios.RN_Chamados;
 
 /**
  *
  * @author UhelberC
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class UsuarioBean implements Serializable {
     /*
      * DAOs
@@ -252,7 +253,7 @@ public class UsuarioBean implements Serializable {
             this.msn.EviarMensagens("frm:usuario", FacesMessage.SEVERITY_ERROR, "Erro na autenticação...", "Verifique se o usuario e senha estão certos.");
             ir = "index";
         }
-
+        System.out.println(this.usr.getNome());
         return ir;
     }
 
@@ -402,14 +403,12 @@ public class UsuarioBean implements Serializable {
     }
 
     public List<Chamado> listarTodosChamados() throws ClassNotFoundException, SQLException {
-        List<Chamado> chamado = new LinkedList<Chamado>();
-        if (this.usr.getNome() != null) {
-            chamado = (LinkedList<Chamado>) this.chmdDAO.getTodosChamados(this.usr, this.tipoListarChamados);
-        } else {
-            this.sair();
-        }
-
-        return chamado;
+        List<Chamado> chamados = new LinkedList<Chamado>();
+        RN_Chamados rnChamado = new RN_Chamados();
+        
+        chamados = rnChamado.listarTodosChamados(this.usr, this.chmd, this.tipoListarChamados);
+        System.out.println(chamados.size());
+        return chamados;
     }
 
     public List<Parecer> listarTodosPareceres() throws SQLException, ClassNotFoundException {

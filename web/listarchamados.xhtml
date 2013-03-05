@@ -15,7 +15,7 @@
         <h:form id="frm">
             <h:panelGroup class="usr">
                 <h:commandButton image="imagens/sair2.png" action="#{usuarioBean.sair()}" />
-                <h:outputText value="#{usuarioBean.usr.nome}" />
+                <h:outputText value="#{usuarioBean.usr.nome} #{usuarioBean.usr.sobrenome}" />
                 <h:outputText value=" " />
                 <h:outputText value="#{usuarioBean.usr.sobrenome}" />
             </h:panelGroup>
