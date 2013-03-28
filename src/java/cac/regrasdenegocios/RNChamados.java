@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package regrasdenegocios;
+package cac.regrasdenegocios;
 
 import cac.dao.ChamadoDAO;
 import cac.db.Chamado;
@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author UhelberC
  */
-public class RN_Chamados {
+public class RNChamados {
     private ChamadoDAO chamadoDAO;
     private Chamado chamado;
 

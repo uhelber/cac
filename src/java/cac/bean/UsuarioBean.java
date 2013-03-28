@@ -40,21 +40,21 @@ import java.util.List;
 import javax.annotation.PreDestroy;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.event.ValueChangeEvent;
-import regrasdenegocios.RN_Chamados;
+import cac.regrasdenegocios.RNChamados;
 
 /**
  *
  * @author UhelberC
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class UsuarioBean implements Serializable {
+    
     /*
      * DAOs
      */
-
     private UsuarioDAO usrDAO;
     private ChamadoDAO chmdDAO;
     private ParecerDAO prcrDAO;
@@ -67,6 +67,7 @@ public class UsuarioBean implements Serializable {
     private PermissaoDAO permissaoDAO;
     private PregaoDAO pregaoDAO;
     private LaboratorioDAO laboratorioDAO = new LaboratorioDAO();
+    
     /*
      * Objetos
      */
@@ -80,6 +81,8 @@ public class UsuarioBean implements Serializable {
     private Funcao funcao;
     private Cidade cidadeSeleciona = null;
     private Pregao pregao = new Pregao();
+    private DataBase db;
+    
     /*
      * Argumentos
      */
@@ -90,6 +93,7 @@ public class UsuarioBean implements Serializable {
     private Integer inep = null;
 
     public UsuarioBean() throws ClassNotFoundException, SQLException {
+        this.db = new DataBase();
         this.usrDAO = new UsuarioDAO();
         this.chmdDAO = new ChamadoDAO();
         this.prcrDAO = new ParecerDAO();
@@ -404,8 +408,8 @@ public class UsuarioBean implements Serializable {
 
     public List<Chamado> listarTodosChamados() throws ClassNotFoundException, SQLException {
         List<Chamado> chamados = new LinkedList<Chamado>();
-        RN_Chamados rnChamado = new RN_Chamados();
-        
+        RNChamados rnChamado = new RNChamados();
+
         chamados = rnChamado.listarTodosChamados(this.usr, this.chmd, this.tipoListarChamados);
         System.out.println(chamados.size());
         return chamados;
@@ -571,8 +575,7 @@ public class UsuarioBean implements Serializable {
     public String sair() throws SQLException, ClassNotFoundException {
         this.usr = new Usuario();
         this.usrDAO = new UsuarioDAO();
-        DataBase db = new DataBase();
-        db.fecherTudo();
+        this.db.fecherTudo();
 
         return "index";
     }
